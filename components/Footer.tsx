@@ -1,41 +1,100 @@
 'use client';
 import { useLanguage } from './LanguageProvider';
-import { Camera, ThumbsUp } from 'lucide-react';
+import { Instagram, Facebook, MapPin, Phone, Mail } from 'lucide-react';
 import Link from 'next/link';
+import { Reveal } from './Motion';
 
 export default function Footer() {
   const { lang } = useLanguage();
+  const isAr = lang === 'ar';
+
+  const links = [
+    { href: '/about', en: 'About Us', ar: 'من نحن' },
+    { href: '/programs', en: 'Programs', ar: 'برامجنا' },
+    { href: '/curriculum', en: 'Curriculum', ar: 'المنهج' },
+    { href: '/characters', en: 'Characters', ar: 'شخصياتنا' },
+    { href: '/gallery', en: 'Gallery', ar: 'المعرض' },
+  ];
 
   return (
-    <footer className="bg-brand-yellow py-16 px-6 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto flex flex-col items-center text-center relative z-10">
-          <Link href="/" className="inline-block bg-white px-6 py-3 blob-1 shadow-sm hover:scale-105 transition-transform mb-8">
-            <span className="font-fredoka text-brand-darkblue text-3xl lowercase tracking-tight">mada</span>
-          </Link>
-          
-          <h2 className={`text-brand-darkblue mb-8 ${lang === 'en' ? 'font-fredoka text-2xl' : 'font-cairo font-bold text-2xl'}`}>
-            {lang === 'en' ? "Follow our journey" : "تابعوا رحلتنا"}
-          </h2>
-          <div className="flex gap-4 mb-10">
-            <a href="#" className="bg-brand-darkblue text-white p-4 rounded-full hover:scale-110 transition-transform shadow-lg">
-              <Camera size={24} />
-            </a>
-            <a href="#" className="bg-brand-darkblue text-white p-4 rounded-full hover:scale-110 transition-transform shadow-lg">
-              <ThumbsUp size={24} />
-            </a>
-          </div>
-          <p className={`text-brand-darkblue/80 font-bold mb-4 ${lang === 'ar' && 'font-cairo'}`}>
-            {lang === 'en' ? "Tag us @MadaEarlyAcademy" : "@MadaEarlyAcademy تابعونا"}
-          </p>
-          <p className="text-brand-darkblue/60 text-sm font-outfit">
-            © 2026 Mada Early Learning Academy
-          </p>
-        </div>
+    <footer className="mesh-ink grain relative overflow-hidden text-white">
+      <div className="absolute -top-24 -left-24 w-[420px] h-[420px] bg-brand-purple/30 blob-1 animate-morph -z-0" />
+      <div className="absolute -bottom-32 -right-20 w-[360px] h-[360px] bg-brand-blue/30 blob-3 animate-float -z-0" />
 
-        {/* Footer Blob */}
-        <div className="absolute -bottom-10 -right-10 w-[160px] h-[160px] bg-[#E5C12A] blob-3 flex items-center justify-center text-4xl shadow-inner -z-0">
-          ⚡
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-10">
+        <Reveal className="grid md:grid-cols-12 gap-12 mb-16" direction="up">
+          {/* Brand */}
+          <div className="md:col-span-5">
+            <Link href="/" className="inline-flex items-center gap-3 mb-6">
+              <span className="bg-brand-yellow w-12 h-12 blob-1 shadow-lg flex items-center justify-center">
+                <span className="font-fredoka text-brand-darkblue text-xl lowercase">m</span>
+              </span>
+              <span className="font-display font-semibold text-3xl lowercase tracking-tight">mada</span>
+            </Link>
+            <p className={`text-white/60 leading-relaxed max-w-sm mb-8 ${isAr ? 'font-cairo' : 'font-outfit'}`}>
+              {isAr
+                ? 'حضانة دولية متميزة حيث يزدهر كل طفل في بيئة حاضنة وآمنة وثنائية اللغة.'
+                : 'A premium international preschool where every child blooms in a nurturing, safe, bilingual environment.'}
+            </p>
+            <div className="flex gap-3">
+              <a href="#" aria-label="Instagram" className="glass-dark w-11 h-11 rounded-full flex items-center justify-center hover:bg-brand-yellow hover:text-brand-darkblue transition-colors">
+                <Instagram size={18} />
+              </a>
+              <a href="#" aria-label="Facebook" className="glass-dark w-11 h-11 rounded-full flex items-center justify-center hover:bg-brand-yellow hover:text-brand-darkblue transition-colors">
+                <Facebook size={18} />
+              </a>
+            </div>
+          </div>
+
+          {/* Explore */}
+          <div className="md:col-span-3">
+            <h4 className={`text-brand-cyan text-xs tracking-[0.25em] uppercase mb-5 ${isAr ? 'font-cairo' : 'font-outfit'}`}>
+              {isAr ? 'استكشف' : 'Explore'}
+            </h4>
+            <ul className="space-y-3">
+              {links.map((l) => (
+                <li key={l.en}>
+                  <Link href={l.href} className={`text-white/70 hover:text-white transition-colors ${isAr ? 'font-cairo' : 'font-outfit'}`}>
+                    {isAr ? l.ar : l.en}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="md:col-span-4">
+            <h4 className={`text-brand-cyan text-xs tracking-[0.25em] uppercase mb-5 ${isAr ? 'font-cairo' : 'font-outfit'}`}>
+              {isAr ? 'تواصل معنا' : 'Get in touch'}
+            </h4>
+            <ul className="space-y-4 text-white/70">
+              <li className="flex items-start gap-3">
+                <MapPin size={18} className="text-brand-yellow mt-0.5 shrink-0" />
+                <span className={isAr ? 'font-cairo' : 'font-outfit'}>
+                  {isAr ? 'القاهرة الجديدة، مصر' : 'New Cairo, Egypt'}
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone size={18} className="text-brand-yellow shrink-0" />
+                <a href="tel:+201000000000" className="hover:text-white transition-colors font-outfit" dir="ltr">+20 100 000 0000</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail size={18} className="text-brand-yellow shrink-0" />
+                <a href="mailto:hello@mada.academy" className="hover:text-white transition-colors font-outfit">hello@mada.academy</a>
+              </li>
+            </ul>
+          </div>
+        </Reveal>
+
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-white/40 text-sm font-outfit">
+            © 2026 Mada Early Learning Academy. {isAr ? 'جميع الحقوق محفوظة.' : 'All rights reserved.'}
+          </p>
+          <p className={`text-white/50 text-sm ${isAr ? 'font-cairo' : 'font-outfit'}`}>
+            {isAr ? 'تابعونا @MadaEarlyAcademy' : 'Follow us @MadaEarlyAcademy'}
+          </p>
         </div>
+      </div>
     </footer>
   );
 }

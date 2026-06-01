@@ -1,12 +1,23 @@
 'use client';
 import { useLanguage } from './LanguageProvider';
 import Link from 'next/link';
-import { Camera, ThumbsUp, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { Instagram, Facebook, Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function Header() {
   const { lang, setLang } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const links = [
     { href: '/', en: 'Home', ar: 'الرئيسية' },
@@ -17,79 +28,134 @@ export default function Header() {
     { href: '/gallery', en: 'Gallery', ar: 'معرض الصور' },
   ];
 
+  const isAr = lang === 'ar';
+
   return (
     <>
-      <div className="bg-brand-darkblue h-10 flex items-center justify-between px-6 z-[1010] relative">
-        <div className="flex gap-2">
+      {/* Top utility bar */}
+      <div className="bg-brand-darkblue h-10 flex items-center justify-between px-6 z-[1010] relative text-white">
+        <div className="flex gap-1.5">
           <button
             onClick={() => setLang('en')}
-            className={`px-3 py-0.5 text-xs rounded ${lang === 'en' ? 'bg-brand-yellow text-brand-darkblue font-bold' : 'text-white/80 hover:text-white'}`}
+            className={`px-3 py-0.5 text-xs rounded-full transition-colors ${lang === 'en' ? 'bg-brand-yellow text-brand-darkblue font-bold' : 'text-white/70 hover:text-white'}`}
           >
             EN
           </button>
           <button
             onClick={() => setLang('ar')}
-            className={`px-3 py-0.5 text-xs rounded font-cairo ${lang === 'ar' ? 'bg-brand-yellow text-brand-darkblue font-bold' : 'text-white/80 hover:text-white'}`}
+            className={`px-3 py-0.5 text-xs rounded-full font-cairo transition-colors ${lang === 'ar' ? 'bg-brand-yellow text-brand-darkblue font-bold' : 'text-white/70 hover:text-white'}`}
           >
             عربي
           </button>
         </div>
-        <div className="flex gap-4">
-          <a href="#" className="text-white hover:text-brand-yellow transition-colors"><Camera size={16} /></a>
-          <a href="#" className="text-white hover:text-brand-yellow transition-colors"><ThumbsUp size={16} /></a>
+        <div className="hidden sm:flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-white/50 font-outfit">
+          {isAr ? 'حضانة دولية متميزة' : 'Premium International Preschool'}
+        </div>
+        <div className="flex gap-3">
+          <a href="#" aria-label="Instagram" className="text-white/70 hover:text-brand-yellow transition-colors"><Instagram size={15} /></a>
+          <a href="#" aria-label="Facebook" className="text-white/70 hover:text-brand-yellow transition-colors"><Facebook size={15} /></a>
         </div>
       </div>
-      <header className="bg-white/90 backdrop-blur-md sticky top-0 z-[1000] border-b border-brand-blue/10">
-        <div className={`max-w-7xl mx-auto px-6 h-20 flex items-center justify-between`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+
+      {/* Floating glass header */}
+      <header className="sticky top-0 z-[1000] px-3 md:px-6 pt-3">
+        <motion.div
+          initial={false}
+          animate={{
+            paddingTop: scrolled ? 8 : 14,
+            paddingBottom: scrolled ? 8 : 14,
+          }}
+          className={`max-w-7xl mx-auto rounded-[26px] px-5 md:px-7 flex items-center justify-between transition-shadow duration-500 ${
+            scrolled ? 'glass shadow-soft' : 'bg-white/55 backdrop-blur-md border border-white/40'
+          }`}
+          dir={isAr ? 'rtl' : 'ltr'}
+        >
           <div className="flex items-center gap-8 md:gap-12">
-            <Link href="/" className="inline-block bg-brand-yellow px-4 py-2 blob-1 shadow-sm hover:scale-105 transition-transform" onClick={() => setMobileMenuOpen(false)}>
-              <span className="font-fredoka text-brand-darkblue text-2xl lowercase tracking-tight">mada</span>
+            <Link
+              href="/"
+              className="group inline-flex items-center gap-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span className="bg-brand-yellow w-10 h-10 blob-1 shadow-sm flex items-center justify-center group-hover:animate-morph transition-transform group-hover:scale-105">
+                <span className="font-fredoka text-brand-darkblue text-lg leading-none lowercase">m</span>
+              </span>
+              <span className="font-display font-semibold text-brand-darkblue text-2xl tracking-tight lowercase">mada</span>
             </Link>
-            
+
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-8">
-              {links.map((link) => (
-                <Link key={link.en} href={link.href} className={`font-bold text-brand-darkblue hover:text-brand-pink transition-colors ${lang === 'ar' ? 'font-cairo' : 'font-outfit'}`}>
-                  {lang === 'en' ? link.en : link.ar}
-                </Link>
-              ))}
+            <nav className="hidden lg:flex items-center gap-7">
+              {links.map((link) => {
+                const active = pathname === link.href;
+                return (
+                  <Link
+                    key={link.en}
+                    href={link.href}
+                    className={`relative text-sm font-semibold transition-colors group ${
+                      active ? 'text-brand-pink' : 'text-brand-darkblue/80 hover:text-brand-darkblue'
+                    } ${isAr ? 'font-cairo' : 'font-outfit'}`}
+                  >
+                    {isAr ? link.ar : link.en}
+                    <span
+                      className={`absolute -bottom-1.5 left-0 h-[2px] rounded-full bg-brand-pink transition-all duration-300 ${
+                        active ? 'w-full' : 'w-0 group-hover:w-full'
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
             </nav>
           </div>
 
-          <div className="hidden md:block">
-            <Link href="/#apply-form" className={`bg-brand-pink text-white px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-transform shadow-md shadow-brand-pink/20 ${lang === 'ar' ? 'font-cairo' : 'font-outfit'}`}>
-              {lang === 'en' ? 'Contact Us' : 'اتصل بنا'}
+          <div className="hidden lg:block">
+            <Link
+              href="/#apply-form"
+              className={`bg-brand-darkblue text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-brand-pink hover:scale-105 transition-all shadow-md ${isAr ? 'font-cairo' : 'font-outfit'}`}
+            >
+              {isAr ? 'اتصل بنا' : 'Contact Us'}
             </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
-          <button className="md:hidden text-brand-darkblue" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          <button
+            className="lg:hidden text-brand-darkblue p-1"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Menu"
+          >
+            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
-        </div>
+        </motion.div>
 
         {/* Mobile Nav */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 right-0 bg-white border-b border-brand-blue/10 p-6 flex flex-col gap-4 shadow-xl" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-            {links.map((link) => (
-              <Link 
-                key={link.en} 
-                href={link.href} 
-                onClick={() => setMobileMenuOpen(false)}
-                className={`font-bold text-brand-darkblue text-lg ${lang === 'ar' ? 'font-cairo' : 'font-outfit'}`}
-              >
-                {lang === 'en' ? link.en : link.ar}
-              </Link>
-            ))}
-            <Link 
-              href="#" 
-              onClick={() => setMobileMenuOpen(false)}
-              className={`bg-brand-pink text-white text-center px-6 py-3 rounded-full font-bold mt-2 ${lang === 'ar' ? 'font-cairo' : 'font-outfit'}`}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+              className="lg:hidden max-w-7xl mx-auto mt-3 glass rounded-[26px] p-6 flex flex-col gap-1 shadow-luxe"
+              dir={isAr ? 'rtl' : 'ltr'}
             >
-              {lang === 'en' ? 'Contact Us' : 'اتصل بنا'}
-            </Link>
-          </div>
-        )}
+              {links.map((link) => (
+                <Link
+                  key={link.en}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`font-bold text-brand-darkblue text-lg py-2.5 px-3 rounded-xl hover:bg-white/60 transition-colors ${isAr ? 'font-cairo' : 'font-outfit'}`}
+                >
+                  {isAr ? link.ar : link.en}
+                </Link>
+              ))}
+              <Link
+                href="/#apply-form"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`bg-brand-pink text-white text-center px-6 py-3 rounded-full font-bold mt-3 ${isAr ? 'font-cairo' : 'font-outfit'}`}
+              >
+                {isAr ? 'اتصل بنا' : 'Contact Us'}
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
     </>
   );
