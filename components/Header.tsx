@@ -15,17 +15,40 @@ export default function Header() {
   const pathname = usePathname();
 
   // Scroll handler: shrink + hide on scroll down, reveal on scroll up.
+  // Uses a movement threshold so trackpad jitter / scroll-settle overshoot
+  // doesn't make the bar flicker, and rAF-throttles updates.
   useEffect(() => {
     lastY.current = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
+    let ticking = false;
+    const REVEAL_AT = 120; // always show above this point
+    const THRESHOLD = 8;   // ignore movements smaller than this
+
+    const update = () => {
+      ticking = false;
+      const y = Math.max(0, window.scrollY);
       setScrolled(y > 24);
-      const goingDown = y > lastY.current;
-      if (y > 140 && goingDown) setHidden(true);
-      else if (!goingDown) setHidden(false);
+
+      if (y <= REVEAL_AT) {
+        setHidden(false);
+        lastY.current = y;
+        return;
+      }
+
+      const delta = y - lastY.current;
+      if (Math.abs(delta) < THRESHOLD) return; // keep last anchor; let it accumulate
+
+      setHidden(delta > 0); // down -> hide, up -> reveal
       lastY.current = y;
     };
-    onScroll();
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    update();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
