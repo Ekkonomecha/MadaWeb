@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import Preloader from './Preloader';
 import { motion, useScroll } from 'motion/react';
 
 type Lang = 'en' | 'ar';
@@ -34,6 +35,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
 
   return (
     <LanguageContext.Provider value={{ lang, setLang }}>
+      <Preloader />
       <div className={`min-h-screen flex flex-col bg-brand-offwhite text-brand-body ${lang === 'ar' ? 'font-cairo' : 'font-outfit'}`}>
         <motion.div
           className="fixed top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-brand-pink to-brand-yellow z-[2000] origin-left"

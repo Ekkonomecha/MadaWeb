@@ -1,0 +1,12 @@
+<svg width="470" height="160" viewBox="0 0 470 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="mada Early Learning Academy">
+  <!-- Logo mark: morphing yellow blob with 'm' -->
+  <path d="M84 18c28 0 52 14 56 42 4 26-8 50-34 60-22 8-50 6-66-12C26 92 22 64 36 42 48 24 60 18 84 18Z" fill="#FFDA3B"/>
+  <text x="78" y="108" font-family="Fredoka, 'Fredoka One', sans-serif" font-size="78" font-weight="600" fill="#0A1240" text-anchor="middle" dominant-baseline="alphabetic">m</text>
+  <!-- Orbiting pink dot -->
+  <circle cx="128" cy="44" r="7" fill="#FF3B61"/>
+
+  <!-- Wordmark -->
+  <text x="160" y="92" font-family="Fraunces, Georgia, serif" font-size="64" font-weight="600" letter-spacing="-2" fill="#0A1240">mada<tspan fill="#FF3B61">.</tspan></text>
+  <!-- Tagline -->
+  <text x="163" y="120" font-family="Outfit, Arial, sans-serif" font-size="12.5" letter-spacing="3.5" fill="#0A1240" opacity="0.55">EARLY LEARNING ACADEMY</text>
+</svg>
