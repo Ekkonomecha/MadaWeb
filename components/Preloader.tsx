@@ -102,12 +102,12 @@ export default function Preloader() {
             />
 
             <motion.p
-              className="text-white/45 text-[11px] tracking-[0.45em] uppercase font-outfit"
+              className="text-white/60 text-xl md:text-2xl font-display italic"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2 }}
             >
-              Early Learning Academy
+              Your child has it all!
             </motion.p>
 
             {/* Progress bar + counter */}
