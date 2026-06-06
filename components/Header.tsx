@@ -6,44 +6,62 @@ import { Instagram, Facebook, Menu, X } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
+/**
+ * Header — utility bar (fixed, always visible) + glass nav (fixed, hides on
+ * scroll-down / reveals on scroll-up via a CSS transition on translateY).
+ *
+ * Why CSS transition instead of Framer Motion on the outer wrapper:
+ * position:sticky + transform breaks sticky behaviour in all browsers.
+ * position:fixed + transform works reliably. Framer Motion is kept only for
+ * the inner pill padding tween and the mobile-menu slide animation.
+ */
 export default function Header() {
   const { lang, setLang } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const lastY = useRef(0);
+  const [scrolled, setScrolled]   = useState(false);
+  const [hidden,  setHidden]      = useState(false);
+  const lastY    = useRef(0);
+  const ticking  = useRef(false);
   const pathname = usePathname();
 
-  // Scroll handler: shrink + hide on scroll down, reveal on scroll up.
-  // Uses a movement threshold so trackpad jitter / scroll-settle overshoot
-  // doesn't make the bar flicker, and rAF-throttles updates.
+  // ── Scroll logic ──────────────────────────────────────────────────────────
   useEffect(() => {
     lastY.current = window.scrollY;
-    let ticking = false;
-    const REVEAL_AT = 120; // always show above this point
-    const THRESHOLD = 8;   // ignore movements smaller than this
+
+    const ALWAYS_SHOW_BELOW = 80;  // px — always visible near the top
+    const HIDE_THRESHOLD    = 10;  // px — min movement to trigger hide
+    const SHOW_THRESHOLD    = 8;   // px — min movement to trigger show
 
     const update = () => {
-      ticking = false;
+      ticking.current = false;
       const y = Math.max(0, window.scrollY);
-      setScrolled(y > 24);
 
-      if (y <= REVEAL_AT) {
+      setScrolled(y > 30);
+
+      // Always show near top
+      if (y <= ALWAYS_SHOW_BELOW) {
         setHidden(false);
         lastY.current = y;
         return;
       }
 
       const delta = y - lastY.current;
-      if (Math.abs(delta) < THRESHOLD) return; // keep last anchor; let it accumulate
 
-      setHidden(delta > 0); // down -> hide, up -> reveal
-      lastY.current = y;
+      if (delta > HIDE_THRESHOLD) {
+        // Scrolling DOWN — hide
+        setHidden(true);
+        lastY.current = y;
+      } else if (delta < -SHOW_THRESHOLD) {
+        // Scrolling UP — reveal
+        setHidden(false);
+        lastY.current = y;
+      }
+      // Ignore tiny jitter (|delta| < threshold) — don't update lastY
     };
 
     const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
+      if (!ticking.current) {
+        ticking.current = true;
         requestAnimationFrame(update);
       }
     };
@@ -53,63 +71,96 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Never hide the bar while the mobile menu is open.
+  // Never hide while the mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) setHidden(false);
   }, [mobileMenuOpen]);
 
   const links = [
-    { href: '/', en: 'Home', ar: 'الرئيسية' },
-    { href: '/about', en: 'About Us', ar: 'من نحن' },
-    { href: '/programs', en: 'Programs', ar: 'برامجنا' },
+    { href: '/',           en: 'Home',       ar: 'الرئيسية'       },
+    { href: '/about',      en: 'About Us',   ar: 'من نحن'         },
+    { href: '/programs',   en: 'Programs',   ar: 'برامجنا'        },
     { href: '/curriculum', en: 'Curriculum', ar: 'المنهج الدراسي' },
-    { href: '/characters', en: 'Characters', ar: 'شخصياتنا' },
-    { href: '/gallery', en: 'Gallery', ar: 'معرض الصور' },
+    { href: '/characters', en: 'Characters', ar: 'شخصياتنا'       },
+    { href: '/gallery',    en: 'Gallery',    ar: 'معرض الصور'     },
   ];
 
   const isAr = lang === 'ar';
 
   return (
     <>
-      {/* Top utility bar */}
-      <div className="bg-brand-darkblue h-10 flex items-center justify-between px-6 z-[1010] relative text-white">
+      {/* ── Utility bar — fixed, always visible ──────────────────────────── */}
+      <div
+        className="fixed top-0 left-0 right-0 z-[1020] bg-brand-darkblue h-10
+                   flex items-center justify-between px-6 text-white"
+      >
         <div className="flex gap-1.5">
           <button
             onClick={() => setLang('en')}
-            className={`px-3 py-0.5 text-xs rounded-full transition-colors ${lang === 'en' ? 'bg-brand-yellow text-brand-darkblue font-bold' : 'text-white/70 hover:text-white'}`}
+            className={`px-3 py-0.5 text-xs rounded-full transition-colors
+              ${lang === 'en'
+                ? 'bg-brand-yellow text-brand-darkblue font-bold'
+                : 'text-white/70 hover:text-white'}`}
           >
             EN
           </button>
           <button
             onClick={() => setLang('ar')}
-            className={`px-3 py-0.5 text-xs rounded-full font-cairo transition-colors ${lang === 'ar' ? 'bg-brand-yellow text-brand-darkblue font-bold' : 'text-white/70 hover:text-white'}`}
+            className={`px-3 py-0.5 text-xs rounded-full font-cairo transition-colors
+              ${lang === 'ar'
+                ? 'bg-brand-yellow text-brand-darkblue font-bold'
+                : 'text-white/70 hover:text-white'}`}
           >
             عربي
           </button>
         </div>
-        <div className="hidden sm:flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-white/50 font-outfit">
+
+        <div className="hidden sm:flex items-center text-[11px] tracking-[0.25em]
+                        uppercase text-white/50 font-outfit">
           {isAr ? 'حضانة دولية متميزة' : 'Premium International Preschool'}
         </div>
+
         <div className="flex gap-3">
-          <a href="#" aria-label="Instagram" className="text-white/70 hover:text-brand-yellow transition-colors"><Instagram size={15} /></a>
-          <a href="#" aria-label="Facebook" className="text-white/70 hover:text-brand-yellow transition-colors"><Facebook size={15} /></a>
+          <a href="#" aria-label="Instagram"
+             className="text-white/70 hover:text-brand-yellow transition-colors">
+            <Instagram size={15} />
+          </a>
+          <a href="#" aria-label="Facebook"
+             className="text-white/70 hover:text-brand-yellow transition-colors">
+            <Facebook size={15} />
+          </a>
         </div>
       </div>
 
-      {/* Floating glass header — sticky, hides on scroll down, reveals on scroll up */}
-      <motion.header
-        className="sticky top-0 z-[1000] px-3 md:px-6 pt-3 will-change-transform"
-        initial={false}
-        animate={{ y: hidden ? '-130%' : '0%' }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      {/* ── Nav bar — fixed below utility bar, hides/shows on scroll ─────── */}
+      {/*
+        CRITICAL: use inline style for transform + transition.
+        position:fixed + CSS transform is the only reliable cross-browser
+        pattern for hide-on-scroll navbars.
+        position:sticky + transform breaks sticky in all browsers.
+      */}
+      <header
+        style={{
+          position:   'fixed',
+          top:        '40px',           /* sit just below the 40px utility bar */
+          left:       0,
+          right:      0,
+          zIndex:     1010,
+          padding:    '12px 24px 0',
+          transform:  hidden ? 'translateY(-160%)' : 'translateY(0px)',
+          transition: 'transform 0.38s cubic-bezier(0.22, 1, 0.36, 1)',
+          willChange: 'transform',
+        }}
       >
+        {/* Glass pill */}
         <motion.div
-          initial={false}
           animate={{
-            paddingTop: scrolled ? 8 : 14,
-            paddingBottom: scrolled ? 8 : 14,
+            paddingTop:    scrolled ? 8  : 14,
+            paddingBottom: scrolled ? 8  : 14,
           }}
-          className="relative max-w-7xl mx-auto rounded-[26px] px-5 md:px-7 flex items-center justify-between glass shadow-soft transition-shadow duration-500"
+          transition={{ duration: 0.25, ease: 'easeOut' }}
+          className="relative max-w-7xl mx-auto rounded-[26px] px-5 md:px-7
+                     flex items-center justify-between glass shadow-soft"
           dir={isAr ? 'rtl' : 'ltr'}
         >
           {/* Logo */}
@@ -121,29 +172,31 @@ export default function Header() {
             <img
               src="/assets/logo/mada-logo.svg"
               alt="mada by saja"
-              className="h-11 md:h-12 w-auto group-hover:scale-105 transition-transform origin-left"
+              className="h-11 md:h-12 w-auto group-hover:scale-105
+                         transition-transform origin-left"
             />
           </Link>
 
-          {/* Desktop Nav — absolutely centered in the bar */}
-          <nav className="hidden lg:flex items-center gap-7 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          {/* Desktop Nav — absolutely centered */}
+          <nav className="hidden lg:flex items-center gap-7
+                          absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {links.map((link) => {
               const active = pathname === link.href;
               return (
                 <Link
                   key={link.en}
                   href={link.href}
-                  className={`relative text-sm transition-colors group ${
-                    active
+                  className={`relative text-sm transition-colors group
+                    ${active
                       ? 'text-brand-pink font-bold'
-                      : 'text-brand-darkblue/80 hover:text-brand-darkblue font-normal'
-                  } ${isAr ? 'font-cairo' : 'font-outfit'}`}
+                      : 'text-brand-darkblue/80 hover:text-brand-darkblue font-normal'}
+                    ${isAr ? 'font-cairo' : 'font-outfit'}`}
                 >
                   {isAr ? link.ar : link.en}
                   <span
-                    className={`absolute -bottom-1.5 left-0 h-[2px] rounded-full bg-brand-pink transition-all duration-300 ${
-                      active ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`}
+                    className={`absolute -bottom-1.5 left-0 h-[2px] rounded-full
+                      bg-brand-pink transition-all duration-300
+                      ${active ? 'w-full' : 'w-0 group-hover:w-full'}`}
                   />
                 </Link>
               );
@@ -154,13 +207,16 @@ export default function Header() {
           <div className="hidden lg:block shrink-0">
             <Link
               href="/#apply-form"
-              className={`bg-brand-pink text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-brand-darkblue hover:scale-105 transition-all shadow-md shadow-brand-pink/25 ${isAr ? 'font-cairo' : 'font-outfit'}`}
+              className={`bg-brand-pink text-white px-6 py-2.5 rounded-full
+                text-sm font-bold hover:bg-brand-darkblue hover:scale-105
+                transition-all shadow-md shadow-brand-pink/25
+                ${isAr ? 'font-cairo' : 'font-outfit'}`}
             >
               {isAr ? 'سجّل الآن' : 'Apply Now'}
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile toggle */}
           <button
             className="lg:hidden text-brand-darkblue p-1"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -174,11 +230,12 @@ export default function Header() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -12 }}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.25 }}
-              className="lg:hidden max-w-7xl mx-auto mt-3 glass rounded-[26px] p-6 flex flex-col gap-1 shadow-luxe"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="lg:hidden max-w-7xl mx-auto mt-3 glass rounded-[26px]
+                         p-6 flex flex-col gap-1 shadow-luxe"
               dir={isAr ? 'rtl' : 'ltr'}
             >
               {links.map((link) => (
@@ -186,7 +243,9 @@ export default function Header() {
                   key={link.en}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`font-bold text-brand-darkblue text-lg py-2.5 px-3 rounded-xl hover:bg-white/60 transition-colors ${isAr ? 'font-cairo' : 'font-outfit'}`}
+                  className={`font-bold text-brand-darkblue text-lg py-2.5 px-3
+                    rounded-xl hover:bg-white/60 transition-colors
+                    ${isAr ? 'font-cairo' : 'font-outfit'}`}
                 >
                   {isAr ? link.ar : link.en}
                 </Link>
@@ -194,14 +253,19 @@ export default function Header() {
               <Link
                 href="/#apply-form"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`bg-brand-pink text-white text-center px-6 py-3 rounded-full font-bold mt-3 ${isAr ? 'font-cairo' : 'font-outfit'}`}
+                className={`bg-brand-pink text-white text-center px-6 py-3
+                  rounded-full font-bold mt-3
+                  ${isAr ? 'font-cairo' : 'font-outfit'}`}
               >
                 {isAr ? 'سجّل الآن' : 'Apply Now'}
               </Link>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.header>
+      </header>
+
+      {/* ── Spacer — compensates for fixed utility bar (40px) + nav (~76px) ─ */}
+      <div style={{ height: '116px' }} aria-hidden="true" />
     </>
   );
 }
