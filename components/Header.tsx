@@ -3,21 +3,37 @@ import { useLanguage } from './LanguageProvider';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Instagram, Facebook, Menu, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function Header() {
   const { lang, setLang } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
   const pathname = usePathname();
 
+  // Scroll handler: shrink + hide on scroll down, reveal on scroll up.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    lastY.current = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      const goingDown = y > lastY.current;
+      if (y > 140 && goingDown) setHidden(true);
+      else if (!goingDown) setHidden(false);
+      lastY.current = y;
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Never hide the bar while the mobile menu is open.
+  useEffect(() => {
+    if (mobileMenuOpen) setHidden(false);
+  }, [mobileMenuOpen]);
 
   const links = [
     { href: '/', en: 'Home', ar: 'الرئيسية' },
@@ -57,62 +73,67 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Floating glass header */}
-      <header className="sticky top-0 z-[1000] px-3 md:px-6 pt-3">
+      {/* Floating glass header — sticky, hides on scroll down, reveals on scroll up */}
+      <motion.header
+        className="sticky top-0 z-[1000] px-3 md:px-6 pt-3 will-change-transform"
+        initial={false}
+        animate={{ y: hidden ? '-130%' : '0%' }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
         <motion.div
           initial={false}
           animate={{
             paddingTop: scrolled ? 8 : 14,
             paddingBottom: scrolled ? 8 : 14,
           }}
-          className={`max-w-7xl mx-auto rounded-[26px] px-5 md:px-7 flex items-center justify-between transition-shadow duration-500 ${
-            scrolled ? 'glass shadow-soft' : 'bg-white/55 backdrop-blur-md border border-white/40'
-          }`}
+          className="relative max-w-7xl mx-auto rounded-[26px] px-5 md:px-7 flex items-center justify-between glass shadow-soft transition-shadow duration-500"
           dir={isAr ? 'rtl' : 'ltr'}
         >
-          <div className="flex items-center gap-8 md:gap-12">
-            <Link
-              href="/"
-              className="group inline-flex items-center"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <img
-                src="/assets/logo/mada-logo.svg"
-                alt="mada by saja"
-                className="h-11 md:h-12 w-auto group-hover:scale-105 transition-transform origin-left"
-              />
-            </Link>
+          {/* Logo */}
+          <Link
+            href="/"
+            className="group inline-flex items-center shrink-0"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <img
+              src="/assets/logo/mada-logo.svg"
+              alt="mada by saja"
+              className="h-11 md:h-12 w-auto group-hover:scale-105 transition-transform origin-left"
+            />
+          </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-7">
-              {links.map((link) => {
-                const active = pathname === link.href;
-                return (
-                  <Link
-                    key={link.en}
-                    href={link.href}
-                    className={`relative text-sm font-semibold transition-colors group ${
-                      active ? 'text-brand-pink' : 'text-brand-darkblue/80 hover:text-brand-darkblue'
-                    } ${isAr ? 'font-cairo' : 'font-outfit'}`}
-                  >
-                    {isAr ? link.ar : link.en}
-                    <span
-                      className={`absolute -bottom-1.5 left-0 h-[2px] rounded-full bg-brand-pink transition-all duration-300 ${
-                        active ? 'w-full' : 'w-0 group-hover:w-full'
-                      }`}
-                    />
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
+          {/* Desktop Nav — absolutely centered in the bar */}
+          <nav className="hidden lg:flex items-center gap-7 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            {links.map((link) => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.en}
+                  href={link.href}
+                  className={`relative text-sm transition-colors group ${
+                    active
+                      ? 'text-brand-pink font-bold'
+                      : 'text-brand-darkblue/80 hover:text-brand-darkblue font-normal'
+                  } ${isAr ? 'font-cairo' : 'font-outfit'}`}
+                >
+                  {isAr ? link.ar : link.en}
+                  <span
+                    className={`absolute -bottom-1.5 left-0 h-[2px] rounded-full bg-brand-pink transition-all duration-300 ${
+                      active ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  />
+                </Link>
+              );
+            })}
+          </nav>
 
-          <div className="hidden lg:block">
+          {/* Apply Now CTA */}
+          <div className="hidden lg:block shrink-0">
             <Link
               href="/#apply-form"
-              className={`bg-brand-darkblue text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-brand-pink hover:scale-105 transition-all shadow-md ${isAr ? 'font-cairo' : 'font-outfit'}`}
+              className={`bg-brand-pink text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-brand-darkblue hover:scale-105 transition-all shadow-md shadow-brand-pink/25 ${isAr ? 'font-cairo' : 'font-outfit'}`}
             >
-              {isAr ? 'اتصل بنا' : 'Contact Us'}
+              {isAr ? 'سجّل الآن' : 'Apply Now'}
             </Link>
           </div>
 
@@ -152,12 +173,12 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`bg-brand-pink text-white text-center px-6 py-3 rounded-full font-bold mt-3 ${isAr ? 'font-cairo' : 'font-outfit'}`}
               >
-                {isAr ? 'اتصل بنا' : 'Contact Us'}
+                {isAr ? 'سجّل الآن' : 'Apply Now'}
               </Link>
             </motion.div>
           )}
         </AnimatePresence>
-      </header>
+      </motion.header>
     </>
   );
 }
