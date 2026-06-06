@@ -23,6 +23,10 @@ public/assets/
 │   ├── toddlers.png                 1yr – 2yr    (cyan tint)
 │   ├── preschool.png                2yr – 3yr    (pale pink tint)
 │   └── kindergarten.png             3yr – 5yr    (yellow tint)
+├── fonts/                           Self-hosted brand fonts (loaded via @font-face in app/globals.css)
+│   ├── dinnext-*.otf                DIN Next — English H1/H2 headings (ultralight→black)
+│   ├── ffyaseer-{regular,solid}.ttf FF Yaseer — Arabic H1/H2 headings
+│   └── learningcurve-*.ttf          Learning Curve script (uploaded, not currently wired)
 └── media/
     ├── hero/                        Drop hero / banner photos here
     └── gallery/                     Drop gallery & section photos here

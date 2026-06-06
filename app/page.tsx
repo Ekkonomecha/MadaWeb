@@ -50,7 +50,7 @@ export default function MadaEarlyLearningAcademy() {
               {isAr ? 'باب القبول مفتوح ٢٠٢٦' : 'Admission Open 2026'}
             </div>
 
-            <h1 className="font-fredoka text-brand-darkblue text-[4.5rem] md:text-[5.5rem] lg:text-[7rem] leading-[0.85] tracking-tighter mb-5 lowercase">
+            <h1 className="logo-type font-fredoka text-brand-darkblue text-[4.5rem] md:text-[5.5rem] lg:text-[7rem] leading-[0.85] tracking-tighter mb-5 lowercase">
               mada<span className="text-brand-pink">.</span>
             </h1>
 

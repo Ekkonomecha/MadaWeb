@@ -2,6 +2,20 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..600&family=Fredoka:wght@500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap');
 
+/* ---- Self-hosted brand fonts ---- */
+/* DIN Next — English headings/H1 (contains Latin + Arabic glyphs) */
+@font-face { font-family: "DIN Next"; src: url("/assets/fonts/dinnext-ultralight.otf") format("opentype"); font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: "DIN Next"; src: url("/assets/fonts/dinnext-light.otf") format("opentype"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "DIN Next"; src: url("/assets/fonts/dinnext-regular.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "DIN Next"; src: url("/assets/fonts/dinnext-medium.otf") format("opentype"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "DIN Next"; src: url("/assets/fonts/dinnext-bold.otf") format("opentype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "DIN Next"; src: url("/assets/fonts/dinnext-heavy.otf") format("opentype"); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "DIN Next"; src: url("/assets/fonts/dinnext-black.otf") format("opentype"); font-weight: 900; font-style: normal; font-display: swap; }
+
+/* FF Yaseer — Arabic headings/H1 */
+@font-face { font-family: "FF Yaseer"; src: url("/assets/fonts/ffyaseer-regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "FF Yaseer"; src: url("/assets/fonts/ffyaseer-solid.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+
 @theme {
   /* Core brand palette (preserved) */
   --color-brand-yellow: #FFDA3B;
@@ -30,6 +44,8 @@
   --font-fredoka: "Fredoka", cursive;
   --font-outfit: "Outfit", sans-serif;
   --font-cairo: "Cairo", sans-serif;
+  --font-dinnext: "DIN Next", "Outfit", sans-serif;
+  --font-yaseer: "FF Yaseer", "Cairo", sans-serif;
 
   --shadow-luxe: 0 30px 60px -25px rgba(10, 18, 64, 0.28);
   --shadow-soft: 0 18px 50px -20px rgba(10, 18, 64, 0.18);
@@ -67,6 +83,18 @@ html, body {
   font-optical-sizing: auto;
   letter-spacing: -0.02em;
 }
+
+/* ---- Heading typeface: DIN Next (EN) / FF Yaseer (AR) on H1 + H2 only ---- */
+/* !important overrides the inline Tailwind font utilities on these headings. */
+html[lang="en"] :where(h1, h2) {
+  font-family: var(--font-dinnext) !important;
+  letter-spacing: -0.01em;
+}
+html[lang="ar"] :where(h1, h2) {
+  font-family: var(--font-yaseer) !important;
+}
+/* Exception: keep the decorative "mada." hero wordmark in Fredoka */
+html[lang] .logo-type { font-family: var(--font-fredoka) !important; }
 .text-balance { text-wrap: balance; }
 .text-pretty { text-wrap: pretty; }
 
