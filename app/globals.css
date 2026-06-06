@@ -40,12 +40,14 @@
   --color-brand-teal: #2BB7A3;
   --color-brand-indigo: #4628D3;
 
-  --font-display: "Fraunces", serif;
-  --font-fredoka: "Fredoka", cursive;
-  --font-outfit: "Outfit", sans-serif;
-  --font-cairo: "Cairo", sans-serif;
+  /* English typography is unified on DIN Next (display + body).
+     Weights are preserved by the @font-face faces above. */
   --font-dinnext: "DIN Next", "Outfit", sans-serif;
   --font-yaseer: "FF Yaseer", "Cairo", sans-serif;
+  --font-display: "DIN Next", "Outfit", sans-serif;
+  --font-outfit: "DIN Next", "Outfit", sans-serif;
+  --font-fredoka: "Fredoka", cursive;
+  --font-cairo: "Cairo", sans-serif;
 
   --shadow-luxe: 0 30px 60px -25px rgba(10, 18, 64, 0.28);
   --shadow-soft: 0 18px 50px -20px rgba(10, 18, 64, 0.18);
