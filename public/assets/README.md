@@ -7,9 +7,9 @@ All files here are served statically by Next.js. A file at
 ```
 public/assets/
 ├── logo/
-│   ├── mada-logo.svg / .png         Full lockup (mark + wordmark + tagline) — light bg
-│   ├── mada-logo-light.svg / .png   Full lockup for dark backgrounds
-│   ├── mada-mark.svg / .png         Icon only (yellow blob + "m")
+│   ├── mada-logo.svg / .png         Full "mada · by saja" script wordmark (blue) — light bg
+│   ├── mada-logo-light.svg / .png   White wordmark for dark backgrounds
+│   ├── mada-mark.svg / .png         Icon only — the rainbow gradient swoosh
 ├── characters/                      The 6 curriculum-pillar mascots (official art, 625×625 PNG, transparent)
 │   ├── brushi.png                   🎨 Creativity & Art      (salmon tint)
 │   ├── ratio.png                    🔢 Logic & Math          (blue tint)

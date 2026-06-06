@@ -25,11 +25,8 @@ export default function Footer() {
         <Reveal className="grid md:grid-cols-12 gap-12 mb-16" direction="up">
           {/* Brand */}
           <div className="md:col-span-5">
-            <Link href="/" className="inline-flex items-center gap-3 mb-6">
-              <span className="bg-brand-yellow w-12 h-12 blob-1 shadow-lg flex items-center justify-center">
-                <span className="font-fredoka text-brand-darkblue text-xl lowercase">m</span>
-              </span>
-              <span className="font-display font-semibold text-3xl lowercase tracking-tight">mada</span>
+            <Link href="/" className="inline-block mb-6">
+              <img src="/assets/logo/mada-logo-light.svg" alt="mada by saja" className="h-16 w-auto" />
             </Link>
             <p className={`text-white/60 leading-relaxed max-w-sm mb-8 ${isAr ? 'font-cairo' : 'font-outfit'}`}>
               {isAr

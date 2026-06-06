@@ -73,13 +73,14 @@ export default function Header() {
           <div className="flex items-center gap-8 md:gap-12">
             <Link
               href="/"
-              className="group inline-flex items-center gap-2"
+              className="group inline-flex items-center"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <span className="bg-brand-yellow w-10 h-10 blob-1 shadow-sm flex items-center justify-center group-hover:animate-morph transition-transform group-hover:scale-105">
-                <span className="font-fredoka text-brand-darkblue text-lg leading-none lowercase">m</span>
-              </span>
-              <span className="font-display font-semibold text-brand-darkblue text-2xl tracking-tight lowercase">mada</span>
+              <img
+                src="/assets/logo/mada-logo.svg"
+                alt="mada by saja"
+                className="h-11 md:h-12 w-auto group-hover:scale-105 transition-transform origin-left"
+              />
             </Link>
 
             {/* Desktop Nav */}

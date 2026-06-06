@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from 'motion/react';
 
 /**
  * Preloader — a luxe intro screen shown on first load.
- * The `mada` logo blob morphs while the wordmark draws in, a progress
- * counter sweeps to 100%, then the screen splits and curtains away.
- * Shown once per browser session (sessionStorage), so navigations
- * between pages don't replay it.
+ * The rainbow "mada" swoosh draws itself left-to-right, the wordmark rises
+ * in beneath it, a progress counter sweeps to 100%, then the screen splits
+ * and curtains away. Shown once per browser session (sessionStorage), so
+ * navigations between pages don't replay it.
  */
 export default function Preloader() {
   const [visible, setVisible] = useState(false);
@@ -27,19 +27,18 @@ export default function Preloader() {
     if (!visible) return;
     let frame = 0;
     const start = performance.now();
-    const duration = 2000;
+    const duration = 2200;
 
     const tick = (now: number) => {
       const t = Math.min((now - start) / duration, 1);
-      // easeOutCubic for a natural deceleration
-      const eased = 1 - Math.pow(1 - t, 3);
+      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
       setProgress(Math.round(eased * 100));
       if (t < 1) {
         frame = requestAnimationFrame(tick);
       } else {
         sessionStorage.setItem('mada-preloaded', '1');
         document.body.style.overflow = '';
-        setTimeout(() => setVisible(false), 450);
+        setTimeout(() => setVisible(false), 500);
       }
     };
     frame = requestAnimationFrame(tick);
@@ -56,18 +55,18 @@ export default function Preloader() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Curtain that splits open at the end */}
+          {/* Curtains that split open at the end */}
           <motion.div
             className="absolute inset-x-0 top-0 h-1/2 bg-brand-darkblue z-20"
             initial={{ y: 0 }}
             animate={progress >= 100 ? { y: '-100%' } : { y: 0 }}
-            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.12 }}
           />
           <motion.div
             className="absolute inset-x-0 bottom-0 h-1/2 bg-brand-darkblue z-20"
             initial={{ y: 0 }}
             animate={progress >= 100 ? { y: '100%' } : { y: 0 }}
-            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.12 }}
           />
 
           {/* Floating ambient blobs */}
@@ -75,66 +74,55 @@ export default function Preloader() {
           <div className="absolute bottom-[18%] right-[14%] w-48 h-48 bg-brand-blue/40 blob-3 animate-float-delay blur-2xl" />
 
           {/* Logo lockup */}
-          <div className="relative z-30 flex flex-col items-center gap-8">
+          <div className="relative z-30 flex flex-col items-center gap-7">
+            {/* Rainbow swoosh draws in left-to-right */}
             <motion.div
-              className="relative"
-              initial={{ scale: 0.6, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ clipPath: 'inset(0 100% 0 0)', opacity: 0 }}
+              animate={{ clipPath: 'inset(0 0% 0 0)', opacity: 1 }}
+              transition={{ duration: 1.1, ease: [0.65, 0, 0.35, 1], delay: 0.15 }}
             >
-              <div className="w-28 h-28 md:w-32 md:h-32 bg-brand-yellow blob-1 animate-morph flex items-center justify-center shadow-[0_20px_60px_-15px_rgba(255,218,59,0.5)]">
-                <span className="font-fredoka text-brand-darkblue text-5xl md:text-6xl leading-none lowercase">m</span>
-              </div>
-              {/* orbiting dot */}
-              <motion.span
-                className="absolute top-1/2 left-1/2 w-3 h-3 -ml-1.5 -mt-1.5 rounded-full bg-brand-pink shadow-lg"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
-                style={{ transformOrigin: '6px 78px' }}
+              <motion.img
+                src="/assets/logo/mada-mark.svg"
+                alt=""
+                aria-hidden="true"
+                className="w-28 md:w-36 h-auto"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
               />
             </motion.div>
 
-            {/* Wordmark draws in letter by letter */}
-            <div className="flex items-end overflow-hidden">
-              {'mada'.split('').map((ch, i) => (
-                <motion.span
-                  key={i}
-                  className="font-display font-semibold text-white text-5xl md:text-6xl lowercase tracking-tight"
-                  initial={{ y: '110%', opacity: 0 }}
-                  animate={{ y: '0%', opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.35 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  {ch}
-                </motion.span>
-              ))}
-              <motion.span
-                className="font-display font-semibold text-brand-pink text-5xl md:text-6xl"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.75, type: 'spring', stiffness: 300 }}
-              >
-                .
-              </motion.span>
-            </div>
+            {/* Wordmark rises in */}
+            <motion.img
+              src="/assets/logo/mada-logo-light.svg"
+              alt="mada by saja"
+              className="w-56 md:w-64 h-auto"
+              initial={{ y: 26, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            />
 
             <motion.p
-              className="text-white/50 text-xs tracking-[0.4em] uppercase font-outfit"
+              className="text-white/45 text-[11px] tracking-[0.45em] uppercase font-outfit"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
+              transition={{ delay: 1.2 }}
             >
               Early Learning Academy
             </motion.p>
 
             {/* Progress bar + counter */}
-            <div className="w-52 md:w-64 mt-2 flex flex-col items-center gap-3">
+            <div className="w-52 md:w-64 mt-1 flex flex-col items-center gap-3">
               <div className="w-full h-[3px] rounded-full bg-white/15 overflow-hidden">
                 <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-brand-pink via-brand-yellow to-brand-cyan"
-                  style={{ width: `${progress}%` }}
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${progress}%`,
+                    background:
+                      'linear-gradient(90deg,#54b282,#83a2d4,#8b77b7,#f59fbd,#feda3c,#f17756)',
+                  }}
                 />
               </div>
-              <span className="font-display text-white/70 text-sm tabular-nums">{progress}%</span>
+              <span className="font-outfit text-white/70 text-sm tabular-nums">{progress}%</span>
             </div>
           </div>
         </motion.div>
