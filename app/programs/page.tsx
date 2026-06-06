@@ -9,7 +9,7 @@ export default function ProgramsPage() {
 
   const programs = [
     {
-      id: 'infants', icon: '👶',
+      id: 'infants',
       bg: 'bg-brand-salmon', soft: 'bg-brand-salmon/15', chip: 'bg-brand-salmon',
       enTitle: 'Infants', arTitle: 'الرضّع',
       enAge: '3 Months – 1 Year', arAge: '٣ شهور – ١ سنة',
@@ -17,7 +17,7 @@ export default function ProgramsPage() {
       arDesc: 'بيئة آمنة ومهدئة وحسية للغاية مصممة لجعل لحظات طفلك الأولى بعيدًا عن المنزل مريحة. يركز مقدمو الرعاية الخبراء لدينا على تعزيز الروتين، وتشجيع الإنجازات المبكرة، وبناء مرفقات آمنة.',
     },
     {
-      id: 'toddlers', icon: '🧒',
+      id: 'toddlers',
       bg: 'bg-brand-cyan', soft: 'bg-brand-cyan/15', chip: 'bg-brand-cyan',
       enTitle: 'Toddlers', arTitle: 'الأطفال الصغار',
       enAge: '1 Year – 2 Years', arAge: '١ سنة – ٢ سنة',
@@ -25,7 +25,7 @@ export default function ProgramsPage() {
       arDesc: 'يحتاج المستكشفون النشطون إلى مساحة للحركة. تم تصميم برنامج الأطفال الصغار لدينا حول الاستكشاف المستقل واكتساب اللغة المبكر والمهارات الاجتماعية الأساسية من خلال اللعب الموجه.',
     },
     {
-      id: 'preschool', icon: '🎒',
+      id: 'preschool',
       bg: 'bg-brand-palepink', soft: 'bg-brand-palepink/20', chip: 'bg-brand-palepink',
       enTitle: 'Preschool', arTitle: 'ما قبل المدرسة',
       enAge: '2 Years – 3 Years', arAge: '٢ سنة – ٣ سنوات',
@@ -33,7 +33,7 @@ export default function ProgramsPage() {
       arDesc: 'الفضول يحتل مركز الصدارة. نقدم تعلمًا موضوعيًا منظمًا ولكنه جذاب للغاية. يبدأ الأطفال في بناء مهارات ما قبل القراءة والكتابة وما قبل الرياضيات أثناء التنقل في الديناميكيات الاجتماعية مع أقرانهم.',
     },
     {
-      id: 'kindergarten', icon: '🏫',
+      id: 'kindergarten',
       bg: 'bg-brand-yellow', soft: 'bg-brand-yellow/20', chip: 'bg-brand-yellow',
       enTitle: 'Kindergarten', arTitle: 'رياض الأطفال',
       enAge: '3 Years – 5 Years', arAge: '٣ سنوات – ٥ سنوات',

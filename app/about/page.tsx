@@ -2,6 +2,7 @@
 import React from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { Reveal, Stagger, StaggerItem, ParallaxImage, Parallax } from '@/components/Motion';
+import DoodleIcon from '@/components/DoodleIcon';
 
 export default function AboutPage() {
   const { lang } = useLanguage();
@@ -77,13 +78,13 @@ export default function AboutPage() {
 
           <Stagger className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: '🌱', enTitle: 'Growth Mindset', arTitle: 'عقلية النمو', enDesc: 'We praise effort, not just results. Every mistake is a learning opportunity.', arDesc: 'نحن نشيد بالجهد، وليس النتائج فقط. كل خطأ هو فرصة للتعلم.' },
-              { icon: '🤝', enTitle: 'Partnership', arTitle: 'الشراكة', enDesc: 'Parents are our co-educators. We build strong, transparent relationships based on trust.', arDesc: 'الآباء هم شركاؤنا في التعليم. نبني علاقات قوية وشفافة مبنية على الثقة.' },
-              { icon: '🌍', enTitle: 'Global Citizens', arTitle: 'مواطنون عالميون', enDesc: 'While grounded in our local culture, we prepare children to navigate diverse environments.', arDesc: 'بينما نعتز بثقافتنا المحلية، نعد الأطفال للتنقل في بيئات متنوعة.' },
+              { icon: 'sprout' as const, color: 'text-brand-cyan', enTitle: 'Growth Mindset', arTitle: 'عقلية النمو', enDesc: 'We praise effort, not just results. Every mistake is a learning opportunity.', arDesc: 'نحن نشيد بالجهد، وليس النتائج فقط. كل خطأ هو فرصة للتعلم.' },
+              { icon: 'handshake' as const, color: 'text-brand-yellow', enTitle: 'Partnership', arTitle: 'الشراكة', enDesc: 'Parents are our co-educators. We build strong, transparent relationships based on trust.', arDesc: 'الآباء هم شركاؤنا في التعليم. نبني علاقات قوية وشفافة مبنية على الثقة.' },
+              { icon: 'globe' as const, color: 'text-brand-palepink', enTitle: 'Global Citizens', arTitle: 'مواطنون عالميون', enDesc: 'While grounded in our local culture, we prepare children to navigate diverse environments.', arDesc: 'بينما نعتز بثقافتنا المحلية، نعد الأطفال للتنقل في بيئات متنوعة.' },
             ].map((val, idx) => (
               <StaggerItem key={idx}>
                 <div className="glass-dark p-8 rounded-[32px] hover:-translate-y-2 transition-transform h-full">
-                  <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-3xl mb-6">{val.icon}</div>
+                  <div className={`w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-3xl mb-6 ${val.color}`}><DoodleIcon name={val.icon} /></div>
                   <h3 className={`text-2xl mb-3 ${isAr ? 'font-cairo font-bold' : 'font-display font-semibold'}`}>
                     {isAr ? val.arTitle : val.enTitle}
                   </h3>

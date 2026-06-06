@@ -4,6 +4,7 @@ import React, { useState, FormEvent } from 'react';
 import { motion } from 'motion/react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { Reveal, Stagger, StaggerItem, Parallax, ParallaxImage, Magnetic } from '@/components/Motion';
+import DoodleIcon from '@/components/DoodleIcon';
 
 export default function MadaEarlyLearningAcademy() {
   const { lang } = useLanguage();
@@ -115,7 +116,7 @@ export default function MadaEarlyLearningAcademy() {
           </motion.div>
 
           <div className="absolute -left-6 bottom-16 hidden md:flex items-center justify-center w-24 h-24 bg-brand-yellow rounded-full shadow-xl z-20 animate-float-delay border-4 border-white">
-            <span className="text-4xl">🌟</span>
+            <span className="text-4xl text-brand-darkblue"><DoodleIcon name="star" /></span>
           </div>
         </div>
 
@@ -136,16 +137,16 @@ export default function MadaEarlyLearningAcademy() {
       <section className="bg-brand-darkblue py-10 px-6 relative overflow-hidden">
         <Stagger className="max-w-7xl mx-auto flex flex-wrap md:flex-nowrap justify-between gap-y-8">
           {[
-            { icon: '🔒', enT: 'Safe & Secure', enS: 'Full CCTV Coverage', arT: 'آمن ومحمي', arS: 'تغطية كاملة بالكاميرات' },
-            { icon: '🛡️', enT: 'Secure Environment', enS: 'Gated Community', arT: 'بيئة آمنة', arS: 'مجتمع سكني مغلق' },
-            { icon: '🌍', enT: 'Bilingual', enS: 'English + Arabic', arT: 'ثنائية اللغة', arS: 'إنجليزي + عربي' },
-            { icon: '🎓', enT: 'Ages 3m – 5 Years', enS: 'All stages welcome', arT: 'من 3 شهور حتى 5 سنوات', arS: 'جميع المراحل' },
+            { icon: 'lock' as const, color: 'text-brand-yellow', enT: 'Safe & Secure', enS: 'Full CCTV Coverage', arT: 'آمن ومحمي', arS: 'تغطية كاملة بالكاميرات' },
+            { icon: 'shield' as const, color: 'text-brand-cyan', enT: 'Secure Environment', enS: 'Gated Community', arT: 'بيئة آمنة', arS: 'مجتمع سكني مغلق' },
+            { icon: 'globe' as const, color: 'text-brand-lightblue', enT: 'Bilingual', enS: 'English + Arabic', arT: 'ثنائية اللغة', arS: 'إنجليزي + عربي' },
+            { icon: 'cap' as const, color: 'text-brand-salmon', enT: 'Ages 3m – 5 Years', enS: 'All stages welcome', arT: 'من 3 شهور حتى 5 سنوات', arS: 'جميع المراحل' },
           ].map((item, i) => (
             <StaggerItem
               key={i}
               className="flex flex-col items-center text-center w-1/2 md:w-1/4 p-4 border-b md:border-b-0 md:border-r border-white/15 last:border-0"
             >
-              <span className="text-3xl mb-3">{item.icon}</span>
+              <span className={`text-4xl mb-3 ${item.color}`}><DoodleIcon name={item.icon} /></span>
               <h3 className={`text-white font-bold text-sm md:text-base ${isAr ? 'font-cairo' : 'font-outfit'}`}>{isAr ? item.arT : item.enT}</h3>
               <p className={`text-brand-cyan text-xs mt-1 ${isAr ? 'font-cairo' : 'font-outfit'}`}>{isAr ? item.arS : item.enS}</p>
             </StaggerItem>
@@ -269,14 +270,14 @@ export default function MadaEarlyLearningAcademy() {
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
           <Stagger className="flex-1 w-full order-2 lg:order-1 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {[
-              { icon: '🌍', tEn: 'International Standards', tAr: 'معايير دولية' },
-              { icon: '🤝', tEn: 'Parent Partnership', tAr: 'شراكة مع أولياء الأمور' },
-              { icon: '🌿', tEn: 'Nature-Led Play', tAr: 'لعب مستوحى من الطبيعة' },
-              { icon: '🧠', tEn: 'Holistic Growth', tAr: 'نمو شامل' },
+              { icon: 'globe' as const, color: 'text-brand-blue', tEn: 'International Standards', tAr: 'معايير دولية' },
+              { icon: 'handshake' as const, color: 'text-brand-pink', tEn: 'Parent Partnership', tAr: 'شراكة مع أولياء الأمور' },
+              { icon: 'leaf' as const, color: 'text-brand-teal', tEn: 'Nature-Led Play', tAr: 'لعب مستوحى من الطبيعة' },
+              { icon: 'brain' as const, color: 'text-brand-purple', tEn: 'Holistic Growth', tAr: 'نمو شامل' },
             ].map((feature, i) => (
               <StaggerItem key={i}>
                 <div className="bg-brand-offwhite rounded-3xl p-7 border border-black/5 flex flex-col items-start gap-4 h-full hover:shadow-soft hover:-translate-y-1 transition-all">
-                  <div className="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-2xl border border-black/5">{feature.icon}</div>
+                  <div className={`w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-2xl border border-black/5 ${feature.color}`}><DoodleIcon name={feature.icon} /></div>
                   <h4 className={`text-xl text-brand-darkblue ${isAr ? 'font-cairo font-bold' : 'font-display font-semibold'}`}>
                     {isAr ? feature.tAr : feature.tEn}
                   </h4>
@@ -379,7 +380,7 @@ export default function MadaEarlyLearningAcademy() {
         <Reveal className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 glass rounded-[40px] p-8 md:p-12 shadow-luxe relative z-10">
           <div className="flex-1">
             <div className="inline-block bg-white text-brand-salmon font-bold text-[11px] tracking-[2px] uppercase px-4 py-2 rounded-full mb-6 font-outfit shadow-sm">
-              ☀ {isAr ? 'قريباً' : 'Upcoming'}
+              <DoodleIcon name="sun" className="inline-block align-[-0.1em] mr-1" /> {isAr ? 'قريباً' : 'Upcoming'}
             </div>
             <h2 className={`text-brand-darkblue mb-4 text-balance ${isAr ? 'font-cairo font-bold text-[clamp(2rem,4vw,3rem)] leading-tight' : 'font-display font-light text-[clamp(2.2rem,4vw,3.2rem)] leading-[1.1]'}`}>
               {isAr ? "المعسكر الصيفي '٢٦" : "Summer Camp '26"}
@@ -396,9 +397,11 @@ export default function MadaEarlyLearningAcademy() {
             </Magnetic>
           </div>
           <div className="w-full md:w-1/2 flex justify-center">
-            <div className="w-[250px] h-[250px] bg-white blob-1 flex items-center justify-center text-7xl shadow-xl transform rotate-12 relative animate-float">
-              🏕️
-              <div className="absolute -top-4 -left-4 w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center text-xl shadow-md animate-bounce">💦</div>
+            <div className="w-[250px] h-[250px] bg-white blob-1 flex items-center justify-center text-7xl shadow-xl transform rotate-12 relative animate-float text-brand-salmon">
+              <DoodleIcon name="tent" />
+              <div className="absolute -top-4 -left-4 w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center text-xl shadow-md animate-bounce text-white">
+                <DoodleIcon name="droplet" />
+              </div>
             </div>
           </div>
         </Reveal>
@@ -425,8 +428,8 @@ export default function MadaEarlyLearningAcademy() {
             </p>
 
             <div className="flex items-center gap-6 animate-float">
-              <div className="w-[100px] h-[100px] bg-brand-palepink blob-2 flex items-center justify-center text-4xl shadow-md hover:blob-1 transition-all duration-500">
-                ❤️
+              <div className="w-[100px] h-[100px] bg-brand-palepink blob-2 flex items-center justify-center text-4xl shadow-md hover:blob-1 transition-all duration-500 text-brand-pink">
+                <DoodleIcon name="heart" />
               </div>
               <div className="bg-white px-5 py-3 rounded-2xl shadow-soft text-sm font-bold border border-black/5 relative">
                 <span className={isAr ? 'font-cairo font-bold text-brand-pink' : 'font-display font-semibold text-brand-pink'}>
@@ -535,8 +538,9 @@ export default function MadaEarlyLearningAcademy() {
                   <h3 className={`text-2xl text-brand-darkblue mb-3 ${isAr ? 'font-cairo font-bold' : 'font-display font-semibold'}`}>
                     {isAr ? 'استلمنا طلبك!' : 'Application Received!'}
                   </h3>
-                  <p className="text-brand-body/70 text-lg">
-                    {isAr ? 'سنتواصل معك قريباً. 🌿' : "We'll be in touch soon. 🌿"}
+                  <p className="text-brand-body/70 text-lg inline-flex items-center gap-1.5">
+                    {isAr ? 'سنتواصل معك قريباً.' : "We'll be in touch soon."}
+                    <DoodleIcon name="leaf" className="text-brand-teal" />
                   </p>
                 </motion.div>
               )}

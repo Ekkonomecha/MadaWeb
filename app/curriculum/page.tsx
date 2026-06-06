@@ -2,6 +2,7 @@
 import React from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { Reveal, Stagger, StaggerItem, Parallax, ParallaxImage } from '@/components/Motion';
+import DoodleIcon from '@/components/DoodleIcon';
 
 export default function CurriculumPage() {
   const { lang } = useLanguage();
@@ -34,7 +35,7 @@ export default function CurriculumPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 lg:gap-24 items-center mb-28">
             <Reveal direction="right">
-              <div className="w-16 h-16 bg-brand-purple/15 rounded-2xl flex items-center justify-center text-3xl mb-6">🏆</div>
+              <div className="w-16 h-16 bg-brand-purple/15 rounded-2xl flex items-center justify-center text-3xl mb-6 text-brand-purple"><DoodleIcon name="trophy" /></div>
               <h2 className={`text-brand-darkblue mb-4 text-balance ${isAr ? 'font-cairo font-bold text-4xl' : 'font-display font-light text-[clamp(2rem,3vw,2.8rem)] leading-tight'}`}>
                 {isAr ? 'التحضير للمقابلات المدرسية' : 'School Interview Prep'}
               </h2>
@@ -51,14 +52,14 @@ export default function CurriculumPage() {
                 </h3>
                 <Stagger className="space-y-4">
                   {[
-                    { en: 'Phonics & Pre-Reading', ar: 'الصوتيات وما قبل القراءة', icon: '📖' },
-                    { en: 'Early Numeracy & Logic', ar: 'الحساب المبكر والمنطق', icon: '🔢' },
-                    { en: 'Fine & Gross Motor Skills', ar: 'المهارات الحركية الدقيقة والكبرى', icon: '✍️' },
-                    { en: 'Expressive Language & Confidence', ar: 'اللغة التعبيرية والثقة بالنفس', icon: '🗣️' },
+                    { en: 'Phonics & Pre-Reading', ar: 'الصوتيات وما قبل القراءة', icon: 'book' as const },
+                    { en: 'Early Numeracy & Logic', ar: 'الحساب المبكر والمنطق', icon: 'hash' as const },
+                    { en: 'Fine & Gross Motor Skills', ar: 'المهارات الحركية الدقيقة والكبرى', icon: 'pencil' as const },
+                    { en: 'Expressive Language & Confidence', ar: 'اللغة التعبيرية والثقة بالنفس', icon: 'speech' as const },
                   ].map((item, i) => (
                     <StaggerItem key={i}>
                       <div className="flex items-center gap-3 bg-white rounded-2xl px-4 py-3 shadow-sm">
-                        <span className="text-xl">{item.icon}</span>
+                        <span className="text-xl text-brand-purple"><DoodleIcon name={item.icon} /></span>
                         <span className={`text-brand-body font-bold ${isAr && 'font-cairo'}`}>{isAr ? item.ar : item.en}</span>
                       </div>
                     </StaggerItem>
@@ -80,7 +81,7 @@ export default function CurriculumPage() {
               </div>
             </Reveal>
             <Reveal direction="left" delay={0.12} className="order-1 md:order-2">
-              <div className="w-16 h-16 bg-brand-cyan/20 rounded-2xl flex items-center justify-center text-3xl mb-6">🌍</div>
+              <div className="w-16 h-16 bg-brand-cyan/20 rounded-2xl flex items-center justify-center text-3xl mb-6 text-brand-blue"><DoodleIcon name="globe" /></div>
               <h2 className={`text-brand-darkblue mb-4 text-balance ${isAr ? 'font-cairo font-bold text-4xl' : 'font-display font-light text-[clamp(2rem,3vw,2.8rem)] leading-tight'}`}>
                 {isAr ? 'الانغماس ثنائي اللغة' : 'Bilingual Immersion'}
               </h2>
@@ -101,7 +102,7 @@ export default function CurriculumPage() {
       <section className="py-28 px-6 mesh-ink grain text-white overflow-hidden relative">
         <div className="max-w-6xl mx-auto flex flex-col items-center text-center relative z-10">
           <Reveal>
-            <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto">📊</div>
+            <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto text-brand-cyan"><DoodleIcon name="chart-bar" /></div>
             <h2 className={`mb-4 ${isAr ? 'font-cairo font-bold text-4xl lg:text-5xl' : 'font-display font-light text-4xl lg:text-5xl'}`}>
               {isAr ? 'التقدم اليومي والتقارير' : 'Daily Progress & Reports'}
             </h2>
@@ -111,13 +112,13 @@ export default function CurriculumPage() {
           </Reveal>
           <Stagger className="grid md:grid-cols-3 gap-8 w-full text-left" >
             {[
-              { icon: '📱', enT: 'Live Updates App', arT: 'تطبيق التحديثات المباشرة', enD: 'Get photos, meal logs, and nap times sent directly to your phone every day.', arD: 'احصل على الصور، وسجلات الوجبات، وأوقات القيلولة المرسلة مباشرة إلى هاتفك كل يوم.' },
-              { icon: '📈', enT: 'Milestone Tracking', arT: 'تتبع الإنجازات', enD: "Detailed termly reports charting your child's emotional, physical, and cognitive growth.", arD: 'تقارير فصلية مفصلة ترسم نمو طفلك العاطفي والجسدي والمعرفي.' },
-              { icon: '🤝', enT: 'Teacher Consultations', arT: 'استشارات المعلمين', enD: 'Regular 1-on-1 meetings to align our goals with your expectations for home.', arD: 'اجتماعات فردية منتظمة لمواءمة أهدافنا مع توقعاتك في المنزل.' },
+              { icon: 'phone' as const, enT: 'Live Updates App', arT: 'تطبيق التحديثات المباشرة', enD: 'Get photos, meal logs, and nap times sent directly to your phone every day.', arD: 'احصل على الصور، وسجلات الوجبات، وأوقات القيلولة المرسلة مباشرة إلى هاتفك كل يوم.' },
+              { icon: 'chart-up' as const, enT: 'Milestone Tracking', arT: 'تتبع الإنجازات', enD: "Detailed termly reports charting your child's emotional, physical, and cognitive growth.", arD: 'تقارير فصلية مفصلة ترسم نمو طفلك العاطفي والجسدي والمعرفي.' },
+              { icon: 'handshake' as const, enT: 'Teacher Consultations', arT: 'استشارات المعلمين', enD: 'Regular 1-on-1 meetings to align our goals with your expectations for home.', arD: 'اجتماعات فردية منتظمة لمواءمة أهدافنا مع توقعاتك في المنزل.' },
             ].map((c, i) => (
               <StaggerItem key={i}>
                 <div className="glass-dark p-8 rounded-[32px] h-full hover:-translate-y-2 transition-transform" dir={isAr ? 'rtl' : 'ltr'}>
-                  <div className="text-3xl mb-4">{c.icon}</div>
+                  <div className="text-3xl mb-4 text-brand-cyan"><DoodleIcon name={c.icon} /></div>
                   <h4 className={`text-xl font-bold mb-2 ${isAr ? 'font-cairo' : 'font-display'}`}>
                     {isAr ? c.arT : c.enT}
                   </h4>
