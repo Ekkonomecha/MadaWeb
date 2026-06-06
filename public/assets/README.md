@@ -17,6 +17,11 @@ public/assets/
 │   ├── akktiv.png                   ⚡ Physical & Movement   (yellow tint)
 │   ├── cuddies.png                  ❤️ Emotional IQ          (pale pink tint)
 │   └── scopii.png                   🌿 Science & Discovery   (cyan tint)
+├── stages/                          The 4 program age-stage face icons (625×625 PNG, transparent)
+│   ├── infants.png                  3m – 1yr     (salmon tint)
+│   ├── toddlers.png                 1yr – 2yr    (cyan tint)
+│   ├── preschool.png                2yr – 3yr    (pale pink tint)
+│   └── kindergarten.png             3yr – 5yr    (yellow tint)
 └── media/
     ├── hero/                        Drop hero / banner photos here
     └── gallery/                     Drop gallery & section photos here

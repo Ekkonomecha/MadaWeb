@@ -72,8 +72,12 @@ export default function ProgramsPage() {
           {programs.map((prog, idx) => (
             <div key={prog.id} className={`flex flex-col ${idx % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-20`}>
               <Reveal direction={idx % 2 !== 0 ? 'left' : 'right'} className="w-full md:w-1/2 flex justify-center">
-                <div className={`w-[280px] md:w-[400px] h-[280px] md:h-[400px] ${prog.soft} ${blobs[idx]} flex items-center justify-center text-8xl md:text-[8rem] shadow-luxe hover:animate-morph hover:scale-105 transition-transform duration-500`}>
-                  {prog.icon}
+                <div className={`w-[280px] md:w-[400px] h-[280px] md:h-[400px] ${prog.soft} ${blobs[idx]} flex items-center justify-center shadow-luxe overflow-hidden hover:animate-morph hover:scale-105 transition-transform duration-500`}>
+                  <img
+                    src={`/assets/stages/${prog.id}.png`}
+                    alt={prog.enTitle}
+                    className="w-[68%] h-[68%] object-contain"
+                  />
                 </div>
               </Reveal>
               <Reveal direction={idx % 2 !== 0 ? 'right' : 'left'} delay={0.12} className="w-full md:w-1/2">

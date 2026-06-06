@@ -205,10 +205,10 @@ export default function MadaEarlyLearningAcademy() {
 
         <Stagger className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { id: 1, color: 'bg-brand-salmon', icon: '👶', tEn: 'Infants', tAr: 'الرضّع', aEn: '3m – 1yr', aAr: '٣ شهور – ١ سنة' },
-            { id: 2, color: 'bg-brand-cyan', icon: '🧒', tEn: 'Toddlers', tAr: 'الأطفال الصغار', aEn: '1yr – 2yr', aAr: '١ سنة – ٢ سنة' },
-            { id: 3, color: 'bg-brand-palepink', icon: '🎒', tEn: 'Preschool', tAr: 'ما قبل المدرسة', aEn: '2yr – 3yr', aAr: '٢ سنة – ٣ سنوات' },
-            { id: 4, color: 'bg-brand-yellow', icon: '🏫', tEn: 'Kindergarten', tAr: 'رياض الأطفال', aEn: '3yr – 5yr', aAr: '٣ سنوات – ٥ سنوات' },
+            { id: 1, slug: 'infants', tint: 'bg-brand-salmon/15', tEn: 'Infants', tAr: 'الرضّع', aEn: '3m – 1yr', aAr: '٣ شهور – ١ سنة' },
+            { id: 2, slug: 'toddlers', tint: 'bg-brand-cyan/20', tEn: 'Toddlers', tAr: 'الأطفال الصغار', aEn: '1yr – 2yr', aAr: '١ سنة – ٢ سنة' },
+            { id: 3, slug: 'preschool', tint: 'bg-brand-palepink/25', tEn: 'Preschool', tAr: 'ما قبل المدرسة', aEn: '2yr – 3yr', aAr: '٢ سنة – ٣ سنوات' },
+            { id: 4, slug: 'kindergarten', tint: 'bg-brand-yellow/25', tEn: 'Kindergarten', tAr: 'رياض الأطفال', aEn: '3yr – 5yr', aAr: '٣ سنوات – ٥ سنوات' },
           ].map((prog) => (
             <StaggerItem key={prog.id}>
               <motion.a
@@ -217,8 +217,12 @@ export default function MadaEarlyLearningAcademy() {
                 transition={{ type: 'spring', stiffness: 260, damping: 18 }}
                 className="bg-white rounded-[32px] p-8 text-center shadow-soft border border-black/5 block group h-full"
               >
-                <div className={`w-24 h-24 mx-auto ${prog.color} blob-${(prog.id % 3) + 1} flex items-center justify-center text-4xl mb-6 shadow-sm group-hover:animate-morph group-hover:scale-110 transition-transform`}>
-                  {prog.icon}
+                <div className={`w-28 h-28 mx-auto ${prog.tint} blob-${(prog.id % 3) + 1} flex items-center justify-center mb-6 shadow-sm overflow-hidden group-hover:animate-morph group-hover:scale-110 transition-transform`}>
+                  <img
+                    src={`/assets/stages/${prog.slug}.png`}
+                    alt={prog.tEn}
+                    className="w-[80%] h-[80%] object-contain"
+                  />
                 </div>
                 <h3 className={`text-2xl text-brand-darkblue mb-2 ${isAr ? 'font-cairo font-bold' : 'font-display font-semibold'}`}>
                   {isAr ? prog.tAr : prog.tEn}
