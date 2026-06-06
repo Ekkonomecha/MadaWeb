@@ -92,8 +92,8 @@ export default function MadaEarlyLearningAcademy() {
         <div className="w-full md:w-1/2 h-[55vh] md:h-[calc(100vh-120px)] relative flex justify-end items-stretch z-[5]">
           <div className="w-full h-full relative md:rounded-bl-[120px] overflow-hidden shadow-luxe">
             <ParallaxImage
-              src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1600&auto=format&fit=crop"
-              alt="Nursery children with teacher"
+              src="/assets/media/hero/child-playing-learning.jpg"
+              alt="Child engaged in pretend-play learning at Mada"
               className="w-full h-full"
               intensity={12}
             />
