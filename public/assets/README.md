@@ -10,30 +10,23 @@ public/assets/
 │   ├── mada-logo.svg / .png         Full lockup (mark + wordmark + tagline) — light bg
 │   ├── mada-logo-light.svg / .png   Full lockup for dark backgrounds
 │   ├── mada-mark.svg / .png         Icon only (yellow blob + "m")
-├── characters/                      The 6 curriculum-pillar mascots
-│   ├── brushi.svg / .png            🎨 Creativity & Art      (salmon)
-│   ├── ratio.svg / .png             🔢 Logic & Math          (blue)
-│   ├── lingo.svg / .png             🗣️ Languages & Phonics   (purple)
-│   ├── akktiv.svg / .png            ⚡ Physical & Movement   (yellow)
-│   ├── cuddies.svg / .png           ❤️ Emotional IQ          (pale pink)
-│   └── scopii.svg / .png            🌿 Science & Discovery   (cyan)
+├── characters/                      The 6 curriculum-pillar mascots (official art, 625×625 PNG, transparent)
+│   ├── brushi.png                   🎨 Creativity & Art      (salmon tint)
+│   ├── ratio.png                    🔢 Logic & Math          (blue tint)
+│   ├── lingo.png                    🗣️ Languages & Phonics   (purple tint)
+│   ├── akktiv.png                   ⚡ Physical & Movement   (yellow tint)
+│   ├── cuddies.png                  ❤️ Emotional IQ          (pale pink tint)
+│   └── scopii.png                   🌿 Science & Discovery   (cyan tint)
 └── media/
     ├── hero/                        Drop hero / banner photos here
     └── gallery/                     Drop gallery & section photos here
 ```
 
 ## Formats
-- **SVG** is the source of truth for the logo and characters — crisp at any size, tiny file. Prefer it on the web.
-- **PNG** versions (500×500 for characters, transparent background) are provided for places that need a raster (social cards, email, slide decks).
+- **Logo** — SVG is the source of truth (crisp at any size); PNG versions provided for rasters.
+- **Characters** — official hand-illustrated PNGs with transparent backgrounds. On the site they sit inside a soft, color-tinted organic blob and are referenced by id, e.g. `/assets/characters/brushi.png`.
 
-## Regenerating
-The logo SVGs are hand-authored. The character SVGs + all PNGs are generated:
-
-```bash
-node scripts/gen-characters.mjs   # rebuilds character svg + png
-```
-
-Brand palette: yellow `#FFDA3B` · pink `#FF3B61` · salmon `#FE7163` ·
+## Brand palette: yellow `#FFDA3B` · pink `#FF3B61` · salmon `#FE7163` ·
 pale pink `#FFB3AF` · blue `#005CFF` · cyan `#64FFD5` · purple `#4628D3` ·
 dark blue `#0A1240`.
 

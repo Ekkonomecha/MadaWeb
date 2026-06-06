@@ -8,27 +8,27 @@ export default function CharactersPage() {
   const isAr = lang === 'ar';
 
   const characters = [
-    { id: 'brushi', emoji: '🎨', color: 'bg-brand-salmon', text: 'text-white',
+    { id: 'brushi', tint: 'bg-brand-salmon/15',
       enName: 'Brushi', arName: 'براشي', enDomain: 'Creativity & Art', arDomain: 'الإبداع والفنون',
       enDesc: 'Brushi sees the world as a blank canvas. She encourages children to express their feelings through colors, building fine motor skills and creative confidence.',
       arDesc: 'ترى براشي العالم كقماش أبيض. تشجع الأطفال على التعبير عن مشاعرهم من خلال الألوان، وبناء المهارات الحركية الدقيقة والثقة الإبداعية.' },
-    { id: 'ratio', emoji: '🔢', color: 'bg-brand-blue', text: 'text-white',
+    { id: 'ratio', tint: 'bg-brand-blue/10',
       enName: 'Ratio', arName: 'ريشيو', enDomain: 'Logic & Math', arDomain: 'المنطق والرياضيات',
       enDesc: 'Ratio loves counting blocks, sorting shapes, and finding patterns. He makes foundational numeracy fun and engaging.',
       arDesc: 'يحب ريشيو عد الكتل، وفرز الأشكال، والعثور على الأنماط. إنه يجعل الحساب الأساسي ممتعًا وجذابًا.' },
-    { id: 'lingo', emoji: '🗣️', color: 'bg-brand-purple', text: 'text-white',
+    { id: 'lingo', tint: 'bg-brand-purple/10',
       enName: 'Lingo', arName: 'لنجو', enDomain: 'Languages & Phonics', arDomain: 'اللغات والصوتيات',
       enDesc: 'Chatty and bilingual, Lingo helps children navigate words. From early phonics to expressing complex thoughts in English and Arabic.',
       arDesc: 'ثرثار وثنائي اللغة، يساعد لنجو الأطفال على التنقل في الكلمات. من الصوتيات المبكرة إلى التعبير عن الأفكار المعقدة باللغتين الإنجليزية والعربية.' },
-    { id: 'akktiv', emoji: '⚡', color: 'bg-brand-yellow', text: 'text-brand-darkblue',
+    { id: 'akktiv', tint: 'bg-brand-yellow/25',
       enName: 'Akktiv', arName: 'أكتيف', enDomain: 'Physical & Movement', arDomain: 'الرياضة والحركة',
       enDesc: 'Akktiv has endless energy! He guides children through outdoor play, balance exercises, and gross motor skill development.',
       arDesc: 'أكتيف لديه طاقة لا نهاية لها! يوجه الأطفال عبر اللعب في الهواء الطلق، وتمارين التوازن، وتنمية المهارات الحركية الكبرى.' },
-    { id: 'cuddies', emoji: '❤️', color: 'bg-brand-palepink', text: 'text-brand-darkblue',
+    { id: 'cuddies', tint: 'bg-brand-palepink/25',
       enName: 'Cuddies', arName: 'كاديز', enDomain: 'Emotional IQ', arDomain: 'الذكاء العاطفي',
       enDesc: 'Cuddies is all about empathy. She teaches children how to identify their feelings, self-soothe, and show kindness to friends.',
       arDesc: 'كاديز تدور حول التعاطف. إنها تعلم الأطفال كيفية تحديد مشاعرهم، وتهدئة أنفسهم، وإظهار اللطف للأصدقاء.' },
-    { id: 'scopii', emoji: '🌿', color: 'bg-brand-cyan', text: 'text-brand-darkblue',
+    { id: 'scopii', tint: 'bg-brand-cyan/20',
       enName: 'Scopii', arName: 'سكوبي', enDomain: 'Science & Discovery', arDomain: 'العلوم والاكتشاف',
       enDesc: 'Scopii is a nature explorer with a magnifying glass. He turns the garden into a laboratory, fostering a deep curiosity for the natural world.',
       arDesc: 'سكوبي مستكشف طبيعة يحمل عدسة مكبرة. يحول الحديقة إلى مختبر، ويثير فضولًا عميقًا حول العالم الطبيعي.' },
@@ -64,8 +64,12 @@ export default function CharactersPage() {
           {characters.map((char, i) => (
             <StaggerItem key={char.id}>
               <div className="bg-white rounded-[40px] p-8 text-center shadow-soft border border-black/5 hover:-translate-y-2 hover:shadow-luxe transition-all duration-300 group h-full">
-                <div className={`w-32 h-32 mx-auto ${char.color} ${char.text} ${blobs[i % 3]} flex items-center justify-center text-6xl shadow-inner mb-8 group-hover:animate-morph transition-all`}>
-                  {char.emoji}
+                <div className={`w-40 h-40 mx-auto ${char.tint} ${blobs[i % 3]} flex items-center justify-center shadow-inner mb-8 overflow-hidden group-hover:animate-morph transition-all`}>
+                  <img
+                    src={`/assets/characters/${char.id}.png`}
+                    alt={char.enName}
+                    className="w-[82%] h-[82%] object-contain group-hover:scale-110 transition-transform duration-500"
+                  />
                 </div>
                 <h3 className={`text-2xl text-brand-darkblue mb-2 ${isAr ? 'font-cairo font-bold' : 'font-display font-semibold'}`}>
                   {isAr ? char.arName : char.enName}

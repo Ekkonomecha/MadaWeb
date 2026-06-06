@@ -15,10 +15,14 @@ export default function MadaEarlyLearningAcademy() {
     setFormSuccess(true);
   };
 
-  const Character = ({ nameEn, nameAr, emoji, colorClass }: any) => (
+  const Character = ({ id, nameEn, nameAr, tintClass }: any) => (
     <StaggerItem className="flex flex-col items-center gap-4 group cursor-pointer">
-      <div className={`w-[140px] h-[140px] ${colorClass} blob-1 flex items-center justify-center text-5xl shadow-soft group-hover:blob-2 group-hover:scale-105 transition-all duration-500`}>
-        {emoji}
+      <div className={`w-[150px] h-[150px] ${tintClass} blob-1 flex items-center justify-center shadow-soft group-hover:blob-2 group-hover:scale-105 transition-all duration-500 overflow-hidden`}>
+        <img
+          src={`/assets/characters/${id}.png`}
+          alt={nameEn}
+          className="w-[80%] h-[80%] object-contain group-hover:scale-110 transition-transform duration-500"
+        />
       </div>
       <h4 className={`text-brand-darkblue text-lg text-center ${isAr ? 'font-cairo font-bold' : 'font-display font-semibold'}`}>
         {isAr ? nameAr : nameEn}
@@ -247,12 +251,12 @@ export default function MadaEarlyLearningAcademy() {
         </Reveal>
 
         <Stagger className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-16 relative z-10">
-          <Character nameEn="Brushi (Art)" nameAr="براشي (الفنون)" emoji="🎨" colorClass="bg-brand-salmon" />
-          <Character nameEn="Ratio (Math)" nameAr="ريشيو (الرياضيات)" emoji="🔢" colorClass="bg-brand-blue" />
-          <Character nameEn="Cuddies (Empathy)" nameAr="كاديز (التعاطف)" emoji="❤️" colorClass="bg-brand-palepink" />
-          <Character nameEn="Scopii (Science)" nameAr="سكوبي (العلوم)" emoji="🌿" colorClass="bg-brand-cyan" />
-          <Character nameEn="Lingo (Languages)" nameAr="لنجو (اللغات)" emoji="🗣️" colorClass="bg-brand-purple" />
-          <Character nameEn="Akktiv (Movement)" nameAr="أكتيف (الحركة)" emoji="⚡" colorClass="bg-brand-yellow" />
+          <Character id="brushi" nameEn="Brushi (Art)" nameAr="براشي (الفنون)" tintClass="bg-brand-salmon/15" />
+          <Character id="ratio" nameEn="Ratio (Math)" nameAr="ريشيو (الرياضيات)" tintClass="bg-brand-blue/10" />
+          <Character id="cuddies" nameEn="Cuddies (Empathy)" nameAr="كاديز (التعاطف)" tintClass="bg-brand-palepink/25" />
+          <Character id="scopii" nameEn="Scopii (Science)" nameAr="سكوبي (العلوم)" tintClass="bg-brand-cyan/20" />
+          <Character id="lingo" nameEn="Lingo (Languages)" nameAr="لنجو (اللغات)" tintClass="bg-brand-purple/10" />
+          <Character id="akktiv" nameEn="Akktiv (Movement)" nameAr="أكتيف (الحركة)" tintClass="bg-brand-yellow/25" />
         </Stagger>
       </section>
 
