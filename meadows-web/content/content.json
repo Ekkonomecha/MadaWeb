@@ -1,0 +1,395 @@
+{
+  "_meta": {
+    "project": "Meadows International Preschool",
+    "version": "1.0.0",
+    "lastUpdated": "2026-09-14",
+    "languages": ["en", "ar"],
+    "wiring": "LIVE. Every page imports this file through lib/content.ts. Editing a string here changes the site. Nothing is hardcoded in the page components.",
+    "sources": {
+      "palette+fonts+ages": "Meadows Materials/Meadows Guidlines.md",
+      "philosophy+day+foundations": "Meadows Materials/Meadows.md (brochure)",
+      "structure+funnel": "Meadows Materials/Mada_Meadows_Stakeholder_Brief.md"
+    },
+    "placeholders": "Anything with \"_placeholder\": true is invented and awaiting client sign-off. Search this file for _placeholder before any client review."
+  },
+
+  "global": {
+    "siteName": { "en": "Meadows International Preschool", "ar": "ميدوز الدولية لرياض الأطفال" },
+    "siteTagline": { "en": "Where curiosity meets individual excellence", "ar": "حيث يلتقي الفضول بالتميّز الفردي" },
+    "siteDescription": {
+      "en": "A family-owned international preschool in Marassi for children six months to five years. Play-based learning, one-to-one academic time, and a day built as a journey rather than a schedule.",
+      "ar": "حضانة دولية مملوكة لعائلة في مراسي، لأطفال من ستة أشهر إلى خمس سنوات. تعلّم قائم على اللعب، ووقت أكاديمي فردي، ويوم مبني كرحلة لا كجدول."
+    },
+    "logoAlt": { "en": "Meadows", "ar": "ميدوز" },
+    "openingBadge": { "en": "Opening September 2026", "ar": "نفتح أبوابنا في سبتمبر ٢٠٢٦" },
+    "phone": "+20 11 1415 9457",
+    "phoneHref": "+201114159457",
+    "whatsappHref": "201114159457",
+    "email": "hello@meadows.eg",
+    "address": { "en": "Marassi, North Coast, Egypt", "ar": "مراسي، الساحل الشمالي، مصر" },
+    "ages": { "en": "6 months – 5 years", "ar": "٦ أشهر – ٥ سنوات" },
+    "copyright": {
+      "en": "© 2026 Meadows International Preschool. All rights reserved.",
+      "ar": "© ٢٠٢٦ ميدوز الدولية لرياض الأطفال. جميع الحقوق محفوظة."
+    },
+    "socialHandle": { "en": "@meadows.eg", "ar": "@meadows.eg" },
+    "branchNote": {
+      "en": "More Meadows branches are opening soon.",
+      "ar": "فروع جديدة من ميدوز قريبًا."
+    }
+  },
+
+  "nav": {
+    "links": [
+      { "id": "home", "href": "/", "en": "Home", "ar": "الرئيسية" },
+      { "id": "about", "href": "/about", "en": "About", "ar": "من نحن" },
+      { "id": "programs", "href": "/programs", "en": "Programs", "ar": "البرامج" },
+      { "id": "curriculum", "href": "/curriculum", "en": "Curriculum", "ar": "المنهج" },
+      { "id": "characters", "href": "/characters", "en": "Characters", "ar": "شخصياتنا" },
+      { "id": "gallery", "href": "/gallery", "en": "Gallery", "ar": "المعرض" }
+    ],
+    "cta": { "en": "Book a visit", "ar": "احجز زيارة" },
+    "menuLabel": { "en": "Menu", "ar": "القائمة" },
+    "closeLabel": { "en": "Close", "ar": "إغلاق" }
+  },
+
+  "home": {
+    "hero": {
+      "headline": { "en": "Where curiosity meets individual excellence.", "ar": "حيث يلتقي الفضول بالتميّز الفردي." },
+      "body": {
+        "en": "A family-owned preschool in Marassi for children six months to five years. Children here don't just learn — they flourish, at their own rhythm.",
+        "ar": "حضانة عائلية في مراسي لأطفال من ستة أشهر إلى خمس سنوات. الأطفال هنا لا يتعلّمون فحسب، بل يزدهرون، كلٌّ على إيقاعه."
+      },
+      "ctaPrimary": { "en": "Book a visit", "ar": "احجز زيارة" },
+      "ctaSecondary": { "en": "See how a day runs", "ar": "كيف يمضي اليوم" },
+      "annotation": { "en": "every child, their own pace", "ar": "لكل طفل إيقاعه" }
+    },
+
+    "trustBar": {
+      "items": [
+        { "id": "ratio", "value": { "en": "1:4", "ar": "١:٤" }, "label": { "en": "Care ratio in the infant room", "ar": "نسبة الرعاية في غرفة الرضّع" } },
+        { "id": "ages", "value": { "en": "6m–5y", "ar": "٦ش–٥س" }, "label": { "en": "Every stage, one campus", "ar": "كل المراحل في مكان واحد" } },
+        { "id": "cctv", "value": { "en": "24/7", "ar": "٢٤/٧" }, "label": { "en": "CCTV across every room and corridor", "ar": "كاميرات في كل غرفة وممر" } },
+        { "id": "location", "value": { "en": "Marassi", "ar": "مراسي" }, "label": { "en": "Inside the compound gates", "ar": "داخل أسوار الكمبوند" } }
+      ]
+    },
+
+    "about": {
+      "annotation": { "en": "our story", "ar": "قصتنا" },
+      "heading": { "en": "A family nursery, run like one.", "ar": "حضانة عائلية، تُدار كما تُدار العائلة." },
+      "body": {
+        "en": "Meadows is family owned. That is not a detail on a brochure — it is why the founders are at the gate each morning, why class sizes stay small, and why you will speak to a decision-maker on your first visit, not a receptionist.",
+        "ar": "ميدوز مملوكة لعائلة. وهذا ليس تفصيلًا في مطوية، بل هو السبب في وقوف المؤسِّسين عند البوابة كل صباح، وفي بقاء الفصول صغيرة، وفي أنك ستتحدث في زيارتك الأولى إلى صاحب قرار، لا إلى موظف استقبال."
+      },
+      "cta": { "en": "Read our story", "ar": "اقرأ قصتنا" }
+    },
+
+    "programs": {
+      "annotation": { "en": "find your child's room", "ar": "اعثر على غرفة طفلك" },
+      "heading": { "en": "Four rooms, six months to five years.", "ar": "أربع غرف، من ستة أشهر إلى خمس سنوات." },
+      "body": {
+        "en": "Each room has its own rhythm, its own ratio, and its own way of telling you how the day went.",
+        "ar": "لكل غرفة إيقاعها، ونسبتها، وطريقتها في إخبارك كيف مضى اليوم."
+      },
+      "cta": { "en": "All four rooms", "ar": "الغرف الأربع" }
+    },
+
+    "characters": {
+      "annotation": { "en": "drawn by the children", "ar": "من رسم الأطفال" },
+      "heading": { "en": "Six friends who live here.", "ar": "ستة أصدقاء يعيشون هنا." },
+      "body": {
+        "en": "Each one stands for something we want children to carry out of the gate with them.",
+        "ar": "كلٌّ منهم يمثّل شيئًا نريد للأطفال أن يحملوه معهم عند الخروج."
+      },
+      "cta": { "en": "Meet all six", "ar": "تعرّف عليهم" }
+    },
+
+    "why": {
+      "annotation": { "en": "what stays with them", "ar": "ما يبقى معهم" },
+      "heading": { "en": "Foundations for a lifetime.", "ar": "أسسٌ تدوم مدى الحياة." },
+      "body": {
+        "en": "Our focus on practical life is not a philosophy we quote. It is what the room is arranged to produce.",
+        "ar": "تركيزنا على الحياة العملية ليس فلسفة نقتبسها، بل هو ما رُتِّبت الغرفة لإنتاجه."
+      },
+      "items": [
+        { "id": "concentration", "title": { "en": "Deep concentration", "ar": "تركيز عميق" }, "body": { "en": "The ability to stay with a difficult task long after it stops being easy.", "ar": "القدرة على البقاء مع مهمة صعبة بعد أن تتوقف عن كونها سهلة." } },
+        { "id": "order", "title": { "en": "Coordination and order", "ar": "تناسق ونظام" }, "body": { "en": "Mastering the harmony between how you move and where things belong.", "ar": "إتقان الانسجام بين طريقة حركتك ومكان الأشياء." } },
+        { "id": "independence", "title": { "en": "Independence", "ar": "استقلالية" }, "body": { "en": "The confidence to say the four words we most like hearing: I can do it myself.", "ar": "الثقة لقول الكلمات التي نحب سماعها: أستطيع أن أفعلها بنفسي." } },
+        { "id": "motor", "title": { "en": "Fine motor mastery", "ar": "إتقان المهارات الدقيقة" }, "body": { "en": "Preparing small hands for big ideas — and, before long, for a pencil.", "ar": "إعداد الأيدي الصغيرة للأفكار الكبيرة، وقريبًا، للقلم." } }
+      ]
+    },
+
+    "gallery": {
+      "annotation": { "en": "a look inside", "ar": "نظرة من الداخل" },
+      "heading": { "en": "The rooms, before you visit them.", "ar": "الغرف، قبل أن تزورها." },
+      "body": {
+        "en": "Photography of the Marassi campus is being shot ahead of the September opening.",
+        "ar": "يجري تصوير مقرّ مراسي استعدادًا للافتتاح في سبتمبر."
+      },
+      "cta": { "en": "Open the gallery", "ar": "افتح المعرض" }
+    },
+
+    "testimonials": {
+      "annotation": { "en": "from our families", "ar": "من عائلاتنا" },
+      "heading": { "en": "What parents tell us.", "ar": "ما يقوله أولياء الأمور." },
+      "_placeholder": true,
+      "_note": "Placeholder quotes. Replace with real, attributable parent quotes before launch — the brief flags unsubstantiated claims as a 72% drop-off risk.",
+      "items": [
+        {
+          "id": "nour",
+          "quote": { "en": "She started doing up her own shoes in the second week. Nobody asked her to — she just wanted to.", "ar": "بدأت تربط حذاءها بنفسها في الأسبوع الثاني. لم يطلب منها أحد ذلك، بل أرادت هي." },
+          "author": { "en": "Nour H., mother of Layla (3)", "ar": "نور ح.، والدة ليلى (٣ سنوات)" }
+        },
+        {
+          "id": "omar",
+          "quote": { "en": "We compared six nurseries. Meadows was the only one where the founder answered our questions herself.", "ar": "قارنّا بين ست حضانات. كانت ميدوز الوحيدة التي أجابت فيها المؤسِّسة عن أسئلتنا بنفسها." },
+          "author": { "en": "Omar S., father of Yassin (2)", "ar": "عمر س.، والد ياسين (سنتان)" }
+        }
+      ]
+    },
+
+    "summer": {
+      "annotation": { "en": "on the coast", "ar": "على الساحل" },
+      "heading": { "en": "Summer Club at Marassi.", "ar": "نادي الصيف في مراسي." },
+      "body": {
+        "en": "Six weeks of water play, sand, gardening and long afternoons — a walk from the beach, inside the compound gates.",
+        "ar": "ستة أسابيع من اللعب بالماء والرمل والبستنة وأصائل طويلة، على بُعد خطوات من الشاطئ وداخل أسوار الكمبوند."
+      },
+      "cta": { "en": "Join the summer list", "ar": "انضم لقائمة الصيف" }
+    },
+
+    "apply": {
+      "annotation": { "en": "no commitment", "ar": "دون أي التزام" },
+      "heading": { "en": "Come and see the place.", "ar": "تعال وشاهد المكان." },
+      "body": {
+        "en": "Tell us about your child and we will call within 48 hours to arrange a visit. Every family visits before they enrol — we would not want it any other way.",
+        "ar": "أخبرنا عن طفلك وسنتصل بك خلال ٤٨ ساعة لترتيب زيارة. كل عائلة تزورنا قبل التسجيل، ولا نريدها بطريقة أخرى."
+      },
+      "fields": {
+        "childName": { "en": "Child's name", "ar": "اسم الطفل" },
+        "dob": { "en": "Date of birth", "ar": "تاريخ الميلاد" },
+        "room": { "en": "Room", "ar": "الغرفة" },
+        "roomPlaceholder": { "en": "Choose a room", "ar": "اختر الغرفة" },
+        "parentName": { "en": "Your name", "ar": "اسمك" },
+        "whatsapp": { "en": "WhatsApp number", "ar": "رقم الواتساب" },
+        "email": { "en": "Email", "ar": "البريد الإلكتروني" }
+      },
+      "submit": { "en": "Request a visit", "ar": "اطلب زيارة" },
+      "successTitle": { "en": "That's with us.", "ar": "وصلنا طلبك." },
+      "successBody": { "en": "We'll call you within 48 hours to find a time that works.", "ar": "سنتصل بك خلال ٤٨ ساعة لنتفق على موعد مناسب." },
+      "steps": [
+        { "id": "confirm", "en": "You get a confirmation straight away", "ar": "تصلك رسالة تأكيد فورًا" },
+        { "id": "call", "en": "We call within 48 hours", "ar": "نتصل بك خلال ٤٨ ساعة" },
+        { "id": "visit", "en": "You visit, with your child", "ar": "تزورنا، ومعك طفلك" }
+      ]
+    }
+  },
+
+  "rooms": [
+    {
+      "id": "infants",
+      "accent": "teal",
+      "name": { "en": "The Nest", "ar": "العش" },
+      "age": { "en": "6 months – 1 year", "ar": "٦ أشهر – سنة" },
+      "ratio": { "en": "1 adult to 4 children", "ar": "بالغ واحد لكل ٤ أطفال" },
+      "_placeholder": true,
+      "summary": { "en": "Floor time, feeding on your child's schedule rather than ours, and a written note home every single day.", "ar": "وقت على الأرض، ورضاعة وفق جدول طفلك لا جدولنا، وملاحظة مكتوبة إلى البيت كل يوم." },
+      "milestones": {
+        "en": ["Rolling, sitting, crawling, first steps", "Responding to their own name", "Holding a spoon without help"],
+        "ar": ["التقلّب والجلوس والحبو والخطوات الأولى", "الاستجابة لاسمه", "الإمساك بالملعقة دون مساعدة"]
+      },
+      "comms": { "en": "Daily written note plus photos", "ar": "ملاحظة يومية مكتوبة مع صور" }
+    },
+    {
+      "id": "toddlers",
+      "accent": "sun",
+      "name": { "en": "The Burrow", "ar": "الجُحر" },
+      "age": { "en": "1 – 2 years", "ar": "سنة – سنتان" },
+      "ratio": { "en": "1 adult to 5 children", "ar": "بالغ واحد لكل ٥ أطفال" },
+      "_placeholder": true,
+      "summary": { "en": "Walking changes everything. This room is built low, soft and open so that a new walker can get everywhere safely.", "ar": "المشي يغيّر كل شيء. هذه الغرفة منخفضة وناعمة ومفتوحة ليصل إليها الماشي الجديد بأمان." },
+      "milestones": {
+        "en": ["Walking, climbing, carrying", "First words in two languages", "Drinking from an open cup"],
+        "ar": ["المشي والتسلّق والحمل", "أولى الكلمات بلغتين", "الشرب من كوب مفتوح"]
+      },
+      "comms": { "en": "Daily note plus a weekly slip", "ar": "ملاحظة يومية مع تقرير أسبوعي" }
+    },
+    {
+      "id": "preschool",
+      "accent": "sky",
+      "name": { "en": "The Workshop", "ar": "الورشة" },
+      "age": { "en": "2 – 3 years", "ar": "سنتان – ٣ سنوات" },
+      "ratio": { "en": "1 adult to 7 children", "ar": "بالغ واحد لكل ٧ أطفال" },
+      "_placeholder": true,
+      "summary": { "en": "Practical life begins in earnest: pouring, sweeping, buttoning, tidying. Real tools, child-sized.", "ar": "تبدأ الحياة العملية بجدّية: الصبّ والكنس وإغلاق الأزرار والترتيب. أدوات حقيقية بمقاس الأطفال." },
+      "milestones": {
+        "en": ["Dressing with little help", "Sitting with one task for 15 minutes", "Naming feelings instead of acting on them"],
+        "ar": ["ارتداء الملابس بمساعدة بسيطة", "الجلوس مع مهمة واحدة ١٥ دقيقة", "تسمية المشاعر بدل التصرّف بها"]
+      },
+      "comms": { "en": "Weekly slip plus a termly meeting", "ar": "تقرير أسبوعي مع لقاء كل فصل" }
+    },
+    {
+      "id": "kindergarten",
+      "accent": "grass",
+      "name": { "en": "The Meadow", "ar": "المرج" },
+      "age": { "en": "3 – 5 years", "ar": "٣ – ٥ سنوات" },
+      "ratio": { "en": "1 adult to 8 children", "ar": "بالغ واحد لكل ٨ أطفال" },
+      "_placeholder": true,
+      "summary": { "en": "The year before big school. One-to-one academic time every day, and honest preparation for the KG1 interview.", "ar": "العام السابق للمدرسة. وقت أكاديمي فردي كل يوم، وإعداد صادق لمقابلة الروضة الأولى." },
+      "milestones": {
+        "en": ["Letter sounds and early reading", "Numbers to twenty, and what they mean", "Answering an unfamiliar adult with confidence"],
+        "ar": ["أصوات الحروف والقراءة المبكرة", "الأعداد حتى العشرين ومعناها", "إجابة شخص بالغ غير مألوف بثقة"]
+      },
+      "comms": { "en": "Weekly slip, termly report, interview prep sessions", "ar": "تقرير أسبوعي وتقرير فصلي وجلسات إعداد للمقابلة" }
+    }
+  ],
+
+  "characters": {
+    "_placeholder": true,
+    "_note": "NAMES AND PILLARS ARE PLACEHOLDER. The stakeholder brief lists 'Character names, pillars & illustrations' as owed by Saja and still Waiting. Illustrations here are the real supplied artwork; only the names and pillar text are invented. Replace before client review.",
+    "items": [
+      {
+        "id": "pip", "accent": "teal", "image": "/assets/characters/pip.webp",
+        "name": { "en": "Pip", "ar": "بيب" },
+        "pillar": { "en": "Friendship and kindness", "ar": "الصداقة واللطف" },
+        "body": { "en": "Pip greets everyone at the door and remembers who was sad yesterday. He is how we talk about looking after each other.", "ar": "يستقبل بيب الجميع عند الباب ويتذكّر من كان حزينًا بالأمس. به نتحدث عن اعتناء بعضنا ببعض." }
+      },
+      {
+        "id": "juniper", "accent": "berry", "image": "/assets/characters/juniper.webp",
+        "name": { "en": "Juniper", "ar": "جونيبر" },
+        "pillar": { "en": "Curiosity and discovery", "ar": "الفضول والاكتشاف" },
+        "body": { "en": "Juniper asks why until there is nothing left to ask. She belongs to the garden, the magnifying glass and the long question.", "ar": "تسأل جونيبر «لماذا» حتى لا يبقى سؤال. تنتمي إلى الحديقة والعدسة المكبّرة والسؤال الطويل." }
+      },
+      {
+        "id": "comet", "accent": "sky", "image": "/assets/characters/comet.webp",
+        "name": { "en": "Comet", "ar": "كوميت" },
+        "pillar": { "en": "Big ideas and imagination", "ar": "الأفكار الكبيرة والخيال" },
+        "body": { "en": "Comet is what a cardboard box becomes by eleven o'clock. He stands for the story a child builds without being asked.", "ar": "كوميت هو ما يصير إليه صندوق الكرتون بحلول الحادية عشرة. يمثّل الحكاية التي يبنيها الطفل دون أن يُطلب منه." }
+      },
+      {
+        "id": "rumble", "accent": "sun", "image": "/assets/characters/rumble.webp",
+        "name": { "en": "Rumble", "ar": "رَمبل" },
+        "pillar": { "en": "Adventure and the world", "ar": "المغامرة والعالم" },
+        "body": { "en": "Rumble goes somewhere new every week — the shore, the garden, the market. He carries the idea that the world is worth visiting.", "ar": "يذهب رَمبل إلى مكان جديد كل أسبوع: الشاطئ، الحديقة، السوق. يحمل فكرة أن العالم يستحق الزيارة." }
+      },
+      {
+        "id": "breeze", "accent": "grass", "image": "/assets/characters/breeze.webp",
+        "name": { "en": "Breeze", "ar": "نسمة" },
+        "pillar": { "en": "Movement and confidence", "ar": "الحركة والثقة" },
+        "body": { "en": "Breeze only flies when somebody runs. She is balance, gross motor play, and the courage to let go of the rail.", "ar": "لا تطير نسمة إلا حين يركض أحدهم. هي التوازن واللعب الحركي وشجاعة ترك الحاجز." }
+      },
+      {
+        "id": "nibble", "accent": "teal-deep", "image": "/assets/characters/nibble.webp",
+        "name": { "en": "Nibble", "ar": "نِبل" },
+        "pillar": { "en": "Growth and patience", "ar": "النمو والصبر" },
+        "body": { "en": "Nibble takes the whole term to cross one wall. He is our answer whenever somebody asks why we do not rush children.", "ar": "يستغرق نِبل فصلًا كاملًا ليعبر جدارًا واحدًا. هو جوابنا كلما سأل أحد لماذا لا نستعجل الأطفال." }
+      }
+    ]
+  },
+
+  "pages": {
+    "about": {
+      "annotation": { "en": "about meadows", "ar": "عن ميدوز" },
+      "heading": { "en": "We are a family, and it shows.", "ar": "نحن عائلة، وهذا ظاهر." },
+      "intro": {
+        "en": "Meadows is a family-owned international preschool inside Marassi, opening in September 2026 for children six months to five years.",
+        "ar": "ميدوز حضانة دولية مملوكة لعائلة داخل مراسي، تفتح أبوابها في سبتمبر ٢٠٢٦ لأطفال من ستة أشهر إلى خمس سنوات."
+      },
+      "storyHeading": { "en": "Why we opened.", "ar": "لماذا فتحنا." },
+      "_placeholder": true,
+      "_note": "Founder story is placeholder — the brief lists 'Founder / brand story' as owed by the client.",
+      "story": {
+        "en": "We looked for a nursery on the coast that would take a six-month-old seriously, and could not find one. So we built the room we wanted to leave our own child in: small groups, real materials, adults who stay for years rather than terms, and a door that is always open to parents.\n\nInspired by the best early-years practice we could find anywhere in the world, we set out to make a place where children do not simply learn — they flourish.",
+        "ar": "بحثنا على الساحل عن حضانة تأخذ طفلًا في الشهر السادس على محمل الجدّ، فلم نجد. فبنينا الغرفة التي نودّ أن نترك فيها طفلنا: مجموعات صغيرة، ومواد حقيقية، وبالغون يبقون سنوات لا فصولًا، وباب مفتوح دائمًا لأولياء الأمور.\n\nمستلهمين أفضل ممارسات السنوات المبكرة في العالم، أردنا مكانًا لا يتعلّم فيه الأطفال فحسب، بل يزدهرون."
+      },
+      "valuesHeading": { "en": "What we hold to.", "ar": "ما نتمسّك به." },
+      "values": [
+        { "id": "individual", "title": { "en": "Masterpieces in progress", "ar": "تُحف قيد الإنجاز" }, "body": { "en": "Every child paints their own academic journey, at their own rhythm. We do not move a class along at the speed of its fastest child.", "ar": "كل طفل يرسم رحلته الأكاديمية على إيقاعه. نحن لا ندفع الفصل بسرعة أسرع أطفاله." } },
+        { "id": "hands", "title": { "en": "Hands-on mastery", "ar": "إتقان بالممارسة" }, "body": { "en": "Exploration that builds real-world confidence. If it can be done with real hands and real objects, it is not done on a screen.", "ar": "استكشاف يبني ثقة حقيقية. ما يمكن عمله بأيدٍ حقيقية وأشياء حقيقية لا يُعمل على شاشة." } },
+        { "id": "play", "title": { "en": "Play that sparks", "ar": "لعب يُشعل" }, "body": { "en": "Play-based learning is not the soft option. It is the most reliable way we know to produce concentration.", "ar": "التعلّم باللعب ليس الخيار السهل، بل أكثر الطرق التي نعرفها موثوقية لإنتاج التركيز." } },
+        { "id": "family", "title": { "en": "Family-run, permanently", "ar": "إدارة عائلية دائمة" }, "body": { "en": "The people who own Meadows are the people you will meet. We are not a chain, and we are not planning to become one.", "ar": "من يملكون ميدوز هم من ستقابلهم. لسنا سلسلة، ولا ننوي أن نصير كذلك." } }
+      ]
+    },
+
+    "programs": {
+      "annotation": { "en": "the four rooms", "ar": "الغرف الأربع" },
+      "heading": { "en": "Find your child's room.", "ar": "اعثر على غرفة طفلك." },
+      "intro": {
+        "en": "Four rooms, each with its own ratio, rhythm and way of reporting back to you. Children move up when they are ready, not when the calendar says so.",
+        "ar": "أربع غرف، لكل منها نسبتها وإيقاعها وطريقتها في إبلاغك. ينتقل الأطفال حين يجهزون، لا حين يقول التقويم ذلك."
+      },
+      "labels": {
+        "ratio": { "en": "Ratio", "ar": "النسبة" },
+        "milestones": { "en": "What they work on", "ar": "ما يعملون عليه" },
+        "comms": { "en": "How we report back", "ar": "كيف نُبلغك" }
+      }
+    },
+
+    "curriculum": {
+      "annotation": { "en": "the curriculum", "ar": "المنهج" },
+      "heading": { "en": "A journey, not a schedule.", "ar": "رحلة، لا جدول." },
+      "intro": {
+        "en": "We are often asked for the timetable. We would rather show you the shape of a day, because that is what your child will actually feel.",
+        "ar": "كثيرًا ما يُطلب منا الجدول. نفضّل أن نُريك شكل اليوم، لأن هذا ما سيشعر به طفلك فعلًا."
+      },
+      "dayHeading": { "en": "A day of discovery.", "ar": "يوم من الاكتشاف." },
+      "day": [
+        { "id": "circle", "accent": "sun", "title": { "en": "The morning circle", "ar": "حلقة الصباح" }, "body": { "en": "Everyone arrives, greets each other by name, and the tone of the day gets set on purpose rather than by accident.", "ar": "يصل الجميع، ويحيّي بعضهم بعضًا بالأسماء، ويُضبط مزاج اليوم عن قصد لا مصادفة." } },
+        { "id": "academic", "accent": "sky", "title": { "en": "One-to-one academic time", "ar": "وقت أكاديمي فردي" }, "body": { "en": "Focused, individual instruction built around what this particular child needs next. Every child, every day.", "ar": "تعليم فردي مركّز مبني على ما يحتاجه هذا الطفل تحديدًا. كل طفل، كل يوم." } },
+        { "id": "explore", "accent": "grass", "title": { "en": "Exploration and play", "ar": "الاستكشاف واللعب" }, "body": { "en": "From the garden and the gym to story time and carpet activities — the long, unhurried middle of the day.", "ar": "من الحديقة والصالة إلى وقت القصة وأنشطة السجادة: وسط اليوم الطويل غير المستعجل." } },
+        { "id": "body", "accent": "berry", "title": { "en": "Nurturing the body", "ar": "رعاية الجسد" }, "body": { "en": "Wholesome meals at a table, and restorative nap times that we protect fiercely.", "ar": "وجبات صحية على الطاولة، وقيلولة نحميها بشدة." } }
+      ],
+      "bilingualHeading": { "en": "Two languages, equally.", "ar": "لغتان، بالتساوي." },
+      "bilingualBody": {
+        "en": "English and Arabic run side by side from the first room. Arabic is not a weekly session — it is half of the day, taught by native speakers who stay with the children as they move up.",
+        "ar": "تسير الإنجليزية والعربية جنبًا إلى جنب من الغرفة الأولى. العربية ليست حصة أسبوعية، بل نصف اليوم، يدرّسها ناطقون بها يرافقون الأطفال في انتقالهم."
+      },
+      "interviewHeading": { "en": "The KG1 interview, honestly.", "ar": "مقابلة الروضة الأولى، بصدق." },
+      "interviewBody": {
+        "en": "Cairo and coast schools interview four-year-olds, and pretending otherwise helps nobody. In the final year we practise sitting with an unfamiliar adult, answering a question fully, and handling a task without a parent in the room. We will tell you honestly how your child is doing.",
+        "ar": "تُجري المدارس مقابلات لأطفال في الرابعة، والتظاهر بغير ذلك لا يفيد أحدًا. في العام الأخير نتدرّب على الجلوس مع بالغ غير مألوف، وإجابة سؤال كاملًا، وأداء مهمة دون وجود ولي الأمر. وسنخبرك بصدق كيف يبلي طفلك."
+      }
+    },
+
+    "characters": {
+      "annotation": { "en": "drawn by the children", "ar": "من رسم الأطفال" },
+      "heading": { "en": "Six friends who live here.", "ar": "ستة أصدقاء يعيشون هنا." },
+      "intro": {
+        "en": "The children drew them, so they look drawn. Each one carries a pillar of the curriculum, which is how a two-year-old ends up able to tell you what patience is.",
+        "ar": "رسمهم الأطفال، لذلك يبدون مرسومين. كلٌّ منهم يحمل ركنًا من المنهج، وهكذا يصير ابن السنتين قادرًا على أن يخبرك ما الصبر."
+      },
+      "pillarLabel": { "en": "Stands for", "ar": "يمثّل" }
+    },
+
+    "gallery": {
+      "annotation": { "en": "a look inside", "ar": "نظرة من الداخل" },
+      "heading": { "en": "The place, before you visit it.", "ar": "المكان، قبل أن تزوره." },
+      "intro": {
+        "en": "Photography of the Marassi campus is being shot ahead of the September opening. Until then, here is the world the children have drawn of it.",
+        "ar": "يجري تصوير مقرّ مراسي استعدادًا للافتتاح في سبتمبر. وحتى ذلك الحين، هذا هو العالم الذي رسمه الأطفال عنه."
+      },
+      "_placeholder": true,
+      "_note": "No photography exists in the supplied assets. The brief flags stock-only imagery as a 91% drop-off risk, so this page deliberately shows children's artwork and states the position plainly rather than using stock photos.",
+      "categories": [
+        { "id": "rooms", "en": "The rooms", "ar": "الغرف" },
+        { "id": "garden", "en": "Garden and gym", "ar": "الحديقة والصالة" },
+        { "id": "day", "en": "A day here", "ar": "يوم عندنا" },
+        { "id": "summer", "en": "Summer Club", "ar": "نادي الصيف" }
+      ],
+      "emptyState": {
+        "en": "Photographs are coming after the September opening.",
+        "ar": "الصور الفوتوغرافية قادمة بعد افتتاح سبتمبر."
+      }
+    }
+  },
+
+  "footer": {
+    "tagline": {
+      "en": "A family-owned international preschool in Marassi, for children six months to five years.",
+      "ar": "حضانة دولية مملوكة لعائلة في مراسي، لأطفال من ستة أشهر إلى خمس سنوات."
+    },
+    "exploreHeading": { "en": "Explore", "ar": "استكشف" },
+    "visitHeading": { "en": "Come and see us", "ar": "تعال لزيارتنا" },
+    "whatsappLabel": { "en": "Message us on WhatsApp", "ar": "راسلنا على واتساب" }
+  }
+}

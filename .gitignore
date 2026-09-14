@@ -5,3 +5,7 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Client materials — the stakeholder brief is marked "Confidential — For
+# Stakeholder Review" and this repository is public. Keep it local.
+Meadows Materials/

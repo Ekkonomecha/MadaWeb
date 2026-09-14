@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* Meadows International Preschool — design system
+   Brand guidelines (Meadows Guidlines.md) fix the palette and the English face.
+   Everything else is derived: a paper ground, drawn marks, one annotation voice. */
+
+@theme {
+  /* ---- Brand palette (from guidelines; do not re-tune) ---- */
+  --color-teal: #188972;        /* primary */
+  --color-sky: #1a5e93;         /* secondary */
+  --color-berry: #c23039;       /* secondary */
+  --color-grass: #109549;       /* secondary */
+  --color-sun: #ffcc04;         /* secondary */
+
+  /* ---- Derived ground + ink ---- */
+  --color-ink: #0b3d33;         /* body text — deep teal-black, never grey */
+  --color-ink-soft: #4a6f66;    /* secondary text */
+  --color-paper: #f4f8f5;       /* page ground — mint paper, not cream */
+  --color-paper-deep: #e7f1ec;  /* alternating band */
+  --color-chalk: #ffffff;       /* cards */
+  --color-teal-deep: #0f6152;   /* pressed / dark surfaces */
+  --color-teal-wash: #e3f0eb;   /* tint behind illustrations */
+  --color-whatsapp: #25d366;
+
+  /* ---- Type ----
+     The -src variables come from next/font in app/layout.tsx. Poppins is the
+     brand's English face per the guidelines; Caveat carries the annotation
+     voice; Almarai sets Arabic. */
+  --font-poppins: var(--font-poppins-src), system-ui, sans-serif;
+  --font-hand: var(--font-hand-src), "Segoe Script", cursive;
+  --font-arabic: var(--font-arabic-src), "Segoe UI", sans-serif;
+
+  /* ---- Elevation: paper lifting off paper, not a generic drop shadow ---- */
+  --shadow-paper: 0 1px 2px rgba(11, 61, 51, 0.06), 0 12px 28px -18px rgba(11, 61, 51, 0.35);
+  --shadow-lift: 0 2px 4px rgba(11, 61, 51, 0.08), 0 28px 50px -28px rgba(11, 61, 51, 0.45);
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-poppins);
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* Paper tooth — a faint fibre texture so flat colour never reads as screen-flat */
+.paper-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.24 0 0 0 0 0.20 0 0 0 0.055 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===========================================================================
+   Component classes live in Tailwind's `components` layer so that a utility
+   always wins on the same element. Unlayered, `.btn` would beat `hidden` and
+   `.annot` would beat `text-sun` — both are ties on specificity decided by
+   source order, and this file is imported after Tailwind.
+   =========================================================================== */
+@layer components {
+
+/* ---------- Type scale (Elements of Typographic Style, 1.25 minor third) ---------- */
+.t-display {
+  font-size: clamp(2.6rem, 6.2vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+.t-h1 {
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.028em;
+  font-weight: 600;
+}
+.t-h2 {
+  font-size: clamp(1.6rem, 2.9vw, 2.3rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+.t-h3 {
+  font-size: 1.22rem;
+  line-height: 1.34;
+  letter-spacing: -0.012em;
+  font-weight: 600;
+}
+.t-body {
+  font-size: 1.02rem;
+  line-height: 1.72;
+  font-weight: 400;
+}
+.t-small {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+/* Measure: keep prose under ~70 characters */
+.measure { max-width: 34rem; }
+.measure-wide { max-width: 44rem; }
+
+/* ---------- The annotation voice ----------
+   Replaces the all-caps eyebrow label. A margin note in a human hand,
+   set at a slight angle, as if someone wrote on the printout. */
+.annot {
+  font-family: var(--font-hand);
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  line-height: 1.15;
+  color: var(--color-teal);
+  font-weight: 600;
+  display: inline-block;
+  transform: rotate(-2.5deg);
+}
+/* Tone modifiers. `.annot` sets a colour, so a Tailwind `text-*` utility on the
+   same element ties on specificity and loses to whichever lands later in the
+   sheet — always reach for one of these instead. */
+.annot-berry { color: var(--color-berry); }
+.annot-sky { color: var(--color-sky); }
+.annot-soft { color: var(--color-ink-soft); }
+.annot-sun { color: var(--color-sun); }
+.annot-paper { color: color-mix(in srgb, var(--color-paper) 88%, transparent); }
+[dir="rtl"] .annot { transform: rotate(2.5deg); }
+
+/* ---------- Drawn marks ---------- */
+/* Underline that looks brushed on, not a border-bottom */
+.mark-underline {
+  background-image: linear-gradient(transparent 62%, color-mix(in srgb, var(--color-sun) 78%, transparent) 62%);
+  background-repeat: no-repeat;
+  background-size: 100% 88%;
+  padding: 0 0.1em 0.06em;
+}
+
+/* Circled emphasis — a hand-drawn ellipse around a word */
+.mark-circle {
+  position: relative;
+  display: inline-block;
+  padding: 0.05em 0.35em 0.12em;
+}
+.mark-circle::after {
+  content: "";
+  position: absolute;
+  inset: -22% -8% -18%;
+  border: 2.5px solid var(--color-berry);
+  border-radius: 48% 52% 50% 50% / 58% 44% 56% 42%;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ---------- Surfaces ---------- */
+/* A sheet of paper. Rotation is applied per-instance, never globally. */
+.sheet {
+  background: var(--color-chalk);
+  border-radius: 18px;
+  box-shadow: var(--shadow-paper);
+  transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 340ms ease;
+}
+.sheet-hover:hover,
+.sheet-hover:focus-visible {
+  transform: translateY(-5px) rotate(0deg);
+  box-shadow: var(--shadow-lift);
+}
+
+/* ---------- Controls ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.96rem;
+  padding: 0.85rem 1.7rem;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), background-color 200ms ease, color 200ms ease;
+  cursor: pointer;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--color-teal); color: #fff; }
+.btn-primary:hover { background: var(--color-teal-deep); }
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--color-ink) 18%, transparent);
+}
+.btn-ghost:hover { box-shadow: inset 0 0 0 2px var(--color-teal); color: var(--color-teal); }
+.btn-sun { background: var(--color-sun); color: var(--color-ink); }
+.btn-sun:hover { background: #f0be00; }
+
+/* ---------- Forms ---------- */
+.field {
+  width: 100%;
+  background: var(--color-chalk);
+  border: 0;
+  border-bottom: 2px solid color-mix(in srgb, var(--color-ink) 16%, transparent);
+  border-radius: 10px 10px 0 0;
+  padding: 0.85rem 0.95rem;
+  font-family: inherit;
+  font-size: 0.98rem;
+  color: var(--color-ink);
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+.field:focus {
+  outline: none;
+  border-bottom-color: var(--color-teal);
+  background: #fff;
+}
+.field::placeholder { color: color-mix(in srgb, var(--color-ink) 38%, transparent); }
+
+} /* end @layer components */
+
+/* ---------- Focus visibility (keyboard) ---------- */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-sky);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Motion primitives (GSAP sets the values; CSS declares rest state) ---------- */
+.will-rise { will-change: transform, opacity; }
+
+/* ---------- Reduced motion ----------
+   Anything GSAP animates is also readable with no animation at all. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Arabic ---------- */
+[dir="rtl"] body,
+.font-arabic {
+  font-family: var(--font-arabic);
+}
+[dir="rtl"] .t-display,
+[dir="rtl"] .t-h1,
+[dir="rtl"] .t-h2 {
+  letter-spacing: 0;
+  line-height: 1.24;
+}
+/* Caveat has no Arabic coverage — annotations fall back to the Arabic face */
+[dir="rtl"] .annot {
+  font-family: var(--font-arabic);
+  font-size: clamp(0.95rem, 1.3vw, 1.12rem);
+  font-weight: 700;
+}
+
+/* ---------- Utilities ---------- */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
