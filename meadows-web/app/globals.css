@@ -100,29 +100,32 @@ body {
 /* ---- Type scale ----
    The reference's signature: extreme display scale carried by one family.
    Meadows keeps Poppins; only the scale, tracking and leading transfer. */
+/* Weight 600 rather than the reference's 500: chunkier letterforms read as
+   friendlier and more cartoon-like, and it is a weight already loaded for
+   Poppins, so the brand's typeface is unchanged. */
 .t-display {
   font-size: clamp(3.4rem, 10.5vw, 8.75rem);   /* → 140px */
   line-height: 0.95;
   letter-spacing: -0.06em;
-  font-weight: 500;
+  font-weight: 600;
 }
 .t-h1 {
   font-size: clamp(2.6rem, 6.4vw, 5.0625rem);  /* → 81px */
   line-height: 1.05;
-  letter-spacing: -0.06em;
-  font-weight: 500;
+  letter-spacing: -0.055em;
+  font-weight: 600;
 }
 .t-h2 {
   font-size: clamp(2rem, 4vw, 3.3125rem);      /* → 53px */
   line-height: 1.15;
   letter-spacing: -0.04em;
-  font-weight: 500;
+  font-weight: 600;
 }
 .t-h3 {
   font-size: 1.875rem;                          /* 30px */
   line-height: 1.2;
   letter-spacing: -0.02em;
-  font-weight: 500;
+  font-weight: 600;
 }
 .t-subheading {
   font-size: 1.25rem;                           /* 20px */
@@ -164,8 +167,64 @@ body {
 .annot-ink { color: var(--color-ink); }
 [dir="rtl"] .annot { transform: rotate(2.5deg); }
 
+/* ---- Sticky notes ----
+   Cards are paper on a pinboard. This is the one place the reference's
+   no-shadow rule is deliberately reversed: a note without a shadow does not
+   read as a physical thing sitting on the board. The shadow carries a real
+   offset and blur rather than being a flat halo.
+
+   Every tint is mixed down from the brand palette — no new colour is
+   introduced, they are the existing five lightened onto paper. */
+.note {
+  --note-tint: var(--color-chalk);
+  position: relative;
+  background: var(--note-tint);
+  border-radius: 3px 16px 5px 12px;   /* hand-cut, never a perfect rectangle */
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  box-shadow:
+    0 2px 3px rgba(11, 61, 51, 0.09),
+    0 14px 28px -16px rgba(11, 61, 51, 0.42);
+  /* Paper decelerates, it does not spring. The cartoon overshoot is reserved
+     for the characters, where it reads as squash-and-stretch rather than as
+     springy UI chrome. */
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* A torn strip of tape holding it down. */
+.note-taped::before {
+  content: "";
+  position: absolute;
+  top: -0.6rem;
+  left: calc(50% + var(--tape-shift, 0%));
+  translate: -50% 0;
+  width: 4.5rem;
+  height: 1.4rem;
+  background: color-mix(in srgb, var(--color-sun) 55%, #fff);
+  opacity: 0.85;
+  border-radius: 2px;
+  clip-path: polygon(6% 0, 96% 3%, 100% 96%, 3% 100%);
+  rotate: -1.5deg;
+}
+
+/* Picked up slightly and straightened, the way you'd lift a note to read it. */
+.note-live:hover,
+.note-live:focus-within {
+  transform: translateY(-8px) rotate(0deg) scale(1.015) !important;
+  box-shadow:
+    0 4px 6px rgba(11, 61, 51, 0.1),
+    0 30px 48px -20px rgba(11, 61, 51, 0.5);
+}
+
+.sticky-sun { --note-tint: color-mix(in srgb, var(--color-sun) 26%, #fff); }
+.sticky-teal { --note-tint: color-mix(in srgb, var(--color-teal) 15%, #fff); }
+.sticky-berry { --note-tint: color-mix(in srgb, var(--color-berry) 13%, #fff); }
+.sticky-sky { --note-tint: color-mix(in srgb, var(--color-sky) 13%, #fff); }
+.sticky-grass { --note-tint: color-mix(in srgb, var(--color-grass) 14%, #fff); }
+
 /* ---- Surfaces ----
-   The reference's whole elevation model: a colour step, never a shadow. */
+   The reference's colour-step elevation, kept for full-width panels. */
 .surface-card {
   background: var(--color-chalk);
   border-radius: var(--radius-card);
@@ -274,6 +333,41 @@ body {
    Motion
    =========================================================================== */
 .will-rise { will-change: transform, opacity; }
+.will-drift { will-change: transform; }
+
+/* Cut-out sticker edge. The crayon PNGs carry their own transparency, so a
+   tinted drop-shadow lifts them off the paper without a box around them. */
+.sticker {
+  filter: drop-shadow(0 6px 5px rgba(11, 61, 51, 0.16));
+}
+.sticker-lg {
+  filter: drop-shadow(0 12px 10px rgba(11, 61, 51, 0.18));
+}
+
+/* A slow idle bob, offset per element so a row never moves in lockstep. */
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(var(--bob-rot, 0deg)); }
+  50% { transform: translateY(-9px) rotate(calc(var(--bob-rot, 0deg) * -1)); }
+}
+.bob {
+  animation: bob 5.5s ease-in-out infinite;
+  animation-delay: var(--bob-delay, 0s);
+}
+
+/* A quick cartoon squash when a character is poked. The personality lives in
+   the keyframe rotations — a real squash-and-stretch — so the curve itself can
+   stay a clean ease-out instead of an elastic one. */
+@keyframes jiggle {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-7deg) scale(1.06); }
+  50% { transform: rotate(6deg) scale(1.04); }
+  75% { transform: rotate(-3deg) scale(1.02); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+.jiggle-on-hover:hover .jiggle-target,
+.jiggle-on-hover:focus-visible .jiggle-target {
+  animation: jiggle 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -4,23 +4,41 @@ import React, { FormEvent, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t, type Accent, accentText, accentBg } from '@/lib/content';
+import { spread, jitter } from '@/lib/scatter';
 import { AnnotationArrow } from '@/components/Drawn';
-import { useHeroSequence, Drift } from '@/components/Motion';
+import Note, { Doodle } from '@/components/Note';
+import { useHeroSequence, useNotesSettle, Parallax } from '@/components/Motion';
 
 export default function HomePage() {
   const { lang, isAr } = useLang();
   const home = content.home;
   const heroRef = useRef<HTMLElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useHeroSequence(heroRef);
+  useNotesSettle(pageRef);
 
   return (
-    <>
-      {/* ───────── 1 · HERO ─────────
-          Headline dominant, sitting straight on the canvas with no wrapper.
-          The artwork bleeds in from the bottom edge into the band below. */}
+    <div ref={pageRef}>
+      {/* ───────── 1 · HERO ───────── */}
       <section ref={heroRef} className="relative overflow-hidden pt-8 md:pt-16">
-        <div className="mx-auto max-w-[1200px] px-5 md:px-8">
+        {/* Drawings drifting behind the headline, each on its own depth */}
+        <Parallax
+          speed={0.34}
+          spin={10}
+          className="hidden lg:block absolute top-10 end-[4%] -z-10"
+        >
+          <Doodle src="/assets/motifs/tree-pine.webp" width="8rem" />
+        </Parallax>
+        <Parallax
+          speed={0.2}
+          spin={-8}
+          className="hidden lg:block absolute top-[22rem] end-[18%] -z-10"
+        >
+          <Doodle src="/assets/characters/breeze.webp" width="7rem" />
+        </Parallax>
+
+        <div className="relative mx-auto max-w-[1200px] px-5 md:px-8">
           <h1 className="t-display text-ink max-w-[14ch]">
             {t(home.hero.headline, lang)
               .split(' ')
@@ -57,56 +75,58 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Margin note — set beside the copy, never stacked as a label */}
             <p data-hero-note className="flex items-start gap-2 lg:justify-self-end lg:pb-2">
-              <AnnotationArrow
-                className="w-9 h-7 text-teal/45 shrink-0 -scale-y-100 rtl:-scale-x-100 rtl:-scale-y-100"
-              />
+              <AnnotationArrow className="w-9 h-7 text-teal/45 shrink-0 -scale-y-100 rtl:-scale-x-100 rtl:-scale-y-100" />
               <span className="annot">{t(home.hero.annotation, lang)}</span>
             </p>
           </div>
         </div>
 
-        {/* The six friends, bare on the canvas — the art is its own container.
-            Three across on a phone so the crayon work stays legible; six in a
-            row once there is width for it. */}
+        {/* The six friends, bobbing on the canvas and pokeable */}
         <div className="mt-12 md:mt-16">
           <ul className="mx-auto max-w-[1200px] px-5 md:px-8 grid grid-cols-3 sm:grid-cols-6 gap-x-4 gap-y-6 items-end">
             {content.characters.items.map((c) => (
-              <li key={c.id} data-rise className="will-rise">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={c.image}
-                  alt={t(c.name, lang)}
-                  className="w-full h-auto object-contain"
-                />
+              <li
+                key={c.id}
+                data-rise
+                className="will-rise jiggle-on-hover cursor-pointer"
+              >
+                <span
+                  className="block bob"
+                  style={
+                    {
+                      '--bob-delay': `${spread(c.id, 4, 'd')}s`,
+                      '--bob-rot': `${jitter(c.id, 2.5, 'r')}deg`,
+                    } as React.CSSProperties
+                  }
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={c.image}
+                    alt={t(c.name, lang)}
+                    className="jiggle-target w-full h-auto object-contain sticker"
+                  />
+                </span>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* ───────── 2 · TRUST BAR ───────── */}
-      <section className="pt-10 md:pt-16 px-5 md:px-8">
-        <div className="mx-auto max-w-[1200px] surface-card">
-          <dl className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
-            {home.trustBar.items.map((item) => (
-              <div key={item.id}>
-                <dt className="sr-only">{t(item.label, lang)}</dt>
-                <dd>
-                  <span className="block t-h3 text-teal">{t(item.value, lang)}</span>
-                  <span className="block t-small text-ink-soft mt-2 max-w-[16rem]">
-                    {t(item.label, lang)}
-                  </span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+      {/* ───────── 2 · TRUST BAR — four notes pinned in a row ───────── */}
+      <section className="pt-12 md:pt-20 px-5 md:px-8">
+        <ul className="mx-auto max-w-[1200px] grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+          {home.trustBar.items.map((item) => (
+            <Note key={item.id} id={item.id} as="li" taped className="!p-6 md:!p-7">
+              <p className="t-h3 text-ink">{t(item.value, lang)}</p>
+              <p className="t-small text-ink/70 mt-2">{t(item.label, lang)}</p>
+            </Note>
+          ))}
+        </ul>
       </section>
 
       {/* ───────── 3 · ABOUT SNAPSHOT ───────── */}
-      <section className="py-10 md:py-16 px-5 md:px-8">
+      <section className="relative py-14 md:py-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px] grid lg:grid-cols-[1fr_auto] gap-14 lg:gap-20 items-center">
           <div>
             <h2 className="t-h1 text-ink max-w-[16ch]">{t(home.about.heading, lang)}</h2>
@@ -118,23 +138,23 @@ export default function HomePage() {
             </p>
           </div>
 
-          <Drift className="hidden lg:block shrink-0" amount={30}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/motifs/tree-round.webp"
-              alt=""
-              aria-hidden="true"
-              className="w-64 h-auto mix-blend-multiply"
-            />
-          </Drift>
+          <Parallax speed={0.26} spin={-6} className="hidden lg:block shrink-0">
+            <Doodle src="/assets/motifs/tree-round.webp" width="16rem" />
+          </Parallax>
         </div>
       </section>
 
-      {/* ───────── 4 · PROGRAMS OVERVIEW ─────────
-          An editorial list rather than four identical cards — the room name
-          carries the scale, and the accent rule tells you which room. */}
-      <section className="py-10 md:py-16 px-5 md:px-8">
-        <div className="mx-auto max-w-[1200px]">
+      {/* ───────── 4 · PROGRAMS — a room per note ───────── */}
+      <section className="relative py-14 md:py-20 px-5 md:px-8">
+        <Parallax
+          speed={0.3}
+          spin={12}
+          className="hidden md:block absolute top-6 end-[6%] -z-10"
+        >
+          <Doodle src="/assets/characters/rumble.webp" width="9rem" />
+        </Parallax>
+
+        <div className="relative mx-auto max-w-[1200px]">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 className="t-h1 text-ink max-w-[14ch]">{t(home.programs.heading, lang)}</h2>
             <p className="annot annot-berry">{t(home.programs.annotation, lang)}</p>
@@ -143,42 +163,33 @@ export default function HomePage() {
             {t(home.programs.body, lang)}
           </p>
 
-          <ul className="mt-16">
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-7 mt-14">
             {content.rooms.map((room) => {
               const accent = room.accent as Accent;
               return (
-                <li key={room.id} className="border-t border-hairline">
-                  <Link
-                    href="/programs"
-                    className="group grid md:grid-cols-[minmax(0,22rem)_1fr] gap-4 md:gap-10 py-8 md:py-10 items-baseline"
-                  >
-                    <div className="flex items-baseline gap-4">
-                      <span
-                        className={`w-10 h-[3px] rounded-full shrink-0 translate-y-[-0.35em] transition-all duration-300 group-hover:w-14 ${accentBg[accent]}`}
-                        aria-hidden="true"
-                      />
-                      <span className="t-h2 text-ink transition-colors duration-300 group-hover:text-teal">
-                        {t(room.name, lang)}
-                      </span>
-                    </div>
-                    <div>
-                      <span className={`block t-subheading ${accentText[accent]}`}>
-                        {t(room.age, lang)}
-                      </span>
-                      <span className="block t-body text-ink-soft mt-2 measure">
-                        {t(room.summary, lang)}
-                      </span>
-                      <span className="block t-small text-ink/50 mt-3">
-                        {t(room.ratio, lang)}
-                      </span>
-                    </div>
+                <Note key={room.id} id={room.id} as="li">
+                  <Link href="/programs" className="block group">
+                    <span
+                      className={`block w-11 h-[4px] rounded-full mb-5 transition-all duration-300 group-hover:w-16 ${accentBg[accent]}`}
+                      aria-hidden="true"
+                    />
+                    <span className="block t-h3 text-ink">{t(room.name, lang)}</span>
+                    <span className={`block t-small font-medium mt-1 ${accentText[accent]}`}>
+                      {t(room.age, lang)}
+                    </span>
+                    <span className="block t-small text-ink/70 mt-4">
+                      {t(room.summary, lang)}
+                    </span>
+                    <span className="block t-small text-ink/45 mt-4">
+                      {t(room.ratio, lang)}
+                    </span>
                   </Link>
-                </li>
+                </Note>
               );
             })}
           </ul>
 
-          <div className="border-t border-hairline pt-10">
+          <div className="mt-12">
             <Link href="/programs" className="btn btn-ghost">
               {t(home.programs.cta, lang)}
               <span className="btn-dot bg-teal" aria-hidden="true" />
@@ -187,9 +198,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ───────── 5 · CHARACTERS TEASER ─────────
-          Art on bare canvas, no frames. Colour moves to the name rule. */}
-      <section className="py-10 md:py-16 px-5 md:px-8">
+      {/* ───────── 5 · CHARACTERS ───────── */}
+      <section className="py-14 md:py-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px]">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 className="t-h1 text-ink max-w-[14ch]">{t(home.characters.heading, lang)}</h2>
@@ -204,17 +214,27 @@ export default function HomePage() {
               const accent = c.accent as Accent;
               return (
                 <li key={c.id}>
-                  <Link href="/characters" className="group block">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={c.image}
-                      alt=""
-                      aria-hidden="true"
-                      className="w-full aspect-square object-contain transition-transform duration-500 ease-out group-hover:-translate-y-2"
-                    />
+                  <Link href="/characters" className="group block jiggle-on-hover">
+                    <span
+                      className="block bob"
+                      style={
+                        {
+                          '--bob-delay': `${spread(c.id, 4, 'g')}s`,
+                          '--bob-rot': `${jitter(c.id, 3, 'h')}deg`,
+                        } as React.CSSProperties
+                      }
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={c.image}
+                        alt=""
+                        aria-hidden="true"
+                        className="jiggle-target w-full aspect-square object-contain sticker"
+                      />
+                    </span>
                     <span className="block t-h3 text-ink mt-5">{t(c.name, lang)}</span>
                     <span
-                      className={`block w-9 h-[3px] rounded-full my-3 transition-all duration-300 group-hover:w-14 ${accentBg[accent]}`}
+                      className={`block w-9 h-[4px] rounded-full my-3 transition-all duration-300 group-hover:w-16 ${accentBg[accent]}`}
                       aria-hidden="true"
                     />
                     <span className={`block t-small ${accentText[accent]}`}>
@@ -226,7 +246,7 @@ export default function HomePage() {
             })}
           </ul>
 
-          <div className="mt-16">
+          <div className="mt-14">
             <Link href="/characters" className="btn btn-ghost">
               {t(home.characters.cta, lang)}
               <span className="btn-dot bg-berry" aria-hidden="true" />
@@ -235,9 +255,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ───────── 6 · FOUNDATIONS ───────── */}
-      <section className="py-10 md:py-16 px-5 md:px-8">
-        <div className="mx-auto max-w-[1200px]">
+      {/* ───────── 6 · FOUNDATIONS — four notes ───────── */}
+      <section className="relative py-14 md:py-20 px-5 md:px-8">
+        <Parallax
+          speed={0.24}
+          spin={-14}
+          className="hidden md:block absolute bottom-10 start-[3%] -z-10"
+        >
+          <Doodle src="/assets/characters/comet.webp" width="8rem" />
+        </Parallax>
+
+        <div className="relative mx-auto max-w-[1200px]">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 className="t-h1 text-ink max-w-[14ch]">{t(home.why.heading, lang)}</h2>
             <p className="annot">{t(home.why.annotation, lang)}</p>
@@ -246,19 +274,19 @@ export default function HomePage() {
             {t(home.why.body, lang)}
           </p>
 
-          <ul className="grid md:grid-cols-2 gap-x-16 gap-y-14 mt-16">
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-7 mt-14">
             {home.why.items.map((item) => (
-              <li key={item.id}>
+              <Note key={item.id} id={item.id} as="li" live={false}>
                 <h3 className="t-h3 text-ink">{t(item.title, lang)}</h3>
-                <p className="t-body text-ink-soft mt-3 measure">{t(item.body, lang)}</p>
-              </li>
+                <p className="t-small text-ink/70 mt-3">{t(item.body, lang)}</p>
+              </Note>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* ───────── 7 · GALLERY TEASER ───────── */}
-      <section className="py-10 md:py-16 px-5 md:px-8">
+      {/* ───────── 7 · GALLERY ───────── */}
+      <section className="py-14 md:py-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px] grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
           <div>
             <h2 className="t-h1 text-ink max-w-[14ch]">{t(home.gallery.heading, lang)}</h2>
@@ -271,9 +299,9 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <ul className="grid grid-cols-3 gap-4 lg:gap-6">
+          <ul className="grid grid-cols-3 gap-4 lg:gap-5">
             {['tree-pine', 'face-blue', 'tree-round'].map((m) => (
-              <li key={m} className="surface-card !p-5 aspect-[3/4] grid place-items-center">
+              <Note key={m} id={m} as="li" taped className="!p-4 aspect-[3/4]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`/assets/motifs/${m}.webp`}
@@ -281,14 +309,14 @@ export default function HomePage() {
                   aria-hidden="true"
                   className="w-full h-full object-contain"
                 />
-              </li>
+              </Note>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* ───────── 8 · TESTIMONIALS ───────── */}
-      <section className="py-10 md:py-16 px-5 md:px-8">
+      {/* ───────── 8 · TESTIMONIALS — two big notes ───────── */}
+      <section className="py-14 md:py-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px]">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 className="t-h1 text-ink max-w-[14ch]">
@@ -297,25 +325,33 @@ export default function HomePage() {
             <p className="annot annot-berry">{t(home.testimonials.annotation, lang)}</p>
           </div>
 
-          <ul className="grid md:grid-cols-2 gap-6 mt-16">
+          <ul className="grid md:grid-cols-2 gap-7 md:gap-8 mt-16">
             {home.testimonials.items.map((item) => (
-              <li key={item.id} className="surface-card">
+              <Note key={item.id} id={item.id} as="li" taped className="md:!p-10">
                 <blockquote>
                   <p className="t-h3 text-ink measure">{t(item.quote, lang)}</p>
-                  <footer className="t-small text-ink-soft mt-7">
+                  <footer className="t-small text-ink/65 mt-7">
                     {t(item.author, lang)}
                   </footer>
                 </blockquote>
-              </li>
+              </Note>
             ))}
           </ul>
         </div>
       </section>
 
       {/* ───────── 9 · SUMMER CLUB ───────── */}
-      <section className="px-5 md:px-8 pb-10 md:pb-16">
-        <div className="mx-auto max-w-[1200px] bg-teal text-white rounded-[50px] px-8 md:px-14 py-16 md:py-20">
-          <div className="grid lg:grid-cols-[1.4fr_auto] gap-10 lg:gap-16 lg:items-end">
+      <section className="relative px-5 md:px-8 py-14 md:py-20">
+        <div className="relative mx-auto max-w-[1200px] bg-teal text-white rounded-[50px] px-8 md:px-14 py-16 md:py-20 overflow-hidden">
+          <Parallax
+            speed={0.22}
+            spin={16}
+            className="hidden md:block absolute -bottom-6 end-8 opacity-90"
+          >
+            <Doodle src="/assets/characters/pip.webp" width="11rem" />
+          </Parallax>
+
+          <div className="relative grid lg:grid-cols-[1.4fr_auto] gap-10 lg:gap-16 lg:items-end">
             <div>
               <h2 className="t-h1 max-w-[14ch]">{t(home.summer.heading, lang)}</h2>
               <p className="t-subheading text-white/80 mt-7 measure-wide">
@@ -335,7 +371,7 @@ export default function HomePage() {
 
       {/* ───────── 10 · REQUEST A VISIT ───────── */}
       <VisitSection />
-    </>
+    </div>
   );
 }
 
@@ -348,15 +384,21 @@ function VisitSection() {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // No backend yet — wired to a handler so the success state and copy are
-    // reviewable. Point this at the CRM before launch.
+    // No backend yet — wired so the success state and copy are reviewable.
     setSent(true);
   };
 
   return (
-    <section id="visit" className="pb-16 md:pb-24 px-5 md:px-8 scroll-mt-28">
-      <div className="mx-auto max-w-[1200px] grid lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-20 items-start">
-        {/* Reassurance */}
+    <section id="visit" className="relative pb-24 md:pb-32 pt-4 px-5 md:px-8 scroll-mt-28">
+      <Parallax
+        speed={0.28}
+        spin={-10}
+        className="hidden lg:block absolute top-20 start-[2%] -z-10"
+      >
+        <Doodle src="/assets/characters/juniper.webp" width="8rem" />
+      </Parallax>
+
+      <div className="relative mx-auto max-w-[1200px] grid lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-20 items-start">
         <div>
           <h2 className="t-h1 text-ink max-w-[13ch]">{t(apply.heading, lang)}</h2>
           <p className="t-subheading text-ink-soft mt-8 measure">{t(apply.body, lang)}</p>
@@ -367,7 +409,7 @@ function VisitSection() {
             {apply.steps.map((step) => (
               <li key={step.id} className="flex gap-4 items-baseline">
                 <span
-                  className="w-2 h-2 rounded-full bg-teal shrink-0 translate-y-[-0.15em]"
+                  className="w-2.5 h-2.5 rounded-full bg-teal shrink-0 translate-y-[-0.1em]"
                   aria-hidden="true"
                 />
                 <span className="t-body text-ink">{t(step, lang)}</span>
@@ -376,12 +418,11 @@ function VisitSection() {
           </ol>
         </div>
 
-        {/* Form */}
-        <div className="surface-card">
+        <Note id="visit-form" tint="sticky-sun" live={false} taped className="md:!p-10">
           {sent ? (
             <div className="py-12 text-center">
               <h3 className="t-h2 text-ink">{t(apply.successTitle, lang)}</h3>
-              <p className="t-body text-ink-soft mt-4 measure mx-auto">
+              <p className="t-body text-ink/75 mt-4 measure mx-auto">
                 {t(apply.successBody, lang)}
               </p>
             </div>
@@ -424,7 +465,7 @@ function VisitSection() {
               </button>
             </form>
           )}
-        </div>
+        </Note>
       </div>
     </section>
   );

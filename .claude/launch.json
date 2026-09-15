@@ -18,6 +18,18 @@
         "3100"
       ],
       "port": 3100
+    },
+    {
+      "name": "meadows-preview",
+      "runtimeExecutable": "C:/Program Files/nodejs/node.exe",
+      "runtimeArgs": [
+        "meadows-web/node_modules/next/dist/bin/next",
+        "dev",
+        "meadows-web",
+        "--port",
+        "3101"
+      ],
+      "port": 3101
     }
   ]
 }

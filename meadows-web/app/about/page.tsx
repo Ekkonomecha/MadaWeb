@@ -1,18 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
-import { Drift } from '@/components/Motion';
+import Note, { Doodle } from '@/components/Note';
+import { useNotesSettle, Parallax } from '@/components/Motion';
 
 export default function AboutPage() {
   const { lang } = useLang();
   const page = content.pages.about;
+  const ref = useRef<HTMLDivElement>(null);
+
+  useNotesSettle(ref);
 
   return (
-    <>
+    <div ref={ref}>
       <PageHero
         annotation={t(page.annotation, lang)}
         heading={t(page.heading, lang)}
@@ -20,36 +24,42 @@ export default function AboutPage() {
       />
 
       {/* Founder story */}
-      <section className="pb-10 md:pb-16 px-5 md:px-8">
+      <section className="pb-14 md:pb-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px] grid lg:grid-cols-[1.5fr_auto] gap-14 lg:gap-20 items-start">
-          <div className="surface-card">
+          <Note id="founder-story" tint="sticky-teal" live={false} taped className="md:!p-12">
             <h2 className="t-h2 text-ink">{t(page.storyHeading, lang)}</h2>
             <div className="mt-7 space-y-5">
               {t(page.story, lang)
                 .split('\n\n')
                 .map((para, i) => (
-                  <p key={i} className="t-body text-ink-soft measure-wide">
+                  <p key={i} className="t-body text-ink/75 measure-wide">
                     {para}
                   </p>
                 ))}
             </div>
-          </div>
+          </Note>
 
-          <Drift className="justify-self-center lg:justify-self-end lg:pt-10" amount={26}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/motifs/face-blue.webp"
-              alt=""
-              aria-hidden="true"
-              className="w-56 md:w-72 h-auto mix-blend-multiply"
-            />
-          </Drift>
+          <Parallax
+            speed={0.24}
+            spin={-8}
+            className="justify-self-center lg:justify-self-end lg:pt-10"
+          >
+            <Doodle src="/assets/motifs/face-blue.webp" width="15rem" />
+          </Parallax>
         </div>
       </section>
 
-      {/* What we hold to */}
-      <section className="pb-10 md:pb-16 px-5 md:px-8">
-        <div className="mx-auto max-w-[1200px]">
+      {/* What we hold to — an editorial list, so the page is not notes end to end */}
+      <section className="relative pb-14 md:pb-20 px-5 md:px-8">
+        <Parallax
+          speed={0.3}
+          spin={12}
+          className="hidden lg:block absolute top-16 end-[2%] -z-10"
+        >
+          <Doodle src="/assets/characters/breeze.webp" width="8rem" />
+        </Parallax>
+
+        <div className="relative mx-auto max-w-[1200px]">
           <h2 className="t-h1 text-ink max-w-[14ch]">{t(page.valuesHeading, lang)}</h2>
 
           <ul className="mt-14">
@@ -67,7 +77,7 @@ export default function AboutPage() {
       </section>
 
       {/* Closing invitation */}
-      <section className="pb-10 md:pb-16 px-5 md:px-8">
+      <section className="pb-16 md:pb-24 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px] bg-teal text-white rounded-[50px] px-8 md:px-14 py-14 md:py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <p className="t-h2 max-w-[20ch]">{t(content.home.apply.heading, lang)}</p>
           <Link href="/#visit" className="btn btn-ghost shrink-0">
@@ -76,6 +86,6 @@ export default function AboutPage() {
           </Link>
         </div>
       </section>
-    </>
+    </div>
   );
 }

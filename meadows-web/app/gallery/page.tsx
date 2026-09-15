@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
+import Note from '@/components/Note';
+import { useNotesSettle } from '@/components/Motion';
 
 /**
  * No photography exists in the supplied assets, and the parent research flags
- * stock imagery as a 91% drop-off risk. So this page shows the children's own
+ * stock imagery as a 91% drop-off risk. So this page pins up the children's own
  * drawings and says plainly when photographs are coming — rather than filling
  * the grid with stock pictures of somebody else's nursery.
  */
@@ -26,16 +28,19 @@ export default function GalleryPage() {
   const { lang } = useLang();
   const page = content.pages.gallery;
   const [active, setActive] = useState(page.categories[0].id);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useNotesSettle(ref);
 
   return (
-    <>
+    <div ref={ref}>
       <PageHero
         annotation={t(page.annotation, lang)}
         heading={t(page.heading, lang)}
         intro={t(page.intro, lang)}
       />
 
-      <section className="pb-10 md:pb-16 px-5 md:px-8">
+      <section className="pb-16 md:pb-24 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px]">
           {/* Category filter */}
           <div
@@ -51,9 +56,7 @@ export default function GalleryPage() {
                   role="tab"
                   aria-selected={selected}
                   onClick={() => setActive(cat.id)}
-                  className={`btn shrink-0 ${
-                    selected ? 'btn-accent' : 'btn-ghost'
-                  }`}
+                  className={`btn shrink-0 ${selected ? 'btn-accent' : 'btn-ghost'}`}
                 >
                   {t(cat, lang)}
                 </button>
@@ -61,13 +64,10 @@ export default function GalleryPage() {
             })}
           </div>
 
-          {/* Children's artwork */}
-          <ul className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mt-12">
+          {/* The children's drawings, pinned up */}
+          <ul className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-7 mt-14">
             {ARTWORK.map((src) => (
-              <li
-                key={src}
-                className="surface-card !p-7 aspect-square grid place-items-center transition-transform duration-500 ease-out hover:-translate-y-1.5"
-              >
+              <Note key={src} id={src} as="li" taped className="!p-6 aspect-square">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={src}
@@ -75,16 +75,16 @@ export default function GalleryPage() {
                   aria-hidden="true"
                   className="w-full h-full object-contain"
                 />
-              </li>
+              </Note>
             ))}
           </ul>
 
           {/* Honest state, rather than stock photography */}
-          <p className="annot annot-soft mt-14 block text-center">
+          <p className="annot annot-soft mt-16 block text-center">
             {t(page.emptyState, lang)}
           </p>
         </div>
       </section>
-    </>
+    </div>
   );
 }

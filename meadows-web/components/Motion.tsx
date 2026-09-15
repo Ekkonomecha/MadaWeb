@@ -131,7 +131,63 @@ export function useJourneyCrawl(scope: React.RefObject<HTMLElement | null>) {
   }, [scope]);
 }
 
-/** Gentle parallax on a piece of artwork. Translation only — never hides content. */
+/**
+ * Parallax layer.
+ *
+ * Depth comes from speed: a near layer travels further against the scroll than
+ * a far one, so the drawings separate from the page as you move. Translation
+ * and rotation only — a parallax layer never changes opacity, so nothing it
+ * holds can end up invisible if the animation fails to run.
+ *
+ * `speed` is a fraction of the element's travel through the viewport.
+ * Negative values move with the scroll instead of against it.
+ */
+export function Parallax({
+  children,
+  className = '',
+  speed = 0.18,
+  spin = 0,
+  as: Tag = 'div',
+}: {
+  children: React.ReactNode;
+  className?: string;
+  speed?: number;
+  spin?: number;
+  as?: React.ElementType;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || prefersReducedMotion()) return;
+
+    const distance = (window.innerHeight + el.offsetHeight) * speed;
+
+    const anim = gsap.fromTo(
+      el,
+      { y: distance * 0.5, rotate: spin * -0.5 },
+      {
+        y: -distance * 0.5,
+        rotate: spin * 0.5,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1 },
+      },
+    );
+
+    return () => {
+      anim.scrollTrigger?.kill();
+      anim.kill();
+    };
+  }, [speed, spin]);
+
+  return (
+    <Tag ref={ref} className={`will-drift ${className}`}>
+      {children}
+    </Tag>
+  );
+}
+
+/** Kept for existing call sites — a Parallax with a fixed, gentle travel. */
 export function Drift({
   children,
   className = '',
@@ -162,4 +218,46 @@ export function Drift({
       {children}
     </div>
   );
+}
+
+/**
+ * Notes settling onto the board.
+ *
+ * Each note drops in slightly out of step with its neighbours and lands at the
+ * angle the scatter gave it, so a row reads as paper that was put down by hand
+ * rather than a grid that faded in. Runs once per group, on first sight.
+ */
+export function useNotesSettle(scope: React.RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const root = scope.current;
+    if (!root) return;
+
+    const ctx = gsap.context(() => {
+      const notes = gsap.utils.toArray<HTMLElement>('[data-note]', root);
+      if (!notes.length || prefersReducedMotion()) return;
+
+      notes.forEach((el) => {
+        const landed = el.style.transform;
+        gsap.fromTo(
+          el,
+          { yPercent: -14, opacity: 0, scale: 0.94 },
+          {
+            yPercent: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.75,
+            ease: 'expo.out',
+            clearProps: 'opacity,scale,yPercent',
+            onComplete: () => {
+              // Restore the scatter angle the inline style carries.
+              el.style.transform = landed;
+            },
+            scrollTrigger: { trigger: el, start: 'top 92%', once: true },
+          },
+        );
+      });
+    }, root);
+
+    return () => ctx.revert();
+  }, [scope]);
 }
