@@ -31,6 +31,19 @@ export const accentText: Record<Accent, string> = {
   'teal-deep': 'text-teal-deep',
 };
 
+/**
+ * Full-bleed accent surfaces with the text colour that actually passes on them.
+ * Sun is bright enough to need ink; the rest carry white.
+ */
+export const accentSurface: Record<Accent, string> = {
+  teal: 'bg-teal text-white',
+  sky: 'bg-sky text-white',
+  berry: 'bg-berry text-white',
+  grass: 'bg-grass text-white',
+  sun: 'bg-sun text-ink',
+  'teal-deep': 'bg-teal-deep text-white',
+};
+
 export const accentBg: Record<Accent, string> = {
   teal: 'bg-teal',
   sky: 'bg-sky',

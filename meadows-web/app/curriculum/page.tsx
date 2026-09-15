@@ -2,14 +2,24 @@
 
 import React, { useRef } from 'react';
 import { useLang } from '@/components/LanguageProvider';
-import { content, t, type Accent, accentText, accentBg } from '@/lib/content';
+import { content, t, type Accent, accentSurface } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note, { Doodle } from '@/components/Note';
+import TiltWords from '@/components/TiltWords';
+import CardDeck, { DeckCard } from '@/components/CardDeck';
 import { useJourneyCrawl, useCardTimeline, Parallax } from '@/components/Motion';
 import { JourneyPath } from '@/components/Drawn';
 
+/** One crayon friend riding along on each stage of the day. */
+const STAGE_FRIEND: Record<string, string> = {
+  circle: '/assets/characters/pip.webp',
+  academic: '/assets/characters/comet.webp',
+  explore: '/assets/characters/breeze.webp',
+  body: '/assets/characters/juniper.webp',
+};
+
 export default function CurriculumPage() {
-  const { lang } = useLang();
+  const { lang, isAr } = useLang();
   const page = content.pages.curriculum;
   const journeyRef = useRef<HTMLElement>(null);
   const pageRef = useRef<HTMLDivElement>(null);
@@ -27,11 +37,14 @@ export default function CurriculumPage() {
       />
 
       {/* ── A day of discovery. The caterpillar rides the path as you scroll —
-             the brochure calls the day a journey, so the motion says so too.
-             These four are a genuine sequence, so they are numbered. ── */}
-      <section ref={journeyRef} className="pb-14 md:pb-20 px-5 md:px-8 overflow-hidden">
+             the brochure calls the day a journey, so the motion says so too. ── */}
+      <section ref={journeyRef} className="pb-8 md:pb-12 px-5 md:px-8 overflow-hidden">
         <div className="mx-auto max-w-[1200px]">
-          <h2 className="t-h1 text-ink max-w-[16ch]">{t(page.dayHeading, lang)}</h2>
+          <TiltWords
+            as="h2"
+            text={t(page.dayHeading, lang)}
+            className="t-h1 text-ink max-w-[16ch] block"
+          />
 
           <div className="relative mt-14 hidden md:block" aria-hidden="true">
             <div data-journey>
@@ -46,24 +59,38 @@ export default function CurriculumPage() {
               />
             </div>
           </div>
-
-          <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-7 mt-10 md:mt-8">
-            {page.day.map((stage, i) => {
-              const accent = stage.accent as Accent;
-              return (
-                <Note key={stage.id} id={stage.id} as="li">
-                  <span
-                    className={`inline-grid place-items-center w-9 h-9 rounded-full text-white t-small font-bold ${accentBg[accent]}`}
-                  >
-                    {i + 1}
-                  </span>
-                  <h3 className="t-h3 text-ink mt-5">{t(stage.title, lang)}</h3>
-                  <p className="t-small text-ink/70 mt-3">{t(stage.body, lang)}</p>
-                </Note>
-              );
-            })}
-          </ol>
         </div>
+      </section>
+
+      {/* The day dealt out one card at a time. Each stage pins at the same line
+          and the one beneath tilts away as the next rises to cover it. */}
+      <section className="px-5 md:px-8 pb-16 md:pb-24">
+        <CardDeck className="mx-auto max-w-[1100px] space-y-6 md:space-y-8">
+          {page.day.map((stage, i) => {
+            const accent = stage.accent as Accent;
+            return (
+              <DeckCard key={stage.id} index={i} className={accentSurface[accent]}>
+                <div className="grid md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-center px-8 md:px-14 py-12 md:py-16">
+                  <div>
+                    <span className="t-small font-medium opacity-70">
+                      {isAr ? `المرحلة ${i + 1}` : `Stage ${i + 1}`}
+                    </span>
+                    <h3 className="t-h1 mt-3">{t(stage.title, lang)}</h3>
+                    <p className="t-subheading mt-6 measure opacity-85">
+                      {t(stage.body, lang)}
+                    </p>
+                  </div>
+
+                  <Doodle
+                    src={STAGE_FRIEND[stage.id] ?? '/assets/characters/pip.webp'}
+                    width="10rem"
+                    className="justify-self-center md:justify-self-end"
+                  />
+                </div>
+              </DeckCard>
+            );
+          })}
+        </CardDeck>
       </section>
 
       {/* Bilingual + interview */}
@@ -78,7 +105,11 @@ export default function CurriculumPage() {
 
         <div className="relative mx-auto max-w-[1200px] grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="lg:pt-6">
-            <h2 className="t-h1 text-ink max-w-[14ch]">{t(page.bilingualHeading, lang)}</h2>
+            <TiltWords
+              as="h2"
+              text={t(page.bilingualHeading, lang)}
+              className="t-h1 text-ink max-w-[14ch] block"
+            />
             <p className="t-body text-ink-soft mt-7 measure">{t(page.bilingualBody, lang)}</p>
           </div>
 

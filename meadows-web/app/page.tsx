@@ -7,6 +7,7 @@ import { content, t, type Accent, accentText, accentBg } from '@/lib/content';
 import { spread, jitter } from '@/lib/scatter';
 import { AnnotationArrow } from '@/components/Drawn';
 import Note, { Doodle } from '@/components/Note';
+import TiltWords from '@/components/TiltWords';
 import { useHeroSequence, useCardTimeline, Parallax } from '@/components/Motion';
 
 export default function HomePage() {
@@ -129,7 +130,7 @@ export default function HomePage() {
       <section className="relative py-14 md:py-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px] grid lg:grid-cols-[1fr_auto] gap-14 lg:gap-20 items-center">
           <div>
-            <h2 className="t-h1 text-ink max-w-[16ch]">{t(home.about.heading, lang)}</h2>
+            <TiltWords as="h2" text={t(home.about.heading, lang)} className="t-h1 text-ink max-w-[16ch] block" />
             <p className="t-body measure-wide text-ink-soft mt-8">{t(home.about.body, lang)}</p>
             <p className="mt-9">
               <Link href="/about" className="t-subheading link-inline">
@@ -156,7 +157,7 @@ export default function HomePage() {
 
         <div className="relative mx-auto max-w-[1200px]">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <h2 className="t-h1 text-ink max-w-[14ch]">{t(home.programs.heading, lang)}</h2>
+            <TiltWords as="h2" text={t(home.programs.heading, lang)} className="t-h1 text-ink max-w-[14ch] block" />
             <p className="annot annot-berry">{t(home.programs.annotation, lang)}</p>
           </div>
           <p className="t-subheading text-ink-soft mt-8 measure-wide">
@@ -202,7 +203,7 @@ export default function HomePage() {
       <section className="py-14 md:py-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px]">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <h2 className="t-h1 text-ink max-w-[14ch]">{t(home.characters.heading, lang)}</h2>
+            <TiltWords as="h2" text={t(home.characters.heading, lang)} className="t-h1 text-ink max-w-[14ch] block" />
             <p className="annot annot-sky">{t(home.characters.annotation, lang)}</p>
           </div>
           <p className="t-subheading text-ink-soft mt-8 measure-wide">
@@ -267,7 +268,7 @@ export default function HomePage() {
 
         <div className="relative mx-auto max-w-[1200px]">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <h2 className="t-h1 text-ink max-w-[14ch]">{t(home.why.heading, lang)}</h2>
+            <TiltWords as="h2" text={t(home.why.heading, lang)} className="t-h1 text-ink max-w-[14ch] block" />
             <p className="annot">{t(home.why.annotation, lang)}</p>
           </div>
           <p className="t-subheading text-ink-soft mt-8 measure-wide">
@@ -289,7 +290,7 @@ export default function HomePage() {
       <section className="py-14 md:py-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px] grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
           <div>
-            <h2 className="t-h1 text-ink max-w-[14ch]">{t(home.gallery.heading, lang)}</h2>
+            <TiltWords as="h2" text={t(home.gallery.heading, lang)} className="t-h1 text-ink max-w-[14ch] block" />
             <p className="t-subheading text-ink-soft mt-8 measure">
               {t(home.gallery.body, lang)}
             </p>
@@ -319,9 +320,11 @@ export default function HomePage() {
       <section className="py-14 md:py-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px]">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <h2 className="t-h1 text-ink max-w-[14ch]">
-              {t(home.testimonials.heading, lang)}
-            </h2>
+            <TiltWords
+              as="h2"
+              text={t(home.testimonials.heading, lang)}
+              className="t-h1 text-ink max-w-[14ch] block"
+            />
             <p className="annot annot-berry">{t(home.testimonials.annotation, lang)}</p>
           </div>
 
@@ -353,7 +356,7 @@ export default function HomePage() {
 
           <div className="relative grid lg:grid-cols-[1.4fr_auto] gap-10 lg:gap-16 lg:items-end">
             <div>
-              <h2 className="t-h1 max-w-[14ch]">{t(home.summer.heading, lang)}</h2>
+              <TiltWords as="h2" text={t(home.summer.heading, lang)} className="t-h1 max-w-[14ch] block" />
               <p className="t-subheading text-white/80 mt-7 measure-wide">
                 {t(home.summer.body, lang)}
               </p>
@@ -400,7 +403,7 @@ function VisitSection() {
 
       <div className="relative mx-auto max-w-[1200px] grid lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-20 items-start">
         <div>
-          <h2 className="t-h1 text-ink max-w-[13ch]">{t(apply.heading, lang)}</h2>
+          <TiltWords as="h2" text={t(apply.heading, lang)} className="t-h1 text-ink max-w-[13ch] block" />
           <p className="t-subheading text-ink-soft mt-8 measure">{t(apply.body, lang)}</p>
 
           <p className="annot mt-10">{t(apply.annotation, lang)}</p>
