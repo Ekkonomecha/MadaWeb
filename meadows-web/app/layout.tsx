@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Poppins, Caveat, Almarai } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
+import SmoothScroll from '@/components/SmoothScroll';
 import Shell from '@/components/Shell';
 import { content } from '@/lib/content';
 
@@ -51,7 +52,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body suppressHydrationWarning className="antialiased">
         <LanguageProvider>
-          <Shell>{children}</Shell>
+          <SmoothScroll>
+            <Shell>{children}</Shell>
+          </SmoothScroll>
         </LanguageProvider>
       </body>
     </html>

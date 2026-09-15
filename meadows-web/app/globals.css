@@ -48,11 +48,33 @@
 }
 
 /* ===========================================================================
+   Lenis — required styles, inlined rather than imported so there is no
+   node_modules path dependency in the stylesheet.
+   =========================================================================== */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ===========================================================================
    Base
    =========================================================================== */
 
 html {
-  scroll-behavior: smooth;
+  /* No `scroll-behavior: smooth` — Lenis drives the scroll itself and the two
+     fight each other. Lenis forces `auto` below while it is active. */
   -webkit-text-size-adjust: 100%;
   /* Browser surfaces belong to the design system too. */
   scrollbar-color: color-mix(in srgb, var(--color-teal) 45%, transparent) transparent;

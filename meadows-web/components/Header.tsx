@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useLenis } from 'lenis/react';
 import { useLang } from './LanguageProvider';
 import { content, t } from '@/lib/content';
 
@@ -20,13 +21,27 @@ export default function Header() {
 
   const { nav, global } = content;
 
-  // Lock the page behind the mobile sheet
+  const lenis = useLenis();
+
+  /*
+   * Lock the page behind the mobile sheet. Lenis owns the scroll position, so
+   * `overflow: hidden` on the body no longer stops it — the instance has to be
+   * told to stop. The overflow is still set for the case where Lenis was
+   * destroyed for reduced motion and the browser is scrolling natively.
+   */
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      lenis?.stop();
+      document.body.style.overflow = 'hidden';
+    } else {
+      lenis?.start();
+      document.body.style.overflow = '';
+    }
     return () => {
+      lenis?.start();
       document.body.style.overflow = '';
     };
-  }, [open]);
+  }, [open, lenis]);
 
   return (
     <>
