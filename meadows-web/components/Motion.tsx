@@ -16,6 +16,28 @@ export function prefersReducedMotion() {
 }
 
 /**
+ * Marks a subtree whose scroll animations should be left alone.
+ * Put `data-scroll-ignore` on anything that must not be animated by the
+ * page-level scroll hooks.
+ */
+const IGNORE = '[data-scroll-ignore]';
+
+/**
+ * True when this element sits inside something that is itself scroll-animated.
+ *
+ * Nested scroll animation is a bug, not a feature. A card that animates writes
+ * a transform on itself, so a ScrollTrigger belonging to a descendant measures
+ * a position that is still moving — it fires at the wrong scroll offset and the
+ * two transforms compound into a jitter. The outermost animated element wins
+ * and everything inside it rides along.
+ */
+function hasAnimatedAncestor(el: Element, selector: string): boolean {
+  const parent = el.parentElement;
+  if (!parent) return false;
+  return !!parent.closest(`${selector}, ${IGNORE}`);
+}
+
+/**
  * The home page's single authored moment.
  *
  * The display headline lifts line by line, then the six characters rise from
@@ -38,7 +60,9 @@ export function useHeroSequence(
     let stopWaiting: (() => void) | undefined;
 
     const ctx = gsap.context(() => {
-      const risers = gsap.utils.toArray<HTMLElement>('[data-rise]', root);
+      const risers = gsap.utils
+        .toArray<HTMLElement>('[data-rise]', root)
+        .filter((el) => !hasAnimatedAncestor(el, '[data-rise]'));
       const lines = gsap.utils.toArray<HTMLElement>('[data-hero-line]', root);
       const note = root.querySelector<HTMLElement>('[data-hero-note]');
       const all = [...risers, ...lines, ...(note ? [note] : [])];
@@ -161,6 +185,14 @@ export function Parallax({
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
 
+    /*
+     * A parallax layer inside a card is the compounding case: the card writes
+     * its own transform as it reveals, and this layer would write another on
+     * top while measuring against a moving parent. Sit still and let the card
+     * carry it.
+     */
+    if (hasAnimatedAncestor(el, '[data-note]')) return;
+
     const distance = (window.innerHeight + el.offsetHeight) * speed;
 
     const anim = gsap.fromTo(
@@ -241,7 +273,16 @@ export function useCardTimeline(scope: React.RefObject<HTMLElement | null>) {
     if (!root) return;
 
     const ctx = gsap.context(() => {
-      const notes = gsap.utils.toArray<HTMLElement>('[data-note]', root);
+      /*
+       * Outermost cards only. A card nested inside another card is animated by
+       * its parent already; giving it its own trigger would measure against a
+       * moving element and compound the two transforms. `data-scroll-ignore`
+       * opts a subtree out by hand.
+       */
+      const notes = gsap.utils
+        .toArray<HTMLElement>('[data-note]', root)
+        .filter((el) => !hasAnimatedAncestor(el, '[data-note]'));
+
       if (!notes.length) return;
 
       // No animation at all — the cards are simply already there.
