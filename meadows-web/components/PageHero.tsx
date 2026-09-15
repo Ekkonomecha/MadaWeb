@@ -1,9 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Squiggle } from './Drawn';
+import { AnnotationArrow } from './Drawn';
 
-/** Shared opening band for inner pages. Mirrors Mada's page structure. */
+/**
+ * Opening band for inner pages.
+ *
+ * The heading is the dominant element and sits directly on the canvas with no
+ * card wrapper. The handwritten note is a margin annotation set beside the
+ * intro, not a label stacked above the heading.
+ */
 export default function PageHero({
   annotation,
   heading,
@@ -18,13 +24,27 @@ export default function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="relative paper-grain pt-16 pb-14 md:pt-24 md:pb-20 overflow-hidden">
-      <div className="relative mx-auto max-w-[1180px] px-5 md:px-8">
-        <p className={`annot mb-4 ${annotationTone}`}>{annotation}</p>
-        <h1 className="t-h1 text-ink max-w-[24ch]">{heading}</h1>
-        {intro && <p className="t-body text-ink-soft mt-6 measure-wide">{intro}</p>}
+    <section className="pt-8 pb-12 md:pt-14 md:pb-16">
+      <div className="mx-auto max-w-[1200px] px-5 md:px-8">
+        <h1 className="t-h1 text-ink max-w-[18ch] text-balance">{heading}</h1>
+
+        {(intro || annotation) && (
+          <div className="mt-10 md:mt-14 grid gap-8 lg:grid-cols-[minmax(0,46rem)_auto] lg:items-start">
+            {intro && <p className="t-subheading text-ink-soft measure-wide">{intro}</p>}
+
+            {annotation && (
+              <p className="flex items-start gap-2 lg:justify-self-end lg:pt-1">
+                <AnnotationArrow
+                  className="w-8 h-6 text-teal/45 shrink-0 -scale-y-100 rtl:-scale-x-100 rtl:-scale-y-100"
+                  strokeWidth={2}
+                />
+                <span className={`annot ${annotationTone}`}>{annotation}</span>
+              </p>
+            )}
+          </div>
+        )}
+
         {children}
-        <Squiggle className="w-40 h-4 text-teal/35 mt-10" strokeWidth={3.5} />
       </div>
     </section>
   );

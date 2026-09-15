@@ -40,13 +40,4 @@ export const accentBg: Record<Accent, string> = {
   'teal-deep': 'bg-teal-deep',
 };
 
-/** Soft tint used behind illustrations. */
-export const accentWash: Record<Accent, string> = {
-  teal: 'bg-teal/10',
-  sky: 'bg-sky/10',
-  berry: 'bg-berry/10',
-  grass: 'bg-grass/10',
-  sun: 'bg-sun/20',
-  'teal-deep': 'bg-teal-deep/10',
-};
 

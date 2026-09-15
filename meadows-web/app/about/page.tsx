@@ -6,7 +6,6 @@ import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import { Drift } from '@/components/Motion';
-import { DrawnRing } from '@/components/Drawn';
 
 export default function AboutPage() {
   const { lang } = useLang();
@@ -21,64 +20,59 @@ export default function AboutPage() {
       />
 
       {/* Founder story */}
-      <section className="bg-chalk py-20 md:py-28">
-        <div className="mx-auto max-w-[1180px] px-5 md:px-8">
-          <div className="grid lg:grid-cols-[1.4fr_1fr] gap-14 items-start">
-            <div>
-              <h2 className="t-h2 text-ink">{t(page.storyHeading, lang)}</h2>
-              <div className="mt-6 space-y-5">
-                {t(page.story, lang)
-                  .split('\n\n')
-                  .map((para, i) => (
-                    <p key={i} className="t-body text-ink-soft measure-wide">
-                      {para}
-                    </p>
-                  ))}
-              </div>
+      <section className="pb-10 md:pb-16 px-5 md:px-8">
+        <div className="mx-auto max-w-[1200px] grid lg:grid-cols-[1.5fr_auto] gap-14 lg:gap-20 items-start">
+          <div className="surface-card">
+            <h2 className="t-h2 text-ink">{t(page.storyHeading, lang)}</h2>
+            <div className="mt-7 space-y-5">
+              {t(page.story, lang)
+                .split('\n\n')
+                .map((para, i) => (
+                  <p key={i} className="t-body text-ink-soft measure-wide">
+                    {para}
+                  </p>
+                ))}
             </div>
-
-            <Drift className="justify-self-center lg:justify-self-end" amount={26}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/assets/motifs/face-blue.webp"
-                alt=""
-                aria-hidden="true"
-                className="w-52 md:w-64 h-auto mix-blend-multiply"
-              />
-            </Drift>
           </div>
+
+          <Drift className="justify-self-center lg:justify-self-end lg:pt-10" amount={26}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/motifs/face-blue.webp"
+              alt=""
+              aria-hidden="true"
+              className="w-56 md:w-72 h-auto mix-blend-multiply"
+            />
+          </Drift>
         </div>
       </section>
 
       {/* What we hold to */}
-      <section className="py-20 md:py-28 paper-grain relative">
-        <div className="relative mx-auto max-w-[1180px] px-5 md:px-8">
-          <div>
-            <h2 className="t-h2 text-ink">{t(page.valuesHeading, lang)}</h2>
-          </div>
+      <section className="pb-10 md:pb-16 px-5 md:px-8">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 className="t-h1 text-ink max-w-[14ch]">{t(page.valuesHeading, lang)}</h2>
 
-          <ul className="grid md:grid-cols-2 gap-x-14 gap-y-10 mt-12">
-            {page.values.map((value, i) => (
-              <li key={value.id} className="flex gap-5">
-                <span className="relative shrink-0 w-12 h-12 grid place-items-center">
-                  <DrawnRing className="absolute inset-0 w-full h-full text-berry/35" />
-                  <span className="t-h3 text-berry leading-none">{i + 1}</span>
-                </span>
-                <div>
-                  <h3 className="t-h3 text-ink">{t(value.title, lang)}</h3>
-                  <p className="t-body text-ink-soft mt-2 measure">{t(value.body, lang)}</p>
-                </div>
+          <ul className="mt-14">
+            {page.values.map((value) => (
+              <li
+                key={value.id}
+                className="border-t border-hairline grid md:grid-cols-[minmax(0,22rem)_1fr] gap-3 md:gap-10 py-9 md:py-11 items-baseline"
+              >
+                <h3 className="t-h2 text-ink">{t(value.title, lang)}</h3>
+                <p className="t-body text-ink-soft measure">{t(value.body, lang)}</p>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section className="bg-teal text-white py-16 md:py-20 paper-grain relative">
-        <div className="relative mx-auto max-w-[1180px] px-5 md:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <p className="t-h2 max-w-[22ch]">{t(content.home.apply.heading, lang)}</p>
-          <Link href="/#visit" className="btn btn-sun shrink-0">
+      {/* Closing invitation */}
+      <section className="pb-10 md:pb-16 px-5 md:px-8">
+        <div className="mx-auto max-w-[1200px] bg-teal text-white rounded-[50px] px-8 md:px-14 py-14 md:py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+          <p className="t-h2 max-w-[20ch]">{t(content.home.apply.heading, lang)}</p>
+          <Link href="/#visit" className="btn btn-ghost shrink-0">
             {t(content.nav.cta, lang)}
+            <span className="btn-dot bg-sun" aria-hidden="true" />
           </Link>
         </div>
       </section>

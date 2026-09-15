@@ -15,3 +15,6 @@ Meadows Materials/
 # machine; skills-lock.json is committed so the set is reproducible.
 .agents/
 .claude/skills/
+
+# TypeScript incremental build artifact
+*.tsbuildinfo

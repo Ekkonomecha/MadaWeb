@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
-import { Squiggle } from '@/components/Drawn';
 
 /**
  * No photography exists in the supplied assets, and the parent research flags
@@ -36,13 +35,13 @@ export default function GalleryPage() {
         intro={t(page.intro, lang)}
       />
 
-      <section className="bg-chalk py-14 md:py-20">
-        <div className="mx-auto max-w-[1180px] px-5 md:px-8">
+      <section className="pb-10 md:pb-16 px-5 md:px-8">
+        <div className="mx-auto max-w-[1200px]">
           {/* Category filter */}
           <div
             role="tablist"
             aria-label={t(page.heading, lang)}
-            className="flex gap-2 overflow-x-auto no-scrollbar pb-2"
+            className="flex gap-2.5 overflow-x-auto no-scrollbar pb-2"
           >
             {page.categories.map((cat) => {
               const selected = cat.id === active;
@@ -52,7 +51,9 @@ export default function GalleryPage() {
                   role="tab"
                   aria-selected={selected}
                   onClick={() => setActive(cat.id)}
-                  className={`btn shrink-0 ${selected ? 'btn-primary' : 'btn-ghost'}`}
+                  className={`btn shrink-0 ${
+                    selected ? 'btn-accent' : 'btn-ghost'
+                  }`}
                 >
                   {t(cat, lang)}
                 </button>
@@ -60,30 +61,28 @@ export default function GalleryPage() {
             })}
           </div>
 
-          {/* Children's artwork, pinned up */}
-          <ul className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mt-10">
-            {ARTWORK.map((src, i) => (
+          {/* Children's artwork */}
+          <ul className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mt-12">
+            {ARTWORK.map((src) => (
               <li
                 key={src}
-                className="sheet sheet-hover aspect-square grid place-items-center p-6"
-                style={{ transform: `rotate(${i % 3 === 0 ? -1.3 : i % 3 === 1 ? 0.9 : -0.4}deg)` }}
+                className="surface-card !p-7 aspect-square grid place-items-center transition-transform duration-500 ease-out hover:-translate-y-1.5"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={src}
                   alt=""
                   aria-hidden="true"
-                  className="w-full h-full object-contain mix-blend-multiply"
+                  className="w-full h-full object-contain"
                 />
               </li>
             ))}
           </ul>
 
           {/* Honest state, rather than stock photography */}
-          <div className="mt-14 text-center">
-            <Squiggle className="w-28 h-4 text-teal/40 mx-auto mb-5" strokeWidth={3.5} />
-            <p className="annot annot-soft">{t(page.emptyState, lang)}</p>
-          </div>
+          <p className="annot annot-soft mt-14 block text-center">
+            {t(page.emptyState, lang)}
+          </p>
         </div>
       </section>
     </>

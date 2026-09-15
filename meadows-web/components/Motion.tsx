@@ -16,11 +16,16 @@ export function prefersReducedMotion() {
 }
 
 /**
- * The home page's single orchestrated moment.
+ * The home page's single authored moment.
  *
- * The crayon horizon draws itself across the page, then the six characters rise
- * from behind it in sequence. It runs once, on load. Everything below the fold
- * is deliberately quiet — no fade-up per section.
+ * The display headline lifts line by line, then the six characters rise from
+ * the bottom edge of the viewport and settle onto the canvas — the reference's
+ * "illustration bleeding from the bottom edge into the next section", arriving
+ * rather than sitting there. It runs once, on load. Nothing below the fold
+ * animates in; scattered per-section entrances are the generic default.
+ *
+ * Everything animates FROM an already-visible layout, so if the timeline never
+ * runs the page is simply the finished page.
  */
 export function useHeroSequence(
   scope: React.RefObject<HTMLElement | null>,
@@ -30,31 +35,47 @@ export function useHeroSequence(
     if (!enabled || !scope.current) return;
 
     const root = scope.current;
-    const reduced = prefersReducedMotion();
-
     let stopWaiting: (() => void) | undefined;
 
     const ctx = gsap.context(() => {
-      const horizon = root.querySelector<SVGPathElement>('[data-horizon] path');
       const risers = gsap.utils.toArray<HTMLElement>('[data-rise]', root);
-      const words = gsap.utils.toArray<HTMLElement>('[data-hero-line]', root);
-      const all = [...risers, ...words];
+      const lines = gsap.utils.toArray<HTMLElement>('[data-hero-line]', root);
+      const note = root.querySelector<HTMLElement>('[data-hero-note]');
+      const all = [...risers, ...lines, ...(note ? [note] : [])];
 
-      /** Final, fully visible state — what the page looks like with no animation. */
-      const settle = () => {
-        gsap.set(all, { clearProps: 'all' });
-        if (horizon) gsap.set(horizon, { strokeDasharray: 'none', strokeDashoffset: 0 });
-      };
+      /** The finished page, with nothing left applied. */
+      const settle = () => gsap.set(all, { clearProps: 'all' });
 
-      if (reduced) {
+      if (prefersReducedMotion()) {
         settle();
         return;
       }
 
+      const play = () => {
+        const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+
+        tl.from(lines, { yPercent: 108, opacity: 0, duration: 1.1, stagger: 0.075 }, 0);
+
+        tl.from(
+          risers,
+          {
+            yPercent: 42,
+            opacity: 0,
+            duration: 1.15,
+            stagger: { each: 0.07, from: 'center' },
+          },
+          0.42,
+        );
+
+        if (note) {
+          tl.from(note, { opacity: 0, rotate: -9, duration: 0.7, ease: 'power2.out' }, 0.95);
+        }
+      };
+
       /*
-       * requestAnimationFrame does not fire in a background tab, so an intro
-       * started there would freeze part-played and leave the hero invisible.
-       * Stay visible instead, and play the intro the first time the tab is seen.
+       * requestAnimationFrame does not run in a background tab, so an intro
+       * started there would freeze part-played. Stay finished instead, and
+       * play the moment the first time the tab is actually looked at.
        */
       if (document.hidden) {
         settle();
@@ -70,34 +91,6 @@ export function useHeroSequence(
       }
 
       play();
-
-      function play() {
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-        tl.from(words, { yPercent: 115, opacity: 0, duration: 0.85, stagger: 0.09 }, 0);
-
-        if (horizon) {
-          const len = horizon.getTotalLength();
-          gsap.set(horizon, { strokeDasharray: len, strokeDashoffset: len });
-          tl.to(horizon, { strokeDashoffset: 0, duration: 1.25, ease: 'power2.inOut' }, 0.35);
-          // Drop the dash pattern once drawn, so the line is a plain stroke afterwards.
-          tl.set(horizon, { strokeDasharray: 'none' });
-        }
-
-        tl.from(
-          risers,
-          {
-            y: 64,
-            opacity: 0,
-            scale: 0.86,
-            rotate: (i: number) => (i % 2 ? 7 : -7),
-            duration: 0.72,
-            stagger: 0.085,
-            ease: 'back.out(1.6)',
-          },
-          0.75,
-        );
-      }
     }, root);
 
     return () => {
@@ -109,12 +102,10 @@ export function useHeroSequence(
 
 /**
  * The curriculum page's moment: the caterpillar crawls the day's journey path
- * as you scroll through the four stages. Motion that means something — the
- * brochure calls the day a journey rather than a schedule.
+ * as you scroll the four stages. Motion that carries meaning — the brochure
+ * calls the day a journey rather than a schedule.
  */
-export function useJourneyCrawl(
-  scope: React.RefObject<HTMLElement | null>,
-) {
+export function useJourneyCrawl(scope: React.RefObject<HTMLElement | null>) {
   useEffect(() => {
     const root = scope.current;
     if (!root) return;
@@ -125,19 +116,14 @@ export function useJourneyCrawl(
       if (!crawler || !path) return;
 
       if (prefersReducedMotion()) {
-        gsap.set(crawler, { opacity: 1, xPercent: 0 });
+        gsap.set(crawler, { opacity: 1 });
         return;
       }
 
       gsap.to(crawler, {
         motionPath: { path, align: path, alignOrigin: [0.5, 0.85], start: 0, end: 1 },
         ease: 'none',
-        scrollTrigger: {
-          trigger: root,
-          start: 'top 68%',
-          end: 'bottom 72%',
-          scrub: 0.8,
-        },
+        scrollTrigger: { trigger: root, start: 'top 68%', end: 'bottom 72%', scrub: 0.8 },
       });
     }, root);
 
@@ -145,7 +131,7 @@ export function useJourneyCrawl(
   }, [scope]);
 }
 
-/** Gentle parallax on a drawn motif. Opt-in, one or two per page at most. */
+/** Gentle parallax on a piece of artwork. Translation only — never hides content. */
 export function Drift({
   children,
   className = '',
