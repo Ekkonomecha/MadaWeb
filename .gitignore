@@ -9,3 +9,9 @@ coverage/
 # Client materials — the stakeholder brief is marked "Confidential — For
 # Stakeholder Review" and this repository is public. Keep it local.
 Meadows Materials/
+
+# Agent skills installed via `npx skills add`. The vendored copy is 2.3MB of
+# third-party tooling and .claude/skills holds an absolute symlink to this
+# machine; skills-lock.json is committed so the set is reproducible.
+.agents/
+.claude/skills/
