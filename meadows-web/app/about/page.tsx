@@ -6,14 +6,14 @@ import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note, { Doodle } from '@/components/Note';
-import { useNotesSettle, Parallax } from '@/components/Motion';
+import { useCardTimeline, Parallax } from '@/components/Motion';
 
 export default function AboutPage() {
   const { lang } = useLang();
   const page = content.pages.about;
   const ref = useRef<HTMLDivElement>(null);
 
-  useNotesSettle(ref);
+  useCardTimeline(ref);
 
   return (
     <div ref={ref}>

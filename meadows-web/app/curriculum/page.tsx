@@ -5,7 +5,7 @@ import { useLang } from '@/components/LanguageProvider';
 import { content, t, type Accent, accentText, accentBg } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note, { Doodle } from '@/components/Note';
-import { useJourneyCrawl, useNotesSettle, Parallax } from '@/components/Motion';
+import { useJourneyCrawl, useCardTimeline, Parallax } from '@/components/Motion';
 import { JourneyPath } from '@/components/Drawn';
 
 export default function CurriculumPage() {
@@ -15,7 +15,7 @@ export default function CurriculumPage() {
   const pageRef = useRef<HTMLDivElement>(null);
 
   useJourneyCrawl(journeyRef);
-  useNotesSettle(pageRef);
+  useCardTimeline(pageRef);
 
   return (
     <div ref={pageRef}>

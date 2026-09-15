@@ -7,7 +7,7 @@ import { content, t, type Accent, accentText, accentBg } from '@/lib/content';
 import { spread, jitter } from '@/lib/scatter';
 import { AnnotationArrow } from '@/components/Drawn';
 import Note, { Doodle } from '@/components/Note';
-import { useHeroSequence, useNotesSettle, Parallax } from '@/components/Motion';
+import { useHeroSequence, useCardTimeline, Parallax } from '@/components/Motion';
 
 export default function HomePage() {
   const { lang, isAr } = useLang();
@@ -16,7 +16,7 @@ export default function HomePage() {
   const pageRef = useRef<HTMLDivElement>(null);
 
   useHeroSequence(heroRef);
-  useNotesSettle(pageRef);
+  useCardTimeline(pageRef);
 
   return (
     <div ref={pageRef}>

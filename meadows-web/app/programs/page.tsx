@@ -6,14 +6,14 @@ import { useLang } from '@/components/LanguageProvider';
 import { content, t, tList, type Accent, accentText, accentBg } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note, { Doodle } from '@/components/Note';
-import { useNotesSettle, Parallax } from '@/components/Motion';
+import { useCardTimeline, Parallax } from '@/components/Motion';
 
 export default function ProgramsPage() {
   const { lang } = useLang();
   const page = content.pages.programs;
   const ref = useRef<HTMLDivElement>(null);
 
-  useNotesSettle(ref);
+  useCardTimeline(ref);
 
   return (
     <div ref={ref}>

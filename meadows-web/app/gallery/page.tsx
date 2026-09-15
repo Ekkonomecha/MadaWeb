@@ -5,7 +5,7 @@ import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note from '@/components/Note';
-import { useNotesSettle } from '@/components/Motion';
+import { useCardTimeline } from '@/components/Motion';
 
 /**
  * No photography exists in the supplied assets, and the parent research flags
@@ -30,7 +30,7 @@ export default function GalleryPage() {
   const [active, setActive] = useState(page.categories[0].id);
   const ref = useRef<HTMLDivElement>(null);
 
-  useNotesSettle(ref);
+  useCardTimeline(ref);
 
   return (
     <div ref={ref}>

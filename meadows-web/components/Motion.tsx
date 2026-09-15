@@ -221,41 +221,87 @@ export function Drift({
 }
 
 /**
- * Notes settling onto the board.
+ * Cards settling onto the board, as one timeline per group.
  *
- * Each note drops in slightly out of step with its neighbours and lands at the
- * angle the scatter gave it, so a row reads as paper that was put down by hand
- * rather than a grid that faded in. Runs once per group, on first sight.
+ * Notes are grouped by the list or section that holds them, so a row staggers
+ * together instead of each card firing on its own trigger. Each group gets a
+ * timeline whose ScrollTrigger is created once; the tweens inside are cleared
+ * and rebuilt whenever ScrollTrigger refreshes, which is how a resize or a
+ * breakpoint change gets fresh measurements rather than stale ones layered on
+ * top of each other.
+ *
+ * A group that has already played is skipped on rebuild. Clearing a finished
+ * timeline would re-apply its `from` state — hiding those cards again — and
+ * with `once: true` the trigger is already dead, so nothing would ever reveal
+ * them.
  */
-export function useNotesSettle(scope: React.RefObject<HTMLElement | null>) {
+export function useCardTimeline(scope: React.RefObject<HTMLElement | null>) {
   useEffect(() => {
     const root = scope.current;
     if (!root) return;
 
     const ctx = gsap.context(() => {
       const notes = gsap.utils.toArray<HTMLElement>('[data-note]', root);
-      if (!notes.length || prefersReducedMotion()) return;
+      if (!notes.length) return;
 
+      // No animation at all — the cards are simply already there.
+      if (prefersReducedMotion()) {
+        gsap.set(notes, { clearProps: 'all' });
+        return;
+      }
+
+      // Group each card with the siblings it should stagger alongside.
+      const groups = new Map<Element, HTMLElement[]>();
       notes.forEach((el) => {
-        const landed = el.style.transform;
-        gsap.fromTo(
-          el,
-          { yPercent: -14, opacity: 0, scale: 0.94 },
-          {
-            yPercent: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.75,
-            ease: 'expo.out',
-            clearProps: 'opacity,scale,yPercent',
-            onComplete: () => {
-              // Restore the scatter angle the inline style carries.
-              el.style.transform = landed;
-            },
-            scrollTrigger: { trigger: el, start: 'top 92%', once: true },
-          },
-        );
+        const key = el.closest('ul, ol, section') ?? root;
+        const list = groups.get(key);
+        if (list) list.push(el);
+        else groups.set(key, [el]);
       });
+
+      type Entry = { els: HTMLElement[]; tl: gsap.core.Timeline; played: boolean };
+
+      const entries: Entry[] = [...groups].map(([trigger, els]) => {
+        const entry: Entry = {
+          els,
+          played: false,
+          tl: gsap.timeline({
+            scrollTrigger: {
+              trigger: trigger as HTMLElement,
+              start: 'top 85%',
+              once: true,
+              invalidateOnRefresh: true,
+            },
+          }),
+        };
+        entry.tl.eventCallback('onComplete', () => {
+          entry.played = true;
+        });
+        return entry;
+      });
+
+      const build = () => {
+        entries.forEach((entry) => {
+          if (entry.played) return;
+          entry.tl.clear();
+          entry.tl.from(entry.els, {
+            yPercent: 12,
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.8,
+            ease: 'expo.out',
+            stagger: 0.09,
+            // Hand the element back to CSS once it has landed.
+            clearProps: 'transform,opacity',
+          });
+        });
+      };
+
+      build();
+      ScrollTrigger.addEventListener('refreshInit', build);
+
+      // gsap.context runs whatever the callback returns on revert.
+      return () => ScrollTrigger.removeEventListener('refreshInit', build);
     }, root);
 
     return () => ctx.revert();

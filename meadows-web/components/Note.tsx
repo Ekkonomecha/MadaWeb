@@ -8,6 +8,11 @@ import { note, type StickyTint } from '@/lib/scatter';
  *
  * The angle, tint and tape position all come from a hash of `id`, so the board
  * looks hand-arranged while rendering identically on the server and the client.
+ *
+ * Two elements, deliberately: the outer one holds the scatter rotation as an
+ * inline transform, the inner one carries `data-note` and is what GSAP animates.
+ * `transform` is a single property, so one layer animating y/scale would wipe
+ * out the other's rotate if they shared an element.
  */
 export default function Note({
   id,
@@ -33,16 +38,16 @@ export default function Note({
 
   return (
     <Tag
-      data-note
-      className={`note ${n.tint} ${live ? 'note-live' : ''} ${taped ? 'note-taped' : ''} ${className}`}
-      style={
-        {
-          transform: `rotate(${n.rotate}deg)`,
-          '--tape-shift': `${n.tape}%`,
-        } as React.CSSProperties
-      }
+      className={`note-tilt ${live ? 'note-tilt-live' : ''}`}
+      style={{ transform: `rotate(${n.rotate}deg)` } as React.CSSProperties}
     >
-      {children}
+      <div
+        data-note
+        className={`note ${n.tint} ${live ? 'note-live' : ''} ${taped ? 'note-taped' : ''} ${className}`}
+        style={{ '--tape-shift': `${n.tape}%` } as React.CSSProperties}
+      >
+        {children}
+      </div>
     </Tag>
   );
 }
