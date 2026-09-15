@@ -326,12 +326,15 @@ export function useCardTimeline(scope: React.RefObject<HTMLElement | null>) {
           if (entry.played) return;
           entry.tl.clear();
           entry.tl.from(entry.els, {
-            yPercent: 12,
+            // An absolute distance, so a tall card and a short one travel the
+            // same way and the row reads as one movement.
+            y: 48,
             opacity: 0,
-            scale: 0.95,
-            duration: 0.8,
+            duration: 0.9,
             ease: 'expo.out',
-            stagger: 0.09,
+            // Long enough to read as one card after another rather than a
+            // single block fading in together.
+            stagger: { each: 0.16, from: 'start' },
             // Hand the element back to CSS once it has landed.
             clearProps: 'transform,opacity',
           });
@@ -340,6 +343,11 @@ export function useCardTimeline(scope: React.RefObject<HTMLElement | null>) {
 
       build();
       ScrollTrigger.addEventListener('refreshInit', build);
+
+      // Dev-only handle, so the reveal schedule can be inspected from the console.
+      if (process.env.NODE_ENV !== 'production') {
+        (window as unknown as { __cardTimelines?: unknown }).__cardTimelines = entries;
+      }
 
       // gsap.context runs whatever the callback returns on revert.
       return () => ScrollTrigger.removeEventListener('refreshInit', build);

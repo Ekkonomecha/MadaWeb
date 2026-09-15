@@ -51,7 +51,7 @@ export default function CurriculumPage() {
             {page.day.map((stage, i) => {
               const accent = stage.accent as Accent;
               return (
-                <Note key={stage.id} id={stage.id} as="li" live={false}>
+                <Note key={stage.id} id={stage.id} as="li">
                   <span
                     className={`inline-grid place-items-center w-9 h-9 rounded-full text-white t-small font-bold ${accentBg[accent]}`}
                   >
@@ -82,7 +82,7 @@ export default function CurriculumPage() {
             <p className="t-body text-ink-soft mt-7 measure">{t(page.bilingualBody, lang)}</p>
           </div>
 
-          <Note id="kg-interview" taped live={false} className="md:!p-10">
+          <Note id="kg-interview" taped className="md:!p-10">
             <h2 className="t-h2 text-ink">{t(page.interviewHeading, lang)}</h2>
             <p className="t-body text-ink/75 mt-6">{t(page.interviewBody, lang)}</p>
           </Note>

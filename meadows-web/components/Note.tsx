@@ -9,16 +9,19 @@ import { note, type StickyTint } from '@/lib/scatter';
  * The angle, tint and tape position all come from a hash of `id`, so the board
  * looks hand-arranged while rendering identically on the server and the client.
  *
+ * Cards carry no animation of their own — no transition, no hover motion. Their
+ * single piece of movement is the staggered scroll reveal in useCardTimeline,
+ * so there is exactly one owner of a card's transform.
+ *
  * Two elements, deliberately: the outer one holds the scatter rotation as an
  * inline transform, the inner one carries `data-note` and is what GSAP animates.
- * `transform` is a single property, so one layer animating y/scale would wipe
- * out the other's rotate if they shared an element.
+ * `transform` is a single property, so one layer animating y would wipe out the
+ * other's rotate if they shared an element.
  */
 export default function Note({
   id,
   tint,
   taped = false,
-  live = true,
   className = '',
   as: Tag = 'div',
   children,
@@ -28,8 +31,6 @@ export default function Note({
   /** Force a tint instead of letting the hash choose. */
   tint?: StickyTint;
   taped?: boolean;
-  /** Lifts and straightens on hover. Turn off for notes that aren't interactive. */
-  live?: boolean;
   className?: string;
   as?: React.ElementType;
   children: React.ReactNode;
@@ -38,12 +39,12 @@ export default function Note({
 
   return (
     <Tag
-      className={`note-tilt ${live ? 'note-tilt-live' : ''}`}
+      className="note-tilt"
       style={{ transform: `rotate(${n.rotate}deg)` } as React.CSSProperties}
     >
       <div
         data-note
-        className={`note ${n.tint} ${live ? 'note-live' : ''} ${taped ? 'note-taped' : ''} ${className}`}
+        className={`note ${n.tint} ${taped ? 'note-taped' : ''} ${className}`}
         style={{ '--tape-shift': `${n.tape}%` } as React.CSSProperties}
       >
         {children}
