@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note from '@/components/Note';
-import { useCardTimeline } from '@/components/Motion';
 
 /**
  * The gallery reads its items from content.json, each tagged with the
@@ -13,7 +12,7 @@ import { useCardTimeline } from '@/components/Motion';
  * restyling a button while showing the same grid.
  *
  * Every item is currently `kind: "generated"` — AI imagery of a generic
- * Montessori setting, not the Marassi campus, which does not open until
+ * Montessori setting, not the real campus, which does not open until
  * September. Only a `kind: "photo"` entry clears the "photographs are coming"
  * line below, so these never present themselves as a record of the real place.
  * Adding the real shoot is an entry in content.json; nothing here changes.
@@ -22,7 +21,6 @@ export default function GalleryPage() {
   const { lang } = useLang();
   const page = content.pages.gallery;
   const [active, setActive] = useState(page.categories[0].id);
-  const ref = useRef<HTMLDivElement>(null);
 
   const shown = useMemo(
     () => page.items.filter((item) => item.categories.includes(active)),
@@ -31,11 +29,8 @@ export default function GalleryPage() {
 
   const photoCount = shown.filter((i) => i.kind === 'photo').length;
 
-  // Re-keyed per category so the reveal replays when the selection changes.
-  useCardTimeline(ref);
-
   return (
-    <div ref={ref}>
+    <div>
       <PageHero
         annotation={t(page.annotation, lang)}
         heading={t(page.heading, lang)}

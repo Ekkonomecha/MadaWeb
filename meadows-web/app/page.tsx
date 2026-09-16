@@ -7,20 +7,19 @@ import { content, t, type Accent, accentText, accentBg } from '@/lib/content';
 import { spread, jitter } from '@/lib/scatter';
 import { AnnotationArrow } from '@/components/Drawn';
 import Note, { Doodle } from '@/components/Note';
+import { Field, SelectField } from '@/components/Form';
 import TiltWords from '@/components/TiltWords';
-import { useHeroSequence, useCardTimeline, Parallax } from '@/components/Motion';
+import { useHeroSequence, Parallax } from '@/components/Motion';
 
 export default function HomePage() {
   const { lang, isAr } = useLang();
   const home = content.home;
   const heroRef = useRef<HTMLElement>(null);
-  const pageRef = useRef<HTMLDivElement>(null);
 
   useHeroSequence(heroRef);
-  useCardTimeline(pageRef);
 
   return (
-    <div ref={pageRef}>
+    <div>
       {/* ───────── 1 · HERO ───────── */}
       <section ref={heroRef} className="relative overflow-hidden pt-8 md:pt-16">
         {/* Drawings drifting behind the headline, each on its own depth */}
@@ -65,7 +64,7 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-wrap gap-3 mt-9">
-                <Link href="#visit" className="btn btn-accent">
+                <Link href="/admissions" className="btn btn-accent">
                   {t(home.hero.ctaPrimary, lang)}
                   <span className="btn-dot bg-sun" aria-hidden="true" />
                 </Link>
@@ -365,7 +364,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-col items-start gap-5 lg:items-end">
               <p className="annot annot-sun">{t(home.summer.annotation, lang)}</p>
-              <Link href="#visit" className="btn btn-ghost">
+              <Link href="/admissions" className="btn btn-ghost">
                 {t(home.summer.cta, lang)}
                 <span className="btn-dot bg-sun" aria-hidden="true" />
               </Link>
@@ -421,6 +420,14 @@ function VisitSection() {
               </li>
             ))}
           </ol>
+
+          {/* The visit request asks for three things. Anyone past that point
+              wants the application, so say where it is. */}
+          <p className="t-body text-ink-soft mt-9">
+            <Link href="/admissions" className="link-inline">
+              {t(apply.applyLink, lang)}
+            </Link>
+          </p>
         </div>
 
         <Note id="visit-form" tint="sticky-sun" taped className="md:!p-10">
@@ -437,19 +444,16 @@ function VisitSection() {
               <Field id="dob" label={t(apply.fields.dob, lang)} type="date" required />
 
               <div className="sm:col-span-2">
-                <label htmlFor="room" className="block t-small font-medium text-ink mb-2">
-                  {t(apply.fields.room, lang)}
-                </label>
-                <select id="room" name="room" required className="field" defaultValue="">
-                  <option value="" disabled>
-                    {t(apply.fields.roomPlaceholder, lang)}
-                  </option>
-                  {content.rooms.map((room) => (
-                    <option key={room.id} value={room.id}>
-                      {t(room.name, lang)} — {t(room.age, lang)}
-                    </option>
-                  ))}
-                </select>
+                <SelectField
+                  id="room"
+                  label={t(apply.fields.room, lang)}
+                  placeholder={t(apply.fields.roomPlaceholder, lang)}
+                  options={content.rooms.map((room) => ({
+                    value: room.id,
+                    label: `${t(room.name, lang)} — ${t(room.age, lang)}`,
+                  }))}
+                  required
+                />
               </div>
 
               <Field id="parentName" label={t(apply.fields.parentName, lang)} required />
@@ -473,28 +477,5 @@ function VisitSection() {
         </Note>
       </div>
     </section>
-  );
-}
-
-function Field({
-  id,
-  label,
-  type = 'text',
-  required = false,
-  dir,
-}: {
-  id: string;
-  label: string;
-  type?: string;
-  required?: boolean;
-  dir?: 'ltr' | 'rtl';
-}) {
-  return (
-    <div>
-      <label htmlFor={id} className="block t-small font-medium text-ink mb-2">
-        {label}
-      </label>
-      <input id={id} name={id} type={type} required={required} dir={dir} className="field" />
-    </div>
   );
 }

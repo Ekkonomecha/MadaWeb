@@ -79,7 +79,7 @@ export default function CharactersPage() {
       <section className="pb-16 md:pb-24 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px] bg-teal text-white rounded-[50px] px-8 md:px-14 py-14 md:py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <p className="t-h2 max-w-[20ch]">{t(content.home.apply.heading, lang)}</p>
-          <Link href="/#visit" className="btn btn-ghost shrink-0">
+          <Link href="/admissions" className="btn btn-ghost shrink-0">
             {t(content.nav.cta, lang)}
             <span className="btn-dot bg-sun" aria-hidden="true" />
           </Link>

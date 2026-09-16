@@ -1,22 +1,19 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t, tList, type Accent, accentText, accentBg } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note, { Doodle } from '@/components/Note';
-import { useCardTimeline, Parallax } from '@/components/Motion';
+import { Parallax } from '@/components/Motion';
 
 export default function ProgramsPage() {
   const { lang } = useLang();
   const page = content.pages.programs;
-  const ref = useRef<HTMLDivElement>(null);
-
-  useCardTimeline(ref);
 
   return (
-    <div ref={ref}>
+    <div>
       <PageHero
         annotation={t(page.annotation, lang)}
         heading={t(page.heading, lang)}
@@ -84,7 +81,7 @@ export default function ProgramsPage() {
                   </div>
                 </dl>
 
-                <Link href="/#visit" className="btn btn-ghost mt-8">
+                <Link href="/admissions" className="btn btn-ghost mt-8">
                   {t(content.nav.cta, lang)}
                   <span className={`btn-dot ${accentBg[accent]}`} aria-hidden="true" />
                 </Link>

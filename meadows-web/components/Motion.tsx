@@ -25,7 +25,7 @@ const IGNORE = '[data-scroll-ignore]';
 /**
  * True when this element sits inside something that is itself scroll-animated.
  *
- * Nested scroll animation is a bug, not a feature. A card that animates writes
+ * Nested scroll animation is a bug, not a feature. An element that animates writes
  * a transform on itself, so a ScrollTrigger belonging to a descendant measures
  * a position that is still moving — it fires at the wrong scroll offset and the
  * two transforms compound into a jitter. The outermost animated element wins
@@ -186,10 +186,8 @@ export function Parallax({
     if (!el || prefersReducedMotion()) return;
 
     /*
-     * A parallax layer inside a card is the compounding case: the card writes
-     * its own transform as it reveals, and this layer would write another on
-     * top while measuring against a moving parent. Sit still and let the card
-     * carry it.
+     * Cards do not move, so nothing on a card may drift either — a lone
+     * parallax layer inside a still card reads as a glitch rather than depth.
      */
     if (hasAnimatedAncestor(el, '[data-note]')) return;
 
@@ -250,109 +248,4 @@ export function Drift({
       {children}
     </div>
   );
-}
-
-/**
- * Cards settling onto the board, as one timeline per group.
- *
- * Notes are grouped by the list or section that holds them, so a row staggers
- * together instead of each card firing on its own trigger. Each group gets a
- * timeline whose ScrollTrigger is created once; the tweens inside are cleared
- * and rebuilt whenever ScrollTrigger refreshes, which is how a resize or a
- * breakpoint change gets fresh measurements rather than stale ones layered on
- * top of each other.
- *
- * A group that has already played is skipped on rebuild. Clearing a finished
- * timeline would re-apply its `from` state — hiding those cards again — and
- * with `once: true` the trigger is already dead, so nothing would ever reveal
- * them.
- */
-export function useCardTimeline(scope: React.RefObject<HTMLElement | null>) {
-  useEffect(() => {
-    const root = scope.current;
-    if (!root) return;
-
-    const ctx = gsap.context(() => {
-      /*
-       * Outermost cards only. A card nested inside another card is animated by
-       * its parent already; giving it its own trigger would measure against a
-       * moving element and compound the two transforms. `data-scroll-ignore`
-       * opts a subtree out by hand.
-       */
-      const notes = gsap.utils
-        .toArray<HTMLElement>('[data-note]', root)
-        .filter((el) => !hasAnimatedAncestor(el, '[data-note]'));
-
-      if (!notes.length) return;
-
-      // No animation at all — the cards are simply already there.
-      if (prefersReducedMotion()) {
-        gsap.set(notes, { clearProps: 'all' });
-        return;
-      }
-
-      // Group each card with the siblings it should stagger alongside.
-      const groups = new Map<Element, HTMLElement[]>();
-      notes.forEach((el) => {
-        const key = el.closest('ul, ol, section') ?? root;
-        const list = groups.get(key);
-        if (list) list.push(el);
-        else groups.set(key, [el]);
-      });
-
-      type Entry = { els: HTMLElement[]; tl: gsap.core.Timeline; played: boolean };
-
-      const entries: Entry[] = [...groups].map(([trigger, els]) => {
-        const entry: Entry = {
-          els,
-          played: false,
-          tl: gsap.timeline({
-            scrollTrigger: {
-              trigger: trigger as HTMLElement,
-              start: 'top 85%',
-              once: true,
-              invalidateOnRefresh: true,
-            },
-          }),
-        };
-        entry.tl.eventCallback('onComplete', () => {
-          entry.played = true;
-        });
-        return entry;
-      });
-
-      const build = () => {
-        entries.forEach((entry) => {
-          if (entry.played) return;
-          entry.tl.clear();
-          entry.tl.from(entry.els, {
-            // An absolute distance, so a tall card and a short one travel the
-            // same way and the row reads as one movement.
-            y: 48,
-            opacity: 0,
-            duration: 0.9,
-            ease: 'expo.out',
-            // Long enough to read as one card after another rather than a
-            // single block fading in together.
-            stagger: { each: 0.16, from: 'start' },
-            // Hand the element back to CSS once it has landed.
-            clearProps: 'transform,opacity',
-          });
-        });
-      };
-
-      build();
-      ScrollTrigger.addEventListener('refreshInit', build);
-
-      // Dev-only handle, so the reveal schedule can be inspected from the console.
-      if (process.env.NODE_ENV !== 'production') {
-        (window as unknown as { __cardTimelines?: unknown }).__cardTimelines = entries;
-      }
-
-      // gsap.context runs whatever the callback returns on revert.
-      return () => ScrollTrigger.removeEventListener('refreshInit', build);
-    }, root);
-
-    return () => ctx.revert();
-  }, [scope]);
 }

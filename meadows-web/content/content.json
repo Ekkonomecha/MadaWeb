@@ -17,8 +17,8 @@
     "siteName": { "en": "Meadows International Preschool", "ar": "ميدوز الدولية لرياض الأطفال" },
     "siteTagline": { "en": "Where curiosity meets individual excellence", "ar": "حيث يلتقي الفضول بالتميّز الفردي" },
     "siteDescription": {
-      "en": "A family-owned international preschool in Marassi for children six months to five years. Play-based learning, one-to-one academic time, and a day built as a journey rather than a schedule.",
-      "ar": "حضانة دولية مملوكة لعائلة في مراسي، لأطفال من ستة أشهر إلى خمس سنوات. تعلّم قائم على اللعب، ووقت أكاديمي فردي، ويوم مبني كرحلة لا كجدول."
+      "en": "A family-owned international preschool for children six months to five years. Play-based learning, one-to-one academic time, and a day built as a journey rather than a schedule.",
+      "ar": "حضانة دولية مملوكة لعائلة لأطفال من ستة أشهر إلى خمس سنوات. تعلّم قائم على اللعب، ووقت أكاديمي فردي، ويوم مبني كرحلة لا كجدول."
     },
     "logoAlt": { "en": "Meadows", "ar": "ميدوز" },
     "openingBadge": { "en": "Opening September 2026", "ar": "نفتح أبوابنا في سبتمبر ٢٠٢٦" },
@@ -26,7 +26,8 @@
     "phoneHref": "+201114159457",
     "whatsappHref": "201114159457",
     "email": "hello@meadows.eg",
-    "address": { "en": "Marassi, North Coast, Egypt", "ar": "مراسي، الساحل الشمالي، مصر" },
+    "_addressNote": "Placeholder. The campus address is withheld until the client confirms what may be published; \"Egypt\" is what the header strip and the footer show in the meantime.",
+    "address": { "en": "Egypt", "ar": "مصر" },
     "ages": { "en": "6 months – 5 years", "ar": "٦ أشهر – ٥ سنوات" },
     "copyright": {
       "en": "© 2026 Meadows International Preschool. All rights reserved.",
@@ -46,9 +47,10 @@
       { "id": "programs", "href": "/programs", "en": "Programs", "ar": "البرامج" },
       { "id": "curriculum", "href": "/curriculum", "en": "Curriculum", "ar": "المنهج" },
       { "id": "characters", "href": "/characters", "en": "Characters", "ar": "شخصياتنا" },
-      { "id": "gallery", "href": "/gallery", "en": "Gallery", "ar": "المعرض" }
+      { "id": "gallery", "href": "/gallery", "en": "Gallery", "ar": "المعرض" },
+      { "id": "admissions", "href": "/admissions", "en": "Admissions", "ar": "التسجيل" }
     ],
-    "cta": { "en": "Book a visit", "ar": "احجز زيارة" },
+    "cta": { "en": "Join Meadows", "ar": "انضم إلى ميدوز" },
     "menuLabel": { "en": "Menu", "ar": "القائمة" },
     "closeLabel": { "en": "Close", "ar": "إغلاق" }
   },
@@ -57,10 +59,10 @@
     "hero": {
       "headline": { "en": "Where curiosity meets individual excellence.", "ar": "حيث يلتقي الفضول بالتميّز الفردي." },
       "body": {
-        "en": "A family-owned preschool in Marassi for children six months to five years. Children here don't just learn — they flourish, at their own rhythm.",
-        "ar": "حضانة عائلية في مراسي لأطفال من ستة أشهر إلى خمس سنوات. الأطفال هنا لا يتعلّمون فحسب، بل يزدهرون، كلٌّ على إيقاعه."
+        "en": "A family-owned preschool for children six months to five years. Children here don't just learn — they flourish, at their own rhythm.",
+        "ar": "حضانة عائلية لأطفال من ستة أشهر إلى خمس سنوات. الأطفال هنا لا يتعلّمون فحسب، بل يزدهرون، كلٌّ على إيقاعه."
       },
-      "ctaPrimary": { "en": "Book a visit", "ar": "احجز زيارة" },
+      "ctaPrimary": { "en": "Join Meadows", "ar": "انضم إلى ميدوز" },
       "ctaSecondary": { "en": "See how a day runs", "ar": "كيف يمضي اليوم" },
       "annotation": { "en": "every child, their own pace", "ar": "لكل طفل إيقاعه" }
     },
@@ -70,7 +72,7 @@
         { "id": "ratio", "value": { "en": "1:4", "ar": "١:٤" }, "label": { "en": "Care ratio in the infant room", "ar": "نسبة الرعاية في غرفة الرضّع" } },
         { "id": "ages", "value": { "en": "6m–5y", "ar": "٦ش–٥س" }, "label": { "en": "Every stage, one campus", "ar": "كل المراحل في مكان واحد" } },
         { "id": "cctv", "value": { "en": "24/7", "ar": "٢٤/٧" }, "label": { "en": "CCTV across every room and corridor", "ar": "كاميرات في كل غرفة وممر" } },
-        { "id": "location", "value": { "en": "Marassi", "ar": "مراسي" }, "label": { "en": "Inside the compound gates", "ar": "داخل أسوار الكمبوند" } }
+        { "id": "bilingual", "value": { "en": "2", "ar": "٢" }, "label": { "en": "Languages, side by side all day", "ar": "لغتان، جنبًا إلى جنب طوال اليوم" } }
       ]
     },
 
@@ -123,8 +125,8 @@
       "annotation": { "en": "a look inside", "ar": "نظرة من الداخل" },
       "heading": { "en": "The rooms, before you visit them.", "ar": "الغرف، قبل أن تزورها." },
       "body": {
-        "en": "Photography of the Marassi campus is being shot ahead of the September opening.",
-        "ar": "يجري تصوير مقرّ مراسي استعدادًا للافتتاح في سبتمبر."
+        "en": "Photography of the school is being shot ahead of the September opening.",
+        "ar": "يجري تصوير المكان استعدادًا للافتتاح في سبتمبر."
       },
       "cta": { "en": "Open the gallery", "ar": "افتح المعرض" }
     },
@@ -149,11 +151,11 @@
     },
 
     "summer": {
-      "annotation": { "en": "on the coast", "ar": "على الساحل" },
-      "heading": { "en": "Summer Club at Marassi.", "ar": "نادي الصيف في مراسي." },
+      "annotation": { "en": "when term ends", "ar": "حين ينتهي العام" },
+      "heading": { "en": "Summer Club.", "ar": "نادي الصيف." },
       "body": {
-        "en": "Six weeks of water play, sand, gardening and long afternoons — a walk from the beach, inside the compound gates.",
-        "ar": "ستة أسابيع من اللعب بالماء والرمل والبستنة وأصائل طويلة، على بُعد خطوات من الشاطئ وداخل أسوار الكمبوند."
+        "en": "Six weeks of water play, sand, gardening and long afternoons — the same rooms and the same faces, at summer pace.",
+        "ar": "ستة أسابيع من اللعب بالماء والرمل والبستنة وأصائل طويلة — الغرف نفسها والوجوه نفسها، بإيقاع الصيف."
       },
       "cta": { "en": "Join the summer list", "ar": "انضم لقائمة الصيف" }
     },
@@ -175,6 +177,7 @@
         "email": { "en": "Email", "ar": "البريد الإلكتروني" }
       },
       "submit": { "en": "Request a visit", "ar": "اطلب زيارة" },
+      "applyLink": { "en": "Ready to apply? Open the admission form", "ar": "جاهز للتقديم؟ افتح طلب التسجيل" },
       "successTitle": { "en": "That's with us.", "ar": "وصلنا طلبك." },
       "successBody": { "en": "We'll call you within 48 hours to find a time that works.", "ar": "سنتصل بك خلال ٤٨ ساعة لنتفق على موعد مناسب." },
       "steps": [
@@ -288,19 +291,85 @@
   },
 
   "pages": {
+    "admissions": {
+      "annotation": { "en": "admissions, September 2026", "ar": "التسجيل، سبتمبر ٢٠٢٦" },
+      "heading": { "en": "Join Meadows.", "ar": "انضم إلى ميدوز." },
+      "intro": {
+        "en": "Places for our first September are limited, and we fill them room by room. Tell us about your child and we will come back to you within 48 hours.",
+        "ar": "الأماكن في سبتمبر الأول محدودة، ونملؤها غرفة بغرفة. أخبرنا عن طفلك وسنعود إليك خلال ٤٨ ساعة."
+      },
+      "_placeholder": true,
+      "_note": "The application form does not submit anywhere yet — sending only shows the success state. Wire it to the school's inbox or CRM before launch, and have the client confirm the 48-hour promise and what the school is allowed to collect.",
+      "stepsHeading": { "en": "How it goes.", "ar": "كيف تمضي الخطوات." },
+      "steps": [
+        { "id": "form", "en": "You send this form", "ar": "ترسل هذا الطلب" },
+        { "id": "call", "en": "We call within 48 hours", "ar": "نتصل بك خلال ٤٨ ساعة" },
+        { "id": "visit", "en": "You visit, with your child", "ar": "تزورنا، ومعك طفلك" },
+        { "id": "place", "en": "We hold the place and agree a start date", "ar": "نحجز المكان ونتفق على تاريخ البدء" }
+      ],
+      "sections": {
+        "child": { "en": "About your child", "ar": "عن طفلك" },
+        "family": { "en": "How we reach you", "ar": "كيف نصل إليك" },
+        "extra": { "en": "Anything else", "ar": "أي شيء آخر" }
+      },
+      "fields": {
+        "childName": { "en": "Child's full name", "ar": "اسم الطفل كاملًا" },
+        "dob": { "en": "Date of birth", "ar": "تاريخ الميلاد" },
+        "room": { "en": "Room", "ar": "الغرفة" },
+        "roomPlaceholder": { "en": "Choose a room", "ar": "اختر الغرفة" },
+        "startDate": { "en": "Preferred start date", "ar": "تاريخ البدء المفضّل" },
+        "homeLanguage": { "en": "Language spoken at home", "ar": "اللغة المستخدمة في البيت" },
+        "parentName": { "en": "Parent or guardian's name", "ar": "اسم ولي الأمر" },
+        "relationship": { "en": "Relationship to the child", "ar": "صلة القرابة" },
+        "relationshipPlaceholder": { "en": "Choose one", "ar": "اختر" },
+        "whatsapp": { "en": "WhatsApp number", "ar": "رقم الواتساب" },
+        "email": { "en": "Email", "ar": "البريد الإلكتروني" },
+        "hearAbout": { "en": "How did you hear about us?", "ar": "كيف عرفت عنا؟" },
+        "hearAboutPlaceholder": { "en": "Optional", "ar": "اختياري" },
+        "notes": { "en": "Allergies, medical needs, or anything you would like us to know", "ar": "حساسية أو احتياجات طبية أو أي شيء تحب أن نعرفه" }
+      },
+      "relationships": [
+        { "id": "mother", "en": "Mother", "ar": "الأم" },
+        { "id": "father", "en": "Father", "ar": "الأب" },
+        { "id": "guardian", "en": "Guardian", "ar": "ولي أمر" }
+      ],
+      "hearAboutOptions": [
+        { "id": "family", "en": "From another family", "ar": "من عائلة أخرى" },
+        { "id": "instagram", "en": "Instagram", "ar": "إنستغرام" },
+        { "id": "search", "en": "A search online", "ar": "بحث على الإنترنت" },
+        { "id": "passing", "en": "Passing the school", "ar": "مررت بالمكان" },
+        { "id": "other", "en": "Somewhere else", "ar": "مكان آخر" }
+      ],
+      "consent": {
+        "en": "Yes, you may contact me about this application on WhatsApp or by email.",
+        "ar": "نعم، يمكنكم التواصل معي بخصوص هذا الطلب عبر واتساب أو البريد الإلكتروني."
+      },
+      "submit": { "en": "Send the application", "ar": "أرسل الطلب" },
+      "successTitle": { "en": "That's with us.", "ar": "وصلنا طلبك." },
+      "successBody": {
+        "en": "We read every application ourselves and will come back to you within 48 hours — usually sooner.",
+        "ar": "نقرأ كل طلب بأنفسنا وسنعود إليك خلال ٤٨ ساعة، وغالبًا أسرع."
+      },
+      "helpHeading": { "en": "Questions before you apply?", "ar": "أسئلة قبل التقديم؟" },
+      "helpBody": {
+        "en": "Ask us anything first. A founder answers, not a call centre.",
+        "ar": "اسأل عمّا تشاء أولًا. يردّ عليك أحد المؤسِّسين، لا مركز اتصال."
+      }
+    },
+
     "about": {
       "annotation": { "en": "about meadows", "ar": "عن ميدوز" },
       "heading": { "en": "We are a family, and it shows.", "ar": "نحن عائلة، وهذا ظاهر." },
       "intro": {
-        "en": "Meadows is a family-owned international preschool inside Marassi, opening in September 2026 for children six months to five years.",
-        "ar": "ميدوز حضانة دولية مملوكة لعائلة داخل مراسي، تفتح أبوابها في سبتمبر ٢٠٢٦ لأطفال من ستة أشهر إلى خمس سنوات."
+        "en": "Meadows is a family-owned international preschool opening in September 2026 for children six months to five years.",
+        "ar": "ميدوز حضانة دولية مملوكة لعائلة، تفتح أبوابها في سبتمبر ٢٠٢٦ لأطفال من ستة أشهر إلى خمس سنوات."
       },
       "storyHeading": { "en": "Why we opened.", "ar": "لماذا فتحنا." },
       "_placeholder": true,
       "_note": "Founder story is placeholder — the brief lists 'Founder / brand story' as owed by the client.",
       "story": {
-        "en": "We looked for a nursery on the coast that would take a six-month-old seriously, and could not find one. So we built the room we wanted to leave our own child in: small groups, real materials, adults who stay for years rather than terms, and a door that is always open to parents.\n\nInspired by the best early-years practice we could find anywhere in the world, we set out to make a place where children do not simply learn — they flourish.",
-        "ar": "بحثنا على الساحل عن حضانة تأخذ طفلًا في الشهر السادس على محمل الجدّ، فلم نجد. فبنينا الغرفة التي نودّ أن نترك فيها طفلنا: مجموعات صغيرة، ومواد حقيقية، وبالغون يبقون سنوات لا فصولًا، وباب مفتوح دائمًا لأولياء الأمور.\n\nمستلهمين أفضل ممارسات السنوات المبكرة في العالم، أردنا مكانًا لا يتعلّم فيه الأطفال فحسب، بل يزدهرون."
+        "en": "We looked for a nursery that would take a six-month-old seriously, and could not find one. So we built the room we wanted to leave our own child in: small groups, real materials, adults who stay for years rather than terms, and a door that is always open to parents.\n\nInspired by the best early-years practice we could find anywhere in the world, we set out to make a place where children do not simply learn — they flourish.",
+        "ar": "بحثنا عن حضانة تأخذ طفلًا في الشهر السادس على محمل الجدّ، فلم نجد. فبنينا الغرفة التي نودّ أن نترك فيها طفلنا: مجموعات صغيرة، ومواد حقيقية، وبالغون يبقون سنوات لا فصولًا، وباب مفتوح دائمًا لأولياء الأمور.\n\nمستلهمين أفضل ممارسات السنوات المبكرة في العالم، أردنا مكانًا لا يتعلّم فيه الأطفال فحسب، بل يزدهرون."
       },
       "valuesHeading": { "en": "What we hold to.", "ar": "ما نتمسّك به." },
       "values": [
@@ -346,7 +415,7 @@
       },
       "interviewHeading": { "en": "The KG1 interview, honestly.", "ar": "مقابلة الروضة الأولى، بصدق." },
       "interviewBody": {
-        "en": "Cairo and coast schools interview four-year-olds, and pretending otherwise helps nobody. In the final year we practise sitting with an unfamiliar adult, answering a question fully, and handling a task without a parent in the room. We will tell you honestly how your child is doing.",
+        "en": "Schools interview four-year-olds, and pretending otherwise helps nobody. In the final year we practise sitting with an unfamiliar adult, answering a question fully, and handling a task without a parent in the room. We will tell you honestly how your child is doing.",
         "ar": "تُجري المدارس مقابلات لأطفال في الرابعة، والتظاهر بغير ذلك لا يفيد أحدًا. في العام الأخير نتدرّب على الجلوس مع بالغ غير مألوف، وإجابة سؤال كاملًا، وأداء مهمة دون وجود ولي الأمر. وسنخبرك بصدق كيف يبلي طفلك."
       }
     },
@@ -365,11 +434,11 @@
       "annotation": { "en": "a look inside", "ar": "نظرة من الداخل" },
       "heading": { "en": "The place, before you visit it.", "ar": "المكان، قبل أن تزوره." },
       "intro": {
-        "en": "Photography of the Marassi campus is being shot ahead of the September opening. The images below show the kind of rooms and gardens we are building.",
-        "ar": "يجري تصوير مقرّ مراسي استعدادًا للافتتاح في سبتمبر. والصور أدناه تُظهر نوع الغرف والحدائق التي نبنيها."
+        "en": "Photography of the school is being shot ahead of the September opening. The images below show the kind of rooms and gardens we are building.",
+        "ar": "يجري تصوير المكان استعدادًا للافتتاح في سبتمبر. والصور أدناه تُظهر نوع الغرف والحدائق التي نبنيها."
       },
       "_placeholder": true,
-      "_note": "Every image on this page is AI-generated (Higgsfield z_image, 2026-09-16) and depicts a generic Montessori setting, NOT the Marassi campus. The brief ties imagery that does not match the visit to permanent loss of trust, so the 'photographs are coming' line stays until real kind:photo entries replace these.",
+      "_note": "Every image on this page is AI-generated (Higgsfield z_image, 2026-09-16) and depicts a generic Montessori setting, NOT the real campus. The brief ties imagery that does not match the visit to permanent loss of trust, so the 'photographs are coming' line stays until real kind:photo entries replace these.",
       "categories": [
         { "id": "rooms", "en": "The rooms", "ar": "الغرف" },
         { "id": "garden", "en": "Garden and gym", "ar": "الحديقة والصالة" },
@@ -378,7 +447,7 @@
       ],
 
       "_itemsNote": "The gallery reads this list. Each entry names the categories it belongs to, so adding a photograph is a matter of adding an entry here — no code change. Three kinds: \"photo\" is real photography from the September shoot, \"generated\" is AI imagery standing in for it, \"artwork\" is the children's own drawings. Only a \"photo\" entry clears the \"photographs are coming\" line, so generated images never present themselves as a record of the real campus.",
-      "_generatedNote": "The four \"generated\" entries were made with Higgsfield (z_image) on 2026-09-16. They depict a generic Montessori setting, NOT the Marassi campus, which does not open until September. Replace them with the real shoot before launch — the parent research ties imagery that does not match the visit to permanent loss of trust.",
+      "_generatedNote": "The four \"generated\" entries were made with Higgsfield (z_image) on 2026-09-16. They depict a generic Montessori setting, NOT the real campus, which does not open until September. Replace them with the real shoot before launch — the parent research ties imagery that does not match the visit to permanent loss of trust.",
       "items": [
         {
           "id": "room-shelves", "kind": "generated", "src": "/assets/photos/room-shelves.webp",
@@ -438,12 +507,12 @@
         {
           "id": "summer-water-table", "kind": "generated", "src": "/assets/photos/summer-water-table.webp",
           "categories": ["summer"],
-          "alt": { "en": "A water table and sun hats under a canopy beside the sea", "ar": "طاولة ماء وقبعات شمس تحت مظلة بجوار البحر" }
+          "alt": { "en": "A wooden water table with buckets and scoops under a parasol in the garden", "ar": "طاولة ماء خشبية بدلاء ومغارف تحت مظلة في الحديقة" }
         },
         {
-          "id": "coastal-terrace", "kind": "generated", "src": "/assets/photos/coastal-terrace.webp",
+          "id": "garden-terrace", "kind": "generated", "src": "/assets/photos/garden-terrace.webp",
           "categories": ["summer"],
-          "alt": { "en": "A shaded coastal terrace with parasols and baskets of sand toys", "ar": "شرفة ساحلية مظللة بمظلات وسلال ألعاب رملية" }
+          "alt": { "en": "A shaded garden terrace with parasols, benches and baskets of sand toys", "ar": "شرفة حديقة مظللة بمظلات ومقاعد وسلال ألعاب رملية" }
         }
       ],
       "emptyState": {
@@ -455,8 +524,8 @@
 
   "footer": {
     "tagline": {
-      "en": "A family-owned international preschool in Marassi, for children six months to five years.",
-      "ar": "حضانة دولية مملوكة لعائلة في مراسي، لأطفال من ستة أشهر إلى خمس سنوات."
+      "en": "A family-owned international preschool, for children six months to five years.",
+      "ar": "حضانة دولية مملوكة لعائلة، لأطفال من ستة أشهر إلى خمس سنوات."
     },
     "exploreHeading": { "en": "Explore", "ar": "استكشف" },
     "visitHeading": { "en": "Come and see us", "ar": "تعال لزيارتنا" },

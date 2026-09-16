@@ -9,14 +9,12 @@ import { note, type StickyTint } from '@/lib/scatter';
  * The angle, tint and tape position all come from a hash of `id`, so the board
  * looks hand-arranged while rendering identically on the server and the client.
  *
- * Cards carry no animation of their own — no transition, no hover motion. Their
- * single piece of movement is the staggered scroll reveal in useCardTimeline,
- * so there is exactly one owner of a card's transform.
+ * Cards carry no animation at all — no transition, no hover motion, no scroll
+ * reveal. The board is hand-arranged and then it holds still.
  *
  * Two elements, deliberately: the outer one holds the scatter rotation as an
- * inline transform, the inner one carries `data-note` and is what GSAP animates.
- * `transform` is a single property, so one layer animating y would wipe out the
- * other's rotate if they shared an element.
+ * inline transform, the inner one carries `data-note` for the scroll hooks to
+ * recognise and skip.
  */
 export default function Note({
   id,

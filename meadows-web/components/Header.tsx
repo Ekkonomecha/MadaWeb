@@ -130,7 +130,7 @@ export default function Header() {
 
               {/* CTA — ghost pill carrying a single chromatic dot */}
               <Link
-                href="/#visit"
+                href="/admissions"
                 className="btn btn-ghost hidden sm:inline-flex bg-paper hover:bg-paper-deep"
               >
                 {t(nav.cta, lang)}
@@ -161,7 +161,7 @@ export default function Header() {
                 </Link>
               ))}
               <Link
-                href="/#visit"
+                href="/admissions"
                 onClick={() => setOpen(false)}
                 className="btn btn-accent mt-2 w-full"
               >

@@ -28,7 +28,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     <ReactLenis
       root
       options={{
-        anchors: true,      // in-page links like #visit glide instead of jumping
+        anchors: true,      // in-page anchor links glide instead of jumping
         lerp: 0.085,        // weight of the glide; lower is heavier
         wheelMultiplier: 1,
         touchMultiplier: 1.6,

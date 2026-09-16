@@ -7,7 +7,7 @@ import PageHero from '@/components/PageHero';
 import Note, { Doodle } from '@/components/Note';
 import TiltWords from '@/components/TiltWords';
 import CardDeck, { DeckCard } from '@/components/CardDeck';
-import { useJourneyCrawl, useCardTimeline, Parallax } from '@/components/Motion';
+import { useJourneyCrawl, Parallax } from '@/components/Motion';
 import { JourneyPath } from '@/components/Drawn';
 
 /** A picture of each stage of the day, shown on its deck card. */
@@ -38,13 +38,11 @@ export default function CurriculumPage() {
   const { lang, isAr } = useLang();
   const page = content.pages.curriculum;
   const journeyRef = useRef<HTMLElement>(null);
-  const pageRef = useRef<HTMLDivElement>(null);
 
   useJourneyCrawl(journeyRef);
-  useCardTimeline(pageRef);
 
   return (
-    <div ref={pageRef}>
+    <div>
       <PageHero
         annotation={t(page.annotation, lang)}
         heading={t(page.heading, lang)}

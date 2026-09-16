@@ -1,22 +1,19 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note, { Doodle } from '@/components/Note';
-import { useCardTimeline, Parallax } from '@/components/Motion';
+import { Parallax } from '@/components/Motion';
 
 export default function AboutPage() {
   const { lang, isAr } = useLang();
   const page = content.pages.about;
-  const ref = useRef<HTMLDivElement>(null);
-
-  useCardTimeline(ref);
 
   return (
-    <div ref={ref}>
+    <div>
       <PageHero
         annotation={t(page.annotation, lang)}
         heading={t(page.heading, lang)}
@@ -94,7 +91,7 @@ export default function AboutPage() {
       <section className="pb-16 md:pb-24 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px] bg-teal text-white rounded-[50px] px-8 md:px-14 py-14 md:py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <p className="t-h2 max-w-[20ch]">{t(content.home.apply.heading, lang)}</p>
-          <Link href="/#visit" className="btn btn-ghost shrink-0">
+          <Link href="/admissions" className="btn btn-ghost shrink-0">
             {t(content.nav.cta, lang)}
             <span className="btn-dot bg-sun" aria-hidden="true" />
           </Link>
