@@ -320,20 +320,44 @@ export function useCardReveal(
         gsap.timeline({
           scrollTrigger: {
             trigger: trigger as HTMLElement,
-            start: 'top 85%',
-            end: 'top 40%',
-            scrub: 0.6,
+            /*
+             * A long range is most of what makes this feel smooth: the same
+             * movement spread over more scroll is a glide rather than a jump.
+             * From just below the fold to well above centre, so a row has the
+             * better part of a viewport to arrive in.
+             */
+            start: 'top 95%',
+            end: 'top 30%',
+            /*
+             * How far the animation lags the wheel before catching up. Lenis is
+             * already easing the scroll itself; this eases the follow on top, so
+             * the cards drift into place instead of tracking every pixel.
+             */
+            scrub: 1.2,
             invalidateOnRefresh: true,
           },
         }).from(els, {
-          y: 88,
-          scale: 0.94,
+          /*
+           * Gentler than it was. Under a scrub the ease maps onto scroll
+           * distance rather than time, so a front-loaded curve like expo or
+           * power2 reads as a lurch followed by a crawl. power1 keeps the
+           * velocity close to the scroll's own.
+           */
+          y: 64,
+          scale: 0.965,
           // Alternating, so a row fans onto the board instead of marching.
-          rotate: (i: number) => (i % 2 === 0 ? -6 : 6),
-          opacity: 0.35,
-          ease: 'power2.out',
+          rotate: (i: number) => (i % 2 === 0 ? -4 : 4),
+          opacity: 0.4,
+          ease: 'power1.out',
           duration: 1,
-          stagger: { each: 0.45, from: 'start' },
+          // Overlapping rather than queued — the row moves as one wave.
+          stagger: { each: 0.3, from: 'start' },
+          /*
+           * Hold the layer on the compositor for the whole scrub. Left to
+           * decide for itself, GSAP promotes at the start and drops it at the
+           * end, and that hand-back is a visible hitch on the last frame.
+           */
+          force3D: true,
         });
       });
     }, root);
