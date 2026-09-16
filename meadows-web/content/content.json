@@ -386,6 +386,11 @@
           "alt": { "en": "A preschool room with low wooden shelves and materials set out on trays", "ar": "غرفة حضانة برفوف خشبية منخفضة ومواد مرتّبة على صواني" }
         },
         {
+          "id": "entrance-hall", "kind": "generated", "src": "/assets/photos/entrance-hall.webp",
+          "categories": ["rooms", "day"],
+          "alt": { "en": "The entrance with low coat pegs and small shoes lined up", "ar": "المدخل بعلّاقات معاطف منخفضة وأحذية صغيرة مصفوفة" }
+        },
+        {
           "id": "reading-corner", "kind": "generated", "src": "/assets/photos/reading-corner.webp",
           "categories": ["rooms"],
           "alt": { "en": "A reading corner with picture books, a woven rug and floor cushions", "ar": "ركن قراءة فيه كتب مصوّرة وسجادة منسوجة ووسائد أرضية" }

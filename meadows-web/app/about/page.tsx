@@ -39,8 +39,8 @@ export default function AboutPage() {
             </div>
           </Note>
 
-          {/* Coat pegs and small shoes by the door — the founders' story is
-              about a family nursery, so the picture is the threshold of one. */}
+          {/* The whole class in one ring with their teacher — the founders'
+              story is about a family nursery, and this is what that looks like. */}
           <Parallax
             speed={0.2}
             spin={-4}
@@ -49,11 +49,11 @@ export default function AboutPage() {
             <figure className="bg-white p-2.5 rounded-lg shadow-lift rotate-[1.5deg]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/assets/photos/entrance-hall.webp"
+                src="/assets/photos/group-hug.webp"
                 alt={
                   isAr
-                    ? 'مدخل الحضانة: علّاقات معاطف منخفضة وأحذية صغيرة مصفوفة'
-                    : 'The nursery entrance: low coat pegs and small shoes lined up'
+                    ? 'معلّمة وأطفال يقفون في حلقة وأذرعهم حول أكتاف بعضهم'
+                    : 'A teacher and children standing in a ring with their arms around one another'
                 }
                 loading="lazy"
                 className="w-full h-auto rounded-[2px]"
