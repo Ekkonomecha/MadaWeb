@@ -10,12 +10,28 @@ import CardDeck, { DeckCard } from '@/components/CardDeck';
 import { useJourneyCrawl, useCardTimeline, Parallax } from '@/components/Motion';
 import { JourneyPath } from '@/components/Drawn';
 
-/** One crayon friend riding along on each stage of the day. */
-const STAGE_FRIEND: Record<string, string> = {
-  circle: '/assets/characters/pip.webp',
-  academic: '/assets/characters/comet.webp',
-  explore: '/assets/characters/breeze.webp',
-  body: '/assets/characters/juniper.webp',
+/** A picture of each stage of the day, shown on its deck card. */
+const STAGE_PHOTO: Record<string, { src: string; en: string; ar: string }> = {
+  circle: {
+    src: '/assets/photos/morning-circle.webp',
+    en: 'Children sitting together on a round rug for the morning circle',
+    ar: 'أطفال يجلسون معًا على سجادة مستديرة في حلقة الصباح',
+  },
+  academic: {
+    src: '/assets/photos/one-to-one.webp',
+    en: 'A teacher working one to one with a child at a low table',
+    ar: 'معلّمة تعمل مع طفل بشكل فردي على طاولة منخفضة',
+  },
+  explore: {
+    src: '/assets/photos/movement-room.webp',
+    en: 'An indoor movement room with soft climbing shapes and a low slide',
+    ar: 'غرفة حركة داخلية بأشكال تسلّق ناعمة وزحليقة منخفضة',
+  },
+  body: {
+    src: '/assets/photos/snack-table.webp',
+    en: 'A low table laid for snack time with fruit and small bowls',
+    ar: 'طاولة منخفضة مجهّزة لوقت الوجبة بالفاكهة وأوعية صغيرة',
+  },
 };
 
 export default function CurriculumPage() {
@@ -81,11 +97,21 @@ export default function CurriculumPage() {
                     </p>
                   </div>
 
-                  <Doodle
-                    src={STAGE_FRIEND[stage.id] ?? '/assets/characters/pip.webp'}
-                    width="10rem"
-                    className="justify-self-center md:justify-self-end"
-                  />
+                  {(() => {
+                    const photo = STAGE_PHOTO[stage.id];
+                    if (!photo) return null;
+                    return (
+                      <figure className="justify-self-center md:justify-self-end w-full max-w-[20rem] bg-white p-2 rounded-xl rotate-[1.2deg]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={photo.src}
+                          alt={isAr ? photo.ar : photo.en}
+                          loading="lazy"
+                          className="w-full aspect-[4/3] object-cover rounded-[3px]"
+                        />
+                      </figure>
+                    );
+                  })()}
                 </div>
               </DeckCard>
             );

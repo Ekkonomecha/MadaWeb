@@ -365,11 +365,11 @@
       "annotation": { "en": "a look inside", "ar": "نظرة من الداخل" },
       "heading": { "en": "The place, before you visit it.", "ar": "المكان، قبل أن تزوره." },
       "intro": {
-        "en": "Photography of the Marassi campus is being shot ahead of the September opening. Until then, here is the world the children have drawn of it.",
-        "ar": "يجري تصوير مقرّ مراسي استعدادًا للافتتاح في سبتمبر. وحتى ذلك الحين، هذا هو العالم الذي رسمه الأطفال عنه."
+        "en": "Photography of the Marassi campus is being shot ahead of the September opening. The images below show the kind of rooms and gardens we are building.",
+        "ar": "يجري تصوير مقرّ مراسي استعدادًا للافتتاح في سبتمبر. والصور أدناه تُظهر نوع الغرف والحدائق التي نبنيها."
       },
       "_placeholder": true,
-      "_note": "No photography exists in the supplied assets. The brief flags stock-only imagery as a 91% drop-off risk, so this page deliberately shows children's artwork and states the position plainly rather than using stock photos.",
+      "_note": "Every image on this page is AI-generated (Higgsfield z_image, 2026-09-16) and depicts a generic Montessori setting, NOT the Marassi campus. The brief ties imagery that does not match the visit to permanent loss of trust, so the 'photographs are coming' line stays until real kind:photo entries replace these.",
       "categories": [
         { "id": "rooms", "en": "The rooms", "ar": "الغرف" },
         { "id": "garden", "en": "Garden and gym", "ar": "الحديقة والصالة" },
@@ -381,84 +381,64 @@
       "_generatedNote": "The four \"generated\" entries were made with Higgsfield (z_image) on 2026-09-16. They depict a generic Montessori setting, NOT the Marassi campus, which does not open until September. Replace them with the real shoot before launch — the parent research ties imagery that does not match the visit to permanent loss of trust.",
       "items": [
         {
-          "id": "gen-room-shelves", "kind": "generated", "src": "/assets/photos/room-shelves.webp",
+          "id": "room-shelves", "kind": "generated", "src": "/assets/photos/room-shelves.webp",
           "categories": ["rooms"],
           "alt": { "en": "A preschool room with low wooden shelves and materials set out on trays", "ar": "غرفة حضانة برفوف خشبية منخفضة ومواد مرتّبة على صواني" }
         },
         {
-          "id": "gen-morning-circle", "kind": "generated", "src": "/assets/photos/morning-circle.webp",
-          "categories": ["day", "rooms"],
+          "id": "reading-corner", "kind": "generated", "src": "/assets/photos/reading-corner.webp",
+          "categories": ["rooms"],
+          "alt": { "en": "A reading corner with picture books, a woven rug and floor cushions", "ar": "ركن قراءة فيه كتب مصوّرة وسجادة منسوجة ووسائد أرضية" }
+        },
+        {
+          "id": "practical-life", "kind": "generated", "src": "/assets/photos/practical-life.webp",
+          "categories": ["rooms"],
+          "alt": { "en": "A practical life table with a pouring tray and two small jugs", "ar": "طاولة الحياة العملية عليها صينية صبّ وإبريقان صغيران" }
+        },
+        {
+          "id": "morning-circle", "kind": "generated", "src": "/assets/photos/morning-circle.webp",
+          "categories": ["rooms", "day"],
           "alt": { "en": "Children sitting together on a round rug for the morning circle", "ar": "أطفال يجلسون معًا على سجادة مستديرة في حلقة الصباح" }
         },
         {
-          "id": "gen-garden", "kind": "generated", "src": "/assets/photos/garden-sandpit.webp",
+          "id": "garden-sandpit", "kind": "generated", "src": "/assets/photos/garden-sandpit.webp",
           "categories": ["garden"],
           "alt": { "en": "A shaded garden with raised beds, a sandpit and terracotta pots", "ar": "حديقة مظللة بأحواض مرتفعة وحوض رمل وأصص فخارية" }
         },
         {
-          "id": "gen-summer", "kind": "generated", "src": "/assets/photos/summer-water-table.webp",
+          "id": "outdoor-movement", "kind": "generated", "src": "/assets/photos/outdoor-movement.webp",
+          "categories": ["garden"],
+          "alt": { "en": "An outdoor climbing frame and balance beam under a pergola", "ar": "إطار تسلّق وعارضة توازن في الخارج تحت تعريشة" }
+        },
+        {
+          "id": "planting-bed", "kind": "generated", "src": "/assets/photos/planting-bed.webp",
+          "categories": ["garden"],
+          "alt": { "en": "Seedlings in a raised planting bed with small wooden hand tools", "ar": "شتلات في حوض زراعة مرتفع مع أدوات يدوية خشبية صغيرة" }
+        },
+        {
+          "id": "art-table", "kind": "generated", "src": "/assets/photos/art-table.webp",
+          "categories": ["garden", "summer"],
+          "alt": { "en": "An outdoor art table with jars of paint and thick brushes", "ar": "طاولة فنون في الخارج عليها عبوات ألوان وفرَش عريضة" }
+        },
+        {
+          "id": "snack-table", "kind": "generated", "src": "/assets/photos/snack-table.webp",
+          "categories": ["day"],
+          "alt": { "en": "A low table laid for snack time with fruit and small bowls", "ar": "طاولة منخفضة مجهّزة لوقت الوجبة بالفاكهة وأوعية صغيرة" }
+        },
+        {
+          "id": "rest-time", "kind": "generated", "src": "/assets/photos/rest-time.webp",
+          "categories": ["day"],
+          "alt": { "en": "Sleeping mats laid out with folded blankets for rest time", "ar": "فرشات نوم مرتّبة مع أغطية مطويّة لوقت الراحة" }
+        },
+        {
+          "id": "summer-water-table", "kind": "generated", "src": "/assets/photos/summer-water-table.webp",
           "categories": ["summer"],
           "alt": { "en": "A water table and sun hats under a canopy beside the sea", "ar": "طاولة ماء وقبعات شمس تحت مظلة بجوار البحر" }
         },
         {
-          "id": "child-blue", "kind": "artwork", "src": "/assets/motifs/face-blue.webp",
-          "categories": ["day", "rooms"],
-          "alt": { "en": "A child drawn in blue, smiling", "ar": "طفل مرسوم بالأزرق يبتسم" }
-        },
-        {
-          "id": "child-orange", "kind": "artwork", "src": "/assets/motifs/motif-32.webp",
-          "categories": ["day", "rooms"],
-          "alt": { "en": "A child drawn in orange with bunches", "ar": "طفلة مرسومة بالبرتقالي بضفيرتين" }
-        },
-        {
-          "id": "child-red", "kind": "artwork", "src": "/assets/motifs/motif-34.webp",
-          "categories": ["day", "rooms"],
-          "alt": { "en": "A child drawn in red with a ponytail", "ar": "طفلة مرسومة بالأحمر بذيل حصان" }
-        },
-        {
-          "id": "child-green", "kind": "artwork", "src": "/assets/motifs/motif-35.webp",
-          "categories": ["day", "rooms"],
-          "alt": { "en": "A child drawn in green", "ar": "طفل مرسوم بالأخضر" }
-        },
-        {
-          "id": "tree-round", "kind": "artwork", "src": "/assets/motifs/tree-round.webp",
-          "categories": ["garden", "summer"],
-          "alt": { "en": "A round green tree", "ar": "شجرة خضراء مستديرة" }
-        },
-        {
-          "id": "tree-pine", "kind": "artwork", "src": "/assets/motifs/tree-pine.webp",
-          "categories": ["garden"],
-          "alt": { "en": "A tall pine tree", "ar": "شجرة صنوبر طويلة" }
-        },
-        {
-          "id": "dog", "kind": "artwork", "src": "/assets/motifs/motif-37.webp",
-          "categories": ["garden", "day"],
-          "alt": { "en": "A dog in a blue coat", "ar": "كلب بمعطف أزرق" }
-        },
-        {
-          "id": "cat", "kind": "artwork", "src": "/assets/motifs/motif-38.webp",
-          "categories": ["rooms", "day"],
-          "alt": { "en": "A red cat sitting", "ar": "قطة حمراء جالسة" }
-        },
-        {
-          "id": "kite", "kind": "artwork", "src": "/assets/characters/breeze.webp",
-          "categories": ["garden", "summer"],
-          "alt": { "en": "A kite with a long tail", "ar": "طائرة ورقية بذيل طويل" }
-        },
-        {
-          "id": "bus", "kind": "artwork", "src": "/assets/characters/rumble.webp",
+          "id": "coastal-terrace", "kind": "generated", "src": "/assets/photos/coastal-terrace.webp",
           "categories": ["summer"],
-          "alt": { "en": "A yellow bus", "ar": "حافلة صفراء" }
-        },
-        {
-          "id": "caterpillar", "kind": "artwork", "src": "/assets/characters/nibble.webp",
-          "categories": ["garden", "day"],
-          "alt": { "en": "A caterpillar carrying an apple", "ar": "يرقة تحمل تفاحة" }
-        },
-        {
-          "id": "rocket", "kind": "artwork", "src": "/assets/characters/comet.webp",
-          "categories": ["rooms"],
-          "alt": { "en": "A rocket taking off", "ar": "صاروخ ينطلق" }
+          "alt": { "en": "A shaded coastal terrace with parasols and baskets of sand toys", "ar": "شرفة ساحلية مظللة بمظلات وسلال ألعاب رملية" }
         }
       ],
       "emptyState": {

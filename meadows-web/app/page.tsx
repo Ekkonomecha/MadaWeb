@@ -300,15 +300,17 @@ export default function HomePage() {
             </Link>
           </div>
 
+          {/* The first three gallery images, pinned up as prints. Read from
+              content.json so this stays in step with the gallery page. */}
           <ul className="grid grid-cols-3 gap-4 lg:gap-5">
-            {['tree-pine', 'face-blue', 'tree-round'].map((m) => (
-              <Note key={m} id={m} as="li" taped className="!p-4 aspect-[3/4]">
+            {content.pages.gallery.items.slice(0, 3).map((item) => (
+              <Note key={item.id} id={item.id} as="li" taped className="!p-2 aspect-[3/4]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`/assets/motifs/${m}.webp`}
-                  alt=""
-                  aria-hidden="true"
-                  className="w-full h-full object-contain"
+                  src={item.src}
+                  alt={t(item.alt, lang)}
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-[2px]"
                 />
               </Note>
             ))}

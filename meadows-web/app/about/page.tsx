@@ -9,7 +9,7 @@ import Note, { Doodle } from '@/components/Note';
 import { useCardTimeline, Parallax } from '@/components/Motion';
 
 export default function AboutPage() {
-  const { lang } = useLang();
+  const { lang, isAr } = useLang();
   const page = content.pages.about;
   const ref = useRef<HTMLDivElement>(null);
 
@@ -39,12 +39,26 @@ export default function AboutPage() {
             </div>
           </Note>
 
+          {/* Coat pegs and small shoes by the door — the founders' story is
+              about a family nursery, so the picture is the threshold of one. */}
           <Parallax
-            speed={0.24}
-            spin={-8}
-            className="justify-self-center lg:justify-self-end lg:pt-10"
+            speed={0.2}
+            spin={-4}
+            className="justify-self-center lg:justify-self-end lg:pt-10 w-full max-w-[26rem]"
           >
-            <Doodle src="/assets/motifs/face-blue.webp" width="15rem" />
+            <figure className="bg-white p-2.5 rounded-lg shadow-lift rotate-[1.5deg]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/photos/entrance-hall.webp"
+                alt={
+                  isAr
+                    ? 'مدخل الحضانة: علّاقات معاطف منخفضة وأحذية صغيرة مصفوفة'
+                    : 'The nursery entrance: low coat pegs and small shoes lined up'
+                }
+                loading="lazy"
+                className="w-full h-auto rounded-[2px]"
+              />
+            </figure>
           </Parallax>
         </div>
       </section>

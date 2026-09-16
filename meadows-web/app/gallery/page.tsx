@@ -12,11 +12,11 @@ import { useCardTimeline } from '@/components/Motion';
  * categories it belongs to, so the filter selects real subsets rather than
  * restyling a button while showing the same grid.
  *
- * Every item is currently `kind: "artwork"` — the children's own drawings.
- * There is no photography in the supplied assets, and the parent research ties
- * stock imagery to a 91% drop-off, so the page shows what genuinely exists and
- * says plainly when photographs are coming. Adding a photo after the September
- * shoot is an entry in content.json; nothing here needs to change.
+ * Every item is currently `kind: "generated"` — AI imagery of a generic
+ * Montessori setting, not the Marassi campus, which does not open until
+ * September. Only a `kind: "photo"` entry clears the "photographs are coming"
+ * line below, so these never present themselves as a record of the real place.
+ * Adding the real shoot is an entry in content.json; nothing here changes.
  */
 export default function GalleryPage() {
   const { lang } = useLang();
@@ -93,6 +93,7 @@ export default function GalleryPage() {
                   <img
                     src={item.src}
                     alt={t(item.alt, lang)}
+                    loading="lazy"
                     className={`w-full h-full ${
                       isPicture ? 'object-cover rounded-[2px]' : 'object-contain'
                     }`}
