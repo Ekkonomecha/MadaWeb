@@ -138,8 +138,27 @@ export default function HomePage() {
             </p>
           </div>
 
-          <Parallax speed={0.26} spin={-6} className="hidden lg:block shrink-0">
-            <Doodle src="/assets/motifs/tree-round.webp" width="16rem" />
+          {/* The copy's claim is that the founders are at the gate each
+              morning, so show that rather than a tree. A card like any
+              other — it lifts and straightens under the pointer. */}
+          <Parallax
+            speed={0.22}
+            spin={-4}
+            className="shrink-0 w-full max-w-[21rem] lg:max-w-[24rem] justify-self-center lg:justify-self-end"
+          >
+            <Note id="about-snapshot" taped className="!p-2.5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/photos/morning-welcome.webp"
+                alt={
+                  isAr
+                    ? 'معلّمة تنحني عند الباب لتستقبل طفلًا وصل حاملًا حقيبته في الصباح'
+                    : 'A teacher crouching at the door to greet a child arriving with their backpack'
+                }
+                loading="lazy"
+                className="w-full h-auto rounded-[2px]"
+              />
+            </Note>
           </Parallax>
         </div>
       </section>
