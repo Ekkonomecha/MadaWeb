@@ -74,16 +74,32 @@ export default function GalleryPage() {
             key={active}
             className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-7 mt-14"
           >
-            {shown.map((item) => (
-              <Note key={item.id} id={item.id} as="li" taped className="!p-6 aspect-square">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.src}
-                  alt={t(item.alt, lang)}
-                  className="w-full h-full object-contain"
-                />
-              </Note>
-            ))}
+            {shown.map((item) => {
+              /*
+               * A drawing sits padded on the note, the way a picture is pinned
+               * up. A photograph fills the note like a print in a frame —
+               * padding round a photo reads as a mistake.
+               */
+              const isPicture = item.kind !== 'artwork';
+              return (
+                <Note
+                  key={item.id}
+                  id={item.id}
+                  as="li"
+                  taped
+                  className={isPicture ? '!p-2.5 aspect-square' : '!p-6 aspect-square'}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.src}
+                    alt={t(item.alt, lang)}
+                    className={`w-full h-full ${
+                      isPicture ? 'object-cover rounded-[2px]' : 'object-contain'
+                    }`}
+                  />
+                </Note>
+              );
+            })}
           </ul>
 
           {/* Honest about what these are, and what is still to come. */}

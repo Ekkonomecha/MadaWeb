@@ -377,8 +377,29 @@
         { "id": "summer", "en": "Summer Club", "ar": "نادي الصيف" }
       ],
 
-      "_itemsNote": "The gallery reads this list. Each entry names the categories it belongs to, so adding a photograph is a matter of adding an entry here — no code change. Set \"kind\": \"photo\" for real photography from the September shoot; \"artwork\" marks the children's drawings standing in until then.",
+      "_itemsNote": "The gallery reads this list. Each entry names the categories it belongs to, so adding a photograph is a matter of adding an entry here — no code change. Three kinds: \"photo\" is real photography from the September shoot, \"generated\" is AI imagery standing in for it, \"artwork\" is the children's own drawings. Only a \"photo\" entry clears the \"photographs are coming\" line, so generated images never present themselves as a record of the real campus.",
+      "_generatedNote": "The four \"generated\" entries were made with Higgsfield (z_image) on 2026-09-16. They depict a generic Montessori setting, NOT the Marassi campus, which does not open until September. Replace them with the real shoot before launch — the parent research ties imagery that does not match the visit to permanent loss of trust.",
       "items": [
+        {
+          "id": "gen-room-shelves", "kind": "generated", "src": "/assets/photos/room-shelves.webp",
+          "categories": ["rooms"],
+          "alt": { "en": "A preschool room with low wooden shelves and materials set out on trays", "ar": "غرفة حضانة برفوف خشبية منخفضة ومواد مرتّبة على صواني" }
+        },
+        {
+          "id": "gen-morning-circle", "kind": "generated", "src": "/assets/photos/morning-circle.webp",
+          "categories": ["day", "rooms"],
+          "alt": { "en": "Children sitting together on a round rug for the morning circle", "ar": "أطفال يجلسون معًا على سجادة مستديرة في حلقة الصباح" }
+        },
+        {
+          "id": "gen-garden", "kind": "generated", "src": "/assets/photos/garden-sandpit.webp",
+          "categories": ["garden"],
+          "alt": { "en": "A shaded garden with raised beds, a sandpit and terracotta pots", "ar": "حديقة مظللة بأحواض مرتفعة وحوض رمل وأصص فخارية" }
+        },
+        {
+          "id": "gen-summer", "kind": "generated", "src": "/assets/photos/summer-water-table.webp",
+          "categories": ["summer"],
+          "alt": { "en": "A water table and sun hats under a canopy beside the sea", "ar": "طاولة ماء وقبعات شمس تحت مظلة بجوار البحر" }
+        },
         {
           "id": "child-blue", "kind": "artwork", "src": "/assets/motifs/face-blue.webp",
           "categories": ["day", "rooms"],

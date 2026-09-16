@@ -17,7 +17,8 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SRC = path.join(root, 'public/assets/_source');
+// Sources live outside public/ so the originals are never served.
+const SRC = path.join(root, 'assets-source');
 const OUT = path.join(root, 'public/assets');
 
 /** Longest edge, in CSS pixels, at 2x for retina. */
@@ -25,6 +26,7 @@ const BUDGET = {
   logo: 1600,
   characters: 900,
   motifs: 1000,
+  photos: 1400,
 };
 
 const bytes = (n) => `${(n / 1024).toFixed(0)} KB`;
