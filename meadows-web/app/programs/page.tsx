@@ -1,19 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t, tList, type Accent, accentText, accentBg } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note, { Doodle } from '@/components/Note';
-import { Parallax } from '@/components/Motion';
+import { Parallax, useCardReveal } from '@/components/Motion';
 
 export default function ProgramsPage() {
   const { lang } = useLang();
   const page = content.pages.programs;
+  const ref = useRef<HTMLDivElement>(null);
+
+  useCardReveal(ref);
 
   return (
-    <div>
+    <div ref={ref}>
       <PageHero
         annotation={t(page.annotation, lang)}
         heading={t(page.heading, lang)}

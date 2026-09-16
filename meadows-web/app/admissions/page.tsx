@@ -1,11 +1,11 @@
 'use client';
 
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useRef, useState } from 'react';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note, { Doodle } from '@/components/Note';
-import { Parallax } from '@/components/Motion';
+import { Parallax, useCardReveal } from '@/components/Motion';
 import { Field, SelectField, TextField, FieldSet } from '@/components/Form';
 
 /**
@@ -23,6 +23,9 @@ export default function AdmissionsPage() {
   const page = content.pages.admissions;
   const global = content.global;
   const [sent, setSent] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useCardReveal(ref);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +34,7 @@ export default function AdmissionsPage() {
   };
 
   return (
-    <div>
+    <div ref={ref}>
       <PageHero
         annotation={t(page.annotation, lang)}
         heading={t(page.heading, lang)}

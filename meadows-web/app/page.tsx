@@ -9,17 +9,19 @@ import { AnnotationArrow } from '@/components/Drawn';
 import Note, { Doodle } from '@/components/Note';
 import { Field, SelectField } from '@/components/Form';
 import TiltWords from '@/components/TiltWords';
-import { useHeroSequence, Parallax } from '@/components/Motion';
+import { useHeroSequence, useCardReveal, Parallax } from '@/components/Motion';
 
 export default function HomePage() {
   const { lang, isAr } = useLang();
   const home = content.home;
   const heroRef = useRef<HTMLElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useHeroSequence(heroRef);
+  useCardReveal(pageRef);
 
   return (
-    <div>
+    <div ref={pageRef}>
       {/* ───────── 1 · HERO ───────── */}
       <section ref={heroRef} className="relative overflow-hidden pt-8 md:pt-16">
         {/* Drawings drifting behind the headline, each on its own depth */}

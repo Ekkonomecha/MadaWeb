@@ -261,3 +261,83 @@ export function Drift({
     </div>
   );
 }
+
+/**
+ * Cards dealt onto the board as you scroll into them.
+ *
+ * Scrubbed, not played. A fire-and-forget tween is over before you arrive —
+ * the trigger fires while the row is still near the bottom edge, and by the
+ * time it is in front of you there is nothing left to see. Tying the reveal to
+ * the scroll position instead means it advances only as you move, so it cannot
+ * be missed and it reads as one card arriving after another rather than a row
+ * blinking into place.
+ *
+ * Cards are grouped by the list or section holding them, so a row is one
+ * timeline with one trigger. Within it each card has its own slot, which is
+ * what staggers them.
+ *
+ * Nothing ever animates to invisible: opacity runs from 0.35, not 0, and the
+ * rest is transform. If a trigger ever mismeasures, the worst case is a card
+ * sitting slightly low and slightly pale — never a blank page.
+ *
+ * `[data-scroll-ignore]` opts a subtree out. The curriculum deck carries it,
+ * and animates itself.
+ *
+ * Pass `resetKey` where the cards themselves are swapped rather than scrolled
+ * past — the gallery's filter remounts its tiles, and the triggers have to be
+ * rebuilt against the new elements or the new set arrives with no reveal.
+ */
+export function useCardReveal(
+  scope: React.RefObject<HTMLElement | null>,
+  resetKey?: string | number,
+) {
+  useEffect(() => {
+    const root = scope.current;
+    if (!root) return;
+
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils
+        .toArray<HTMLElement>('[data-reveal]', root)
+        .filter((el) => !hasAnimatedAncestor(el, '[data-reveal]'));
+
+      if (!cards.length) return;
+
+      // No reveal at all — the cards are simply already there.
+      if (prefersReducedMotion()) {
+        gsap.set(cards, { clearProps: 'all' });
+        return;
+      }
+
+      const groups = new Map<Element, HTMLElement[]>();
+      cards.forEach((el) => {
+        const key = el.closest('ul, ol, section') ?? root;
+        const list = groups.get(key);
+        if (list) list.push(el);
+        else groups.set(key, [el]);
+      });
+
+      groups.forEach((els, trigger) => {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: trigger as HTMLElement,
+            start: 'top 85%',
+            end: 'top 40%',
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        }).from(els, {
+          y: 88,
+          scale: 0.94,
+          // Alternating, so a row fans onto the board instead of marching.
+          rotate: (i: number) => (i % 2 === 0 ? -6 : 6),
+          opacity: 0.35,
+          ease: 'power2.out',
+          duration: 1,
+          stagger: { each: 0.45, from: 'start' },
+        });
+      });
+    }, root);
+
+    return () => ctx.revert();
+  }, [scope, resetKey]);
+}

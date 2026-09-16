@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
 import Note from '@/components/Note';
+import { useCardReveal } from '@/components/Motion';
 
 /**
  * The gallery reads its items from content.json, each tagged with the
@@ -21,6 +22,7 @@ export default function GalleryPage() {
   const { lang } = useLang();
   const page = content.pages.gallery;
   const [active, setActive] = useState(page.categories[0].id);
+  const ref = useRef<HTMLDivElement>(null);
 
   const shown = useMemo(
     () => page.items.filter((item) => item.categories.includes(active)),
@@ -29,8 +31,12 @@ export default function GalleryPage() {
 
   const photoCount = shown.filter((i) => i.kind === 'photo').length;
 
+  // Rebuilt per category: the grid is re-keyed below, so the tiles the
+  // triggers were measured against no longer exist.
+  useCardReveal(ref, active);
+
   return (
-    <div>
+    <div ref={ref}>
       <PageHero
         annotation={t(page.annotation, lang)}
         heading={t(page.heading, lang)}
