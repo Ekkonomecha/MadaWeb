@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { whenReady } from '@/lib/ready';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
@@ -58,6 +59,7 @@ export function useHeroSequence(
 
     const root = scope.current;
     let stopWaiting: (() => void) | undefined;
+    let stopWaitingForCurtain: (() => void) | undefined;
 
     const ctx = gsap.context(() => {
       const risers = gsap.utils
@@ -96,29 +98,39 @@ export function useHeroSequence(
         }
       };
 
-      /*
-       * requestAnimationFrame does not run in a background tab, so an intro
-       * started there would freeze part-played. Stay finished instead, and
-       * play the moment the first time the tab is actually looked at.
-       */
-      if (document.hidden) {
-        settle();
-        const onVisible = () => {
-          if (document.hidden) return;
-          document.removeEventListener('visibilitychange', onVisible);
-          stopWaiting = undefined;
-          play();
-        };
-        document.addEventListener('visibilitychange', onVisible);
-        stopWaiting = () => document.removeEventListener('visibilitychange', onVisible);
-        return;
-      }
+      const begin = () => {
+        /*
+         * requestAnimationFrame does not run in a background tab, so an intro
+         * started there would freeze part-played. Stay finished instead, and
+         * play the moment the first time the tab is actually looked at.
+         */
+        if (document.hidden) {
+          settle();
+          const onVisible = () => {
+            if (document.hidden) return;
+            document.removeEventListener('visibilitychange', onVisible);
+            stopWaiting = undefined;
+            play();
+          };
+          document.addEventListener('visibilitychange', onVisible);
+          stopWaiting = () => document.removeEventListener('visibilitychange', onVisible);
+          return;
+        }
 
-      play();
+        play();
+      };
+
+      /*
+       * The loading panel covers this section until its curtain lifts. Playing
+       * underneath it would spend the whole intro on a hidden element; waiting
+       * for the signal means the headline is already rising as it is uncovered.
+       */
+      stopWaitingForCurtain = whenReady(begin);
     }, root);
 
     return () => {
       stopWaiting?.();
+      stopWaitingForCurtain?.();
       ctx.revert();
     };
   }, [scope, enabled]);

@@ -72,6 +72,18 @@ function LenisBridge() {
     }
 
     gsap.ticker.lagSmoothing(0);
+
+    /*
+     * The head script stops the browser restoring the old offset; this is the
+     * other half. Lenis keeps its own idea of the scroll position, and starting
+     * anywhere but zero would leave it disagreeing with the document. A hash in
+     * the URL is a request for a particular place, so it is left alone.
+     */
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true, force: true });
+    }
+
     // Measurements taken before Lenis took over are stale.
     ScrollTrigger.refresh();
 

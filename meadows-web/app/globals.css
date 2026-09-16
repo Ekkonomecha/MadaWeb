@@ -364,6 +364,17 @@ body {
 
 } /* end @layer components */
 
+/* ---- Loading panel ----
+   Server-rendered, so it paints with the first frame. If its component never
+   hydrates — script blocked, bundle failed — this takes it away anyway, a
+   little after the point where JavaScript would have lifted it itself. */
+@keyframes loader-failsafe {
+  to { opacity: 0; visibility: hidden; }
+}
+.loader-panel {
+  animation: loader-failsafe 600ms ease 5s forwards;
+}
+
 /* ===========================================================================
    Motion
    =========================================================================== */

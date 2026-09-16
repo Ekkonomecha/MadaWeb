@@ -4,6 +4,7 @@ import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
 import SmoothScroll from '@/components/SmoothScroll';
 import Shell from '@/components/Shell';
+import LoadingScreen from '@/components/LoadingScreen';
 import { content } from '@/lib/content';
 
 /*
@@ -50,9 +51,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${poppins.variable} ${caveat.variable} ${almarai.variable}`}
     >
+      <head>
+        {/*
+          A reload should open the page at the top, not wherever the last visit
+          left it. Browsers restore the old offset after load, which lands you
+          mid-page behind a loading panel and leaves Lenis disagreeing with the
+          document about where it is. Inline and in the head so it is set before
+          the browser gets the chance.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(!location.hash)window.scrollTo(0,0)}catch(e){}",
+          }}
+        />
+      </head>
       <body suppressHydrationWarning className="antialiased">
         <LanguageProvider>
           <SmoothScroll>
+            <LoadingScreen />
             <Shell>{children}</Shell>
           </SmoothScroll>
         </LanguageProvider>
