@@ -170,7 +170,7 @@ export default function HomePage() {
                 <Note key={room.id} id={room.id} as="li">
                   <Link href="/programs" className="block group">
                     <span
-                      className={`block w-11 h-[4px] rounded-full mb-5 ${accentBg[accent]}`}
+                      className={`block w-11 h-[4px] rounded-full mb-5 transition-all duration-300 group-hover:w-16 ${accentBg[accent]}`}
                       aria-hidden="true"
                     />
                     <span className="block t-h3 text-ink">{t(room.name, lang)}</span>
@@ -276,7 +276,7 @@ export default function HomePage() {
 
           <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-7 mt-14">
             {home.why.items.map((item) => (
-              <Note key={item.id} id={item.id} as="li">
+              <Note key={item.id} id={item.id} as="li" live={false}>
                 <h3 className="t-h3 text-ink">{t(item.title, lang)}</h3>
                 <p className="t-small text-ink/70 mt-3">{t(item.body, lang)}</p>
               </Note>
@@ -430,7 +430,7 @@ function VisitSection() {
           </p>
         </div>
 
-        <Note id="visit-form" tint="sticky-sun" taped className="md:!p-10">
+        <Note id="visit-form" tint="sticky-sun" live={false} taped className="md:!p-10">
           {sent ? (
             <div className="py-12 text-center">
               <h3 className="t-h2 text-ink">{t(apply.successTitle, lang)}</h3>

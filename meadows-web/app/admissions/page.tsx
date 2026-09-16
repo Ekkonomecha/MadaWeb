@@ -78,7 +78,7 @@ export default function AdmissionsPage() {
           </div>
 
           {/* The application itself */}
-          <Note id="admission-form" tint="sticky-sun" taped className="md:!p-10 lg:!p-12">
+          <Note id="admission-form" tint="sticky-sun" live={false} taped className="md:!p-10 lg:!p-12">
             {sent ? (
               <div className="py-16 text-center">
                 <h2 className="t-h2 text-ink">{t(page.successTitle, lang)}</h2>

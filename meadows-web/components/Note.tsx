@@ -9,17 +9,21 @@ import { note, type StickyTint } from '@/lib/scatter';
  * The angle, tint and tape position all come from a hash of `id`, so the board
  * looks hand-arranged while rendering identically on the server and the client.
  *
- * Cards carry no animation at all — no transition, no hover motion, no scroll
- * reveal. The board is hand-arranged and then it holds still.
+ * A live card lifts and straightens under the pointer, the way you pick a note
+ * off a board to read it. Nothing else moves: there is no scroll reveal on
+ * cards, so hover is the only thing writing a card's transform and the two can
+ * never fight.
  *
  * Two elements, deliberately: the outer one holds the scatter rotation as an
- * inline transform, the inner one carries `data-note` for the scroll hooks to
- * recognise and skip.
+ * inline transform and straightens on hover, the inner one carries `data-note`
+ * and does the lifting. `transform` is a single property, so one layer moving
+ * y/scale would wipe out the other's rotate if they shared an element.
  */
 export default function Note({
   id,
   tint,
   taped = false,
+  live = true,
   className = '',
   as: Tag = 'div',
   children,
@@ -29,6 +33,8 @@ export default function Note({
   /** Force a tint instead of letting the hash choose. */
   tint?: StickyTint;
   taped?: boolean;
+  /** Lifts and straightens on hover. Turn off for notes that aren't interactive. */
+  live?: boolean;
   className?: string;
   as?: React.ElementType;
   children: React.ReactNode;
@@ -37,12 +43,12 @@ export default function Note({
 
   return (
     <Tag
-      className="note-tilt"
+      className={`note-tilt ${live ? 'note-tilt-live' : ''}`}
       style={{ transform: `rotate(${n.rotate}deg)` } as React.CSSProperties}
     >
       <div
         data-note
-        className={`note ${n.tint} ${taped ? 'note-taped' : ''} ${className}`}
+        className={`note ${n.tint} ${live ? 'note-live' : ''} ${taped ? 'note-taped' : ''} ${className}`}
         style={{ '--tape-shift': `${n.tape}%` } as React.CSSProperties}
       >
         {children}

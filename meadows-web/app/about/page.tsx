@@ -23,7 +23,7 @@ export default function AboutPage() {
       {/* Founder story */}
       <section className="pb-14 md:pb-20 px-5 md:px-8">
         <div className="mx-auto max-w-[1200px] grid lg:grid-cols-[1.5fr_auto] gap-14 lg:gap-20 items-start">
-          <Note id="founder-story" tint="sticky-teal" taped className="md:!p-12">
+          <Note id="founder-story" tint="sticky-teal" live={false} taped className="md:!p-12">
             <h2 className="t-h2 text-ink">{t(page.storyHeading, lang)}</h2>
             <div className="mt-7 space-y-5">
               {t(page.story, lang)
