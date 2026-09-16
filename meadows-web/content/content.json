@@ -376,6 +376,70 @@
         { "id": "day", "en": "A day here", "ar": "يوم عندنا" },
         { "id": "summer", "en": "Summer Club", "ar": "نادي الصيف" }
       ],
+
+      "_itemsNote": "The gallery reads this list. Each entry names the categories it belongs to, so adding a photograph is a matter of adding an entry here — no code change. Set \"kind\": \"photo\" for real photography from the September shoot; \"artwork\" marks the children's drawings standing in until then.",
+      "items": [
+        {
+          "id": "child-blue", "kind": "artwork", "src": "/assets/motifs/face-blue.webp",
+          "categories": ["day", "rooms"],
+          "alt": { "en": "A child drawn in blue, smiling", "ar": "طفل مرسوم بالأزرق يبتسم" }
+        },
+        {
+          "id": "child-orange", "kind": "artwork", "src": "/assets/motifs/motif-32.webp",
+          "categories": ["day", "rooms"],
+          "alt": { "en": "A child drawn in orange with bunches", "ar": "طفلة مرسومة بالبرتقالي بضفيرتين" }
+        },
+        {
+          "id": "child-red", "kind": "artwork", "src": "/assets/motifs/motif-34.webp",
+          "categories": ["day", "rooms"],
+          "alt": { "en": "A child drawn in red with a ponytail", "ar": "طفلة مرسومة بالأحمر بذيل حصان" }
+        },
+        {
+          "id": "child-green", "kind": "artwork", "src": "/assets/motifs/motif-35.webp",
+          "categories": ["day", "rooms"],
+          "alt": { "en": "A child drawn in green", "ar": "طفل مرسوم بالأخضر" }
+        },
+        {
+          "id": "tree-round", "kind": "artwork", "src": "/assets/motifs/tree-round.webp",
+          "categories": ["garden", "summer"],
+          "alt": { "en": "A round green tree", "ar": "شجرة خضراء مستديرة" }
+        },
+        {
+          "id": "tree-pine", "kind": "artwork", "src": "/assets/motifs/tree-pine.webp",
+          "categories": ["garden"],
+          "alt": { "en": "A tall pine tree", "ar": "شجرة صنوبر طويلة" }
+        },
+        {
+          "id": "dog", "kind": "artwork", "src": "/assets/motifs/motif-37.webp",
+          "categories": ["garden", "day"],
+          "alt": { "en": "A dog in a blue coat", "ar": "كلب بمعطف أزرق" }
+        },
+        {
+          "id": "cat", "kind": "artwork", "src": "/assets/motifs/motif-38.webp",
+          "categories": ["rooms", "day"],
+          "alt": { "en": "A red cat sitting", "ar": "قطة حمراء جالسة" }
+        },
+        {
+          "id": "kite", "kind": "artwork", "src": "/assets/characters/breeze.webp",
+          "categories": ["garden", "summer"],
+          "alt": { "en": "A kite with a long tail", "ar": "طائرة ورقية بذيل طويل" }
+        },
+        {
+          "id": "bus", "kind": "artwork", "src": "/assets/characters/rumble.webp",
+          "categories": ["summer"],
+          "alt": { "en": "A yellow bus", "ar": "حافلة صفراء" }
+        },
+        {
+          "id": "caterpillar", "kind": "artwork", "src": "/assets/characters/nibble.webp",
+          "categories": ["garden", "day"],
+          "alt": { "en": "A caterpillar carrying an apple", "ar": "يرقة تحمل تفاحة" }
+        },
+        {
+          "id": "rocket", "kind": "artwork", "src": "/assets/characters/comet.webp",
+          "categories": ["rooms"],
+          "alt": { "en": "A rocket taking off", "ar": "صاروخ ينطلق" }
+        }
+      ],
       "emptyState": {
         "en": "Photographs are coming after the September opening.",
         "ar": "الصور الفوتوغرافية قادمة بعد افتتاح سبتمبر."

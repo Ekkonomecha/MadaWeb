@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useLang } from '@/components/LanguageProvider';
 import { content, t } from '@/lib/content';
 import PageHero from '@/components/PageHero';
@@ -8,28 +8,30 @@ import Note from '@/components/Note';
 import { useCardTimeline } from '@/components/Motion';
 
 /**
- * No photography exists in the supplied assets, and the parent research flags
- * stock imagery as a 91% drop-off risk. So this page pins up the children's own
- * drawings and says plainly when photographs are coming — rather than filling
- * the grid with stock pictures of somebody else's nursery.
+ * The gallery reads its items from content.json, each tagged with the
+ * categories it belongs to, so the filter selects real subsets rather than
+ * restyling a button while showing the same grid.
+ *
+ * Every item is currently `kind: "artwork"` — the children's own drawings.
+ * There is no photography in the supplied assets, and the parent research ties
+ * stock imagery to a 91% drop-off, so the page shows what genuinely exists and
+ * says plainly when photographs are coming. Adding a photo after the September
+ * shoot is an entry in content.json; nothing here needs to change.
  */
-const ARTWORK = [
-  '/assets/motifs/tree-round.webp',
-  '/assets/motifs/face-blue.webp',
-  '/assets/motifs/tree-pine.webp',
-  '/assets/motifs/motif-32.webp',
-  '/assets/motifs/motif-34.webp',
-  '/assets/motifs/motif-35.webp',
-  '/assets/motifs/motif-37.webp',
-  '/assets/motifs/motif-38.webp',
-];
-
 export default function GalleryPage() {
   const { lang } = useLang();
   const page = content.pages.gallery;
   const [active, setActive] = useState(page.categories[0].id);
   const ref = useRef<HTMLDivElement>(null);
 
+  const shown = useMemo(
+    () => page.items.filter((item) => item.categories.includes(active)),
+    [active, page.items],
+  );
+
+  const photoCount = shown.filter((i) => i.kind === 'photo').length;
+
+  // Re-keyed per category so the reveal replays when the selection changes.
   useCardTimeline(ref);
 
   return (
@@ -50,39 +52,46 @@ export default function GalleryPage() {
           >
             {page.categories.map((cat) => {
               const selected = cat.id === active;
+              const count = page.items.filter((i) => i.categories.includes(cat.id)).length;
               return (
                 <button
                   key={cat.id}
                   role="tab"
                   aria-selected={selected}
+                  aria-controls="gallery-grid"
                   onClick={() => setActive(cat.id)}
                   className={`btn shrink-0 ${selected ? 'btn-accent' : 'btn-ghost'}`}
                 >
                   {t(cat, lang)}
+                  <span className={selected ? 'opacity-70' : 'opacity-45'}>{count}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* The children's drawings, pinned up */}
-          <ul className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-7 mt-14">
-            {ARTWORK.map((src) => (
-              <Note key={src} id={src} as="li" taped className="!p-6 aspect-square">
+          <ul
+            id="gallery-grid"
+            key={active}
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-7 mt-14"
+          >
+            {shown.map((item) => (
+              <Note key={item.id} id={item.id} as="li" taped className="!p-6 aspect-square">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={src}
-                  alt=""
-                  aria-hidden="true"
+                  src={item.src}
+                  alt={t(item.alt, lang)}
                   className="w-full h-full object-contain"
                 />
               </Note>
             ))}
           </ul>
 
-          {/* Honest state, rather than stock photography */}
-          <p className="annot annot-soft mt-16 block text-center">
-            {t(page.emptyState, lang)}
-          </p>
+          {/* Honest about what these are, and what is still to come. */}
+          {photoCount === 0 && (
+            <p className="annot annot-soft mt-16 block text-center">
+              {t(page.emptyState, lang)}
+            </p>
+          )}
         </div>
       </section>
     </div>
