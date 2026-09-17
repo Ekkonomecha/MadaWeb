@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { ReactLenis, useLenis } from 'lenis/react';
+import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { prefersReducedMotion } from './Motion';
@@ -49,11 +50,36 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
  * a ref that may not be assigned yet.
  */
 function LenisBridge() {
+  const pathname = usePathname();
   const lenis = useLenis(() => {
     // Runs on every Lenis scroll — this is what keeps the parallax layers and
     // the caterpillar locked to the page rather than trailing it.
     ScrollTrigger.update();
   });
+
+  /*
+   * Every page opens at the top, however you arrived at it.
+   *
+   * Following a link already did — Next scrolls to the top itself. Back and
+   * forward did not: scrollRestoration is manual, so the browser no longer
+   * restores a position, and nothing was putting one back, which left the new
+   * page sitting at wherever the old one had been scrolled to. Reacting to the
+   * route covers every case, link and history alike.
+   *
+   * A hash is a request for a particular place in the page, so it is left
+   * alone. Instant rather than eased — a new page should already be at the top,
+   * not travel there.
+   */
+  useEffect(() => {
+    if (window.location.hash) return;
+
+    window.scrollTo(0, 0);
+    // Destroyed under reduced motion, in which case the line above is enough.
+    lenis?.scrollTo(0, { immediate: true, force: true });
+
+    // New page, new measurements.
+    ScrollTrigger.refresh();
+  }, [lenis, pathname]);
 
   useEffect(() => {
     if (!lenis) return;
