@@ -113,18 +113,18 @@ export default function LoadingScreen() {
         gsap
           .timeline({ onComplete: release })
           // Run the count out to 100 rather than cutting it off mid-number.
-          .to(state, { p: 1, duration: 0.4, ease: 'power2.inOut', onUpdate: paint })
+          .to(state, { p: 1, duration: 0.5, ease: 'power2.inOut', onUpdate: paint })
           .to(
             '[data-loader-content]',
-            { opacity: 0, y: -16, duration: 0.3, ease: 'power2.in' },
+            { opacity: 0, y: -16, duration: 0.4, ease: 'power2.in' },
             '-=0.12',
           )
           .to(
             root,
             {
               yPercent: -100,
-              duration: 0.9,
-              ease: 'expo.inOut',
+              duration: 1.05,
+              ease: 'power3.inOut',
               // The hero starts here, under a curtain that is already moving.
               onStart: markReady,
             },

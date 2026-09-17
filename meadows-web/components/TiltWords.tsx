@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { jitter } from '@/lib/scatter';
-import { prefersReducedMotion } from './Motion';
+import { prefersReducedMotion, SCRUB } from './Motion';
 
 /**
  * A heading whose words tilt as the page moves.
@@ -46,7 +46,7 @@ export default function TiltWords({
           trigger: root,
           start: 'top bottom',
           end: 'bottom top',
-          scrub: 1,
+          scrub: SCRUB,
           invalidateOnRefresh: true,
         },
       });

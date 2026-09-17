@@ -29,7 +29,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       root
       options={{
         anchors: true,      // in-page anchor links glide instead of jumping
-        lerp: 0.085,        // weight of the glide; lower is heavier
+        lerp: 0.075,        // weight of the glide; lower is heavier
         wheelMultiplier: 1,
         touchMultiplier: 1.6,
         syncTouch: false,   // leave touch devices with their native momentum

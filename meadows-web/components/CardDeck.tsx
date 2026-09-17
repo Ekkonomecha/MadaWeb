@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { prefersReducedMotion } from './Motion';
+import { prefersReducedMotion, SCRUB } from './Motion';
 
 /**
  * A deck of cards dealt over one another.
@@ -61,7 +61,7 @@ export default function CardDeck({
             trigger: next,
             start: 'top bottom',
             end: 'top 8rem',
-            scrub: 0.6,
+            scrub: SCRUB,
             invalidateOnRefresh: true,
           },
         });

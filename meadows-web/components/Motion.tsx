@@ -10,7 +10,39 @@ import { registerSplit } from '@/lib/text-splits';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, SplitText);
+
+  /*
+   * On a phone, scrolling shows and hides the browser's own chrome, which
+   * changes the viewport height. Left alone, ScrollTrigger treats that as a
+   * resize and re-measures every trigger mid-scroll — a visible stutter caused
+   * by the scroll itself. Vertical resizes on touch devices are ignored.
+   */
+  ScrollTrigger.config({ ignoreMobileResize: true });
 }
+
+/**
+ * One motion vocabulary for the whole site.
+ *
+ * These were five different scrub values and four different eases, tuned one
+ * animation at a time, and the site felt inconsistent for it — a card settling
+ * on one curve while the heading above it moved on another. Everything reads as
+ * one hand now.
+ */
+
+/**
+ * How far a scroll-linked animation lags the wheel before catching up. Lenis is
+ * already easing the scroll itself; this eases the follow on top, so scrubbed
+ * motion drifts toward where the page has got to rather than tracking it pixel
+ * for pixel.
+ */
+export const SCRUB = 1.2;
+
+/**
+ * The site's deceleration curve. expo.out spends four fifths of its travel in
+ * the first fifth of the tween, which reads as a snap followed by a crawl;
+ * power3 decelerates over the whole distance instead.
+ */
+export const EASE_OUT = 'power3.out';
 
 /** True when the visitor has asked the system for less motion. */
 export function prefersReducedMotion() {
@@ -80,23 +112,23 @@ export function useHeroSequence(
       }
 
       const play = () => {
-        const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+        const tl = gsap.timeline({ defaults: { ease: EASE_OUT } });
 
-        tl.from(lines, { yPercent: 108, opacity: 0, duration: 1.1, stagger: 0.075 }, 0);
+        tl.from(lines, { yPercent: 108, opacity: 0, duration: 1.3, stagger: 0.09 }, 0);
 
         tl.from(
           risers,
           {
             yPercent: 42,
             opacity: 0,
-            duration: 1.15,
-            stagger: { each: 0.07, from: 'center' },
+            duration: 1.35,
+            stagger: { each: 0.085, from: 'center' },
           },
           0.42,
         );
 
         if (note) {
-          tl.from(note, { opacity: 0, rotate: -9, duration: 0.7, ease: 'power2.out' }, 0.95);
+          tl.from(note, { opacity: 0, rotate: -9, duration: 0.9, ease: EASE_OUT }, 1.05);
         }
       };
 
@@ -161,7 +193,7 @@ export function useJourneyCrawl(scope: React.RefObject<HTMLElement | null>) {
       gsap.to(crawler, {
         motionPath: { path, align: path, alignOrigin: [0.5, 0.85], start: 0, end: 1 },
         ease: 'none',
-        scrollTrigger: { trigger: root, start: 'top 68%', end: 'bottom 72%', scrub: 0.8 },
+        scrollTrigger: { trigger: root, start: 'top 68%', end: 'bottom 72%', scrub: SCRUB },
       });
     }, root);
 
@@ -214,7 +246,7 @@ export function Parallax({
         y: -distance * 0.5,
         rotate: spin * 0.5,
         ease: 'none',
-        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1 },
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: SCRUB },
       },
     );
 
@@ -249,7 +281,7 @@ export function Drift({
     const anim = gsap.to(el, {
       y: -amount,
       ease: 'none',
-      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1 },
+      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: SCRUB },
     });
     return () => {
       anim.scrollTrigger?.kill();
@@ -335,7 +367,7 @@ export function useCardReveal(
              * already easing the scroll itself; this eases the follow on top, so
              * the cards drift into place instead of tracking every pixel.
              */
-            scrub: 1.2,
+            scrub: SCRUB,
             invalidateOnRefresh: true,
           },
         }).from(els, {
@@ -350,7 +382,7 @@ export function useCardReveal(
           // Alternating, so a row fans onto the board instead of marching.
           rotate: (i: number) => (i % 2 === 0 ? -4 : 4),
           opacity: 0.4,
-          ease: 'power1.out',
+          ease: EASE_OUT,
           duration: 1,
           // Overlapping rather than queued — the row moves as one wave.
           stagger: { each: 0.3, from: 'start' },
@@ -432,9 +464,9 @@ export function useTextReveal(
           const tween = gsap.from(split.lines, {
             yPercent: 115,
             opacity: 0,
-            duration: 0.85,
-            ease: 'expo.out',
-            stagger: 0.09,
+            duration: 1,
+            ease: EASE_OUT,
+            stagger: 0.11,
             force3D: true,
             scrollTrigger: { trigger: el, start: 'top 88%', once: true },
             // Revert after animation: the markup goes back to what it was.
