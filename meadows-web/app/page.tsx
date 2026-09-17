@@ -234,7 +234,14 @@ export default function HomePage() {
             {content.characters.items.map((c) => {
               const accent = c.accent as Accent;
               return (
-                <li key={c.id}>
+                /*
+                 * The container is the animated element, and the only one. The
+                 * reveal hook takes outermost [data-reveal] elements and skips
+                 * any nested inside one, so the picture, the name, the rule and
+                 * the pillar ride this single transform rather than each
+                 * measuring its own trigger against a parent that is moving.
+                 */
+                <li key={c.id} data-reveal>
                   <Link href="/characters" className="group block jiggle-on-hover">
                     <span
                       className="block bob"
