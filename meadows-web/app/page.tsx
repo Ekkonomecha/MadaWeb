@@ -77,7 +77,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <p data-hero-note className="flex items-start gap-2 lg:justify-self-end lg:pb-2">
+            <p data-hero-note className="flex items-start gap-2 lg:justify-self-start lg:pb-2">
               <AnnotationArrow className="w-9 h-7 text-teal/45 shrink-0 -scale-y-100 rtl:-scale-x-100 rtl:-scale-y-100" />
               <span className="annot">{t(home.hero.annotation, lang)}</span>
             </p>

@@ -435,8 +435,26 @@ export function useTextReveal(
      * is not prose and reads as broken when it stutters in.
      */
     const OWNED_ELSEWHERE =
-      '[data-reveal], [data-scroll-ignore], [data-no-split], header, footer, nav, form, a, button, label';
+      '[data-reveal], [data-scroll-ignore], [data-no-split], [data-hero-line], [data-hero-note],' +
+      ' header, footer, nav, form, a, button, label';
     const CONTAINS_OWNED = 'a, button, [data-tilt-word], [data-hero-line], [data-hero-note]';
+
+    /*
+     * Only blocks whose content is plain text.
+     *
+     * SplitText restores a block by rewriting its markup, which builds fresh
+     * nodes rather than reinstating the ones that were there. React is still
+     * holding the originals, so anything it later writes into them lands on
+     * detached nodes and never reaches the screen — the block is frozen at
+     * whatever it said when it was split. Text nodes survive that because React
+     * rewrites the parent's text wholesale; child ELEMENTS do not.
+     *
+     * The hero annotation is exactly this shape — an arrow and a span — and it
+     * sat stuck in one language through every toggle.
+     */
+    const plainTextOnly = (el: Element) =>
+      el.childNodes.length > 0 &&
+      Array.from(el.childNodes).every((node) => node.nodeType === Node.TEXT_NODE);
 
     const splits: SplitText[] = [];
     const tweens: gsap.core.Tween[] = [];
@@ -454,6 +472,7 @@ export function useTextReveal(
             (el) =>
               !el.closest(OWNED_ELSEWHERE) &&
               !el.querySelector(CONTAINS_OWNED) &&
+              plainTextOnly(el) &&
               !!el.textContent?.trim(),
           );
 
