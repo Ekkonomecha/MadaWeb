@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useSyncExternalStore } from 'react';
 import type { Lang } from '@/lib/content';
+import { revertLiveText } from '@/lib/text-splits';
 
 const STORAGE_KEY = 'meadows-lang';
 
@@ -41,6 +42,13 @@ function readServer(): Lang {
 }
 
 function writeStored(next: Lang) {
+  /*
+   * Before anything re-renders. Any block still cut into lines is holding a
+   * memory of its English markup, and reverting after React has written the
+   * Arabic in would put the English straight back.
+   */
+  revertLiveText();
+
   try {
     localStorage.setItem(STORAGE_KEY, next);
   } catch {

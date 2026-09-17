@@ -1,20 +1,32 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
 import { useLang } from './LanguageProvider';
 import { content, t } from '@/lib/content';
+import { useTextReveal } from './Motion';
 
 /** Chrome shared by every page: header, footer, and the WhatsApp shortcut. */
 export default function Shell({ children }: { children: React.ReactNode }) {
   const { lang, isAr } = useLang();
   const { global, footer } = content;
+  const main = useRef<HTMLElement>(null);
+
+  /*
+   * Every page's prose, from one place. Keyed on the route because this shell
+   * does not remount between pages — without it, a client-side navigation would
+   * arrive with the new page's text already finished.
+   */
+  useTextReveal(main, `${usePathname()}:${lang}`);
 
   return (
     <div className={`min-h-screen flex flex-col ${isAr ? 'font-arabic' : ''}`}>
       <Header />
-      <main className="flex-1">{children}</main>
+      <main ref={main} className="flex-1">
+        {children}
+      </main>
       <Footer />
 
       {/* WhatsApp converts better than phone or email for first contact (parent research). */}

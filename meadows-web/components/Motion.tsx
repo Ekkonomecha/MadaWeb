@@ -4,10 +4,12 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { SplitText } from 'gsap/SplitText';
 import { whenReady } from '@/lib/ready';
+import { registerSplit } from '@/lib/text-splits';
 
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+  gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, SplitText);
 }
 
 /** True when the visitor has asked the system for less motion. */
@@ -363,5 +365,131 @@ export function useCardReveal(
     }, root);
 
     return () => ctx.revert();
+  }, [scope, resetKey]);
+}
+
+/**
+ * Text arriving line by line, then handing the markup back.
+ *
+ * SplitText cuts a block into one element per rendered line, each behind a mask
+ * so a line rises out of nothing rather than sliding over its neighbour. The
+ * moment a block finishes, `split.revert()` puts the original markup back —
+ * which is the whole point of doing it this way. While text is split it is a
+ * pile of divs: selecting across lines is awkward, a screen reader meets
+ * fragments, and a resize leaves the lines cut where they no longer break. None
+ * of that outlives the animation.
+ *
+ * Lines, never characters. This site is bilingual, and Arabic is cursive —
+ * splitting inside a word breaks the joins and the text stops being readable.
+ * Lines keep every word whole in both languages.
+ *
+ * Two things have to be waited for. Fonts, because lines split before the real
+ * face loads are measured against fallback metrics and break in the wrong
+ * places; and the loading curtain, so a block above the fold is not already
+ * finished by the time it is uncovered.
+ */
+export function useTextReveal(
+  scope: React.RefObject<HTMLElement | null>,
+  resetKey?: string | number,
+) {
+  useEffect(() => {
+    const root = scope.current;
+    if (!root || prefersReducedMotion()) return;
+
+    /*
+     * Text that belongs to something else. A block inside a card rides the
+     * card; a TiltWords heading is already split into words; the hero headline
+     * belongs to the intro sequence; and chrome — nav, buttons, labels, links —
+     * is not prose and reads as broken when it stutters in.
+     */
+    const OWNED_ELSEWHERE =
+      '[data-reveal], [data-scroll-ignore], [data-no-split], header, footer, nav, form, a, button, label';
+    const CONTAINS_OWNED = 'a, button, [data-tilt-word], [data-hero-line], [data-hero-note]';
+
+    const splits: SplitText[] = [];
+    const tweens: gsap.core.Tween[] = [];
+    let cancelled = false;
+    let ctx: gsap.Context | undefined;
+    let failsafe: number | undefined;
+
+    const build = () => {
+      if (cancelled || !scope.current) return;
+
+      ctx = gsap.context(() => {
+        const blocks = gsap.utils
+          .toArray<HTMLElement>('h1, h2, h3, p', root)
+          .filter(
+            (el) =>
+              !el.closest(OWNED_ELSEWHERE) &&
+              !el.querySelector(CONTAINS_OWNED) &&
+              !!el.textContent?.trim(),
+          );
+
+        blocks.forEach((el) => {
+          const split = new SplitText(el, { type: 'lines', mask: 'lines' });
+          splits.push(split);
+
+          const tween = gsap.from(split.lines, {
+            yPercent: 115,
+            opacity: 0,
+            duration: 0.85,
+            ease: 'expo.out',
+            stagger: 0.09,
+            force3D: true,
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+            // Revert after animation: the markup goes back to what it was.
+            onComplete: () => {
+              split.revert();
+              unregister();
+            },
+          });
+          tweens.push(tween);
+
+          /*
+           * Listed as still-split until it finishes, so anything about to
+           * rewrite this text — the language toggle — can put the markup back
+           * before it does, rather than having its work undone by the revert.
+           */
+          const unregister = registerSplit(() => {
+            tween.scrollTrigger?.kill();
+            tween.kill();
+            split.revert();
+          });
+        });
+
+        // Splitting changed every one of these blocks' heights.
+        ScrollTrigger.refresh();
+      }, root);
+
+      /*
+       * The one way this could bite: a line starts at opacity 0 and plays once,
+       * so a trigger that mismeasures would leave that text invisible for good.
+       * Anything on screen that should have played and has not is finished by
+       * hand — which also reverts it, since that runs on complete.
+       */
+      failsafe = window.setTimeout(() => {
+        tweens.forEach((tween) => {
+          if (tween.progress() > 0) return;
+          const el = tween.scrollTrigger?.trigger as HTMLElement | undefined;
+          if (!el) return;
+          const box = el.getBoundingClientRect();
+          if (box.top < window.innerHeight && box.bottom > 0) tween.progress(1);
+        });
+      }, 6000);
+    };
+
+    const fonts = document.fonts?.ready ?? Promise.resolve();
+    const stopWaiting = whenReady(() => {
+      fonts.then(build);
+    });
+
+    return () => {
+      cancelled = true;
+      stopWaiting();
+      window.clearTimeout(failsafe);
+      // Anything still mid-flight, or never reached, is put back by hand.
+      splits.forEach((split) => split.revert());
+      ctx?.revert();
+    };
   }, [scope, resetKey]);
 }

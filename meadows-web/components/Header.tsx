@@ -46,7 +46,10 @@ export default function Header() {
   return (
     <>
       {/* The opening announcement, quiet on the canvas above the pill. */}
-      <p className="t-small pt-5 px-5 flex flex-wrap justify-center gap-x-6 gap-y-0.5 text-ink-soft">
+      <p
+        data-no-split
+        className="t-small pt-5 px-5 flex flex-wrap justify-center gap-x-6 gap-y-0.5 text-ink-soft"
+      >
         <span className="font-medium text-ink">{t(global.openingBadge, lang)}</span>
         <span>{t(global.address, lang)}</span>
       </p>
